@@ -16,7 +16,7 @@ export class AguaService {
   private headers = new HttpHeaders()
   .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
-  private electricidad: string = "electricidad/";
+  private electricidad: string = "agua/";
 
   obtener_Electricidad( limit: number,page: number ): Observable<ConsumoaguaResponsive> {
     return this.http.get<ConsumoaguaResponsive>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });

@@ -49,6 +49,7 @@ import { TransportePropioReporteComponent } from './components/report/transporte
 import { TransporteTerrestreReporteComponent } from './components/report/transporte-terrestre-reporte/transporte-terrestre-reporte.component';
 import { ElectricidadIngresarComponent } from './components/fna/generacion-electricidad/electricidad-ingresar/electricidad-ingresar.component';
 import { ElectricidadReporteComponent } from './components/fna/generacion-electricidad/electricidad-reporte/electricidad-reporte.component';
+import { ConsumoAguaIngresarComponent } from './components/fna/consumo-agua/consumo-agua-ingresar/consumo-agua-ingresar.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ElectricidadReporteComponent } from './components/fna/generacion-electr
     TransporteTerrestreReporteComponent,
     ElectricidadIngresarComponent,
     ElectricidadReporteComponent,
+    ConsumoAguaIngresarComponent,
   ],
   imports: [
     CommonModule,
