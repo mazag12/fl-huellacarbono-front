@@ -1,0 +1,116 @@
+<mat-toolbar class="navbar bg-primary" data-bs-theme="dark">
+  <a (click)="drawer.toggle()" mat-icon-button>
+      <mat-icon class="text-light">menu</mat-icon>
+  </a>
+  <span class="example-spacer"></span>
+  <span class="ps-2 text-light" >HUELLA DE CARBONO </span>
+  <span class="example-spacer"></span>
+
+  <a [matMenuTriggerFor]="menu">
+    <mat-icon class="text-light">account_circle</mat-icon>
+  </a>
+
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item (click)="onLogout()">Cerrar Session</a>
+</mat-menu>
+
+<mat-drawer-container autosize >
+  <mat-drawer #drawer opened="true" mode="side" position="start" class="text-bg-light">
+  <mat-nav-list role="list" class="list-group">
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" aria-current="true">
+        <a routerLink="/dashboard" mat-button><mat-icon>dashboard</mat-icon> Dashboard</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a routerLink="" mat-button><mat-icon>home</mat-icon> Home</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a routerLink="/dashboard/emisiones/fna" mat-button><mat-icon>explore</mat-icon>Fuentes de Emisiones</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a routerLink="/dashboard/emisiones/reporte" mat-button><mat-icon>table</mat-icon> Reporte de las Emisiones del FNA</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a mat-button><mat-icon>settings</mat-icon> Settings</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a mat-button><mat-icon>help</mat-icon> Help</a>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+          <a mat-button><mat-icon>analytics</mat-icon> analytics</a>
+      </mat-list-item>
+  </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+      <div class="content mat-elevation-z8">
+          <router-outlet></router-outlet>
+      </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<!-- <mat-toolbar>
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+    <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+  </button>
+  <span>HUELLA DE CARBONO</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>add_alert</mat-icon>
+  </button>
+  <button mat-icon-button mat-button  [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>{{ user()?.nombre }} + {{ user()?.apellido }}</button>
+    <button mat-menu-item>{{ user()?.id }}</button>
+    <button mat-menu-item (click)="onLogout()">Cerrar Session</button>
+  </mat-menu>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
+    <img class="avatar mat-elevation-z8" src="../../../../assets/images/logo/Logo.png">
+    <h4 class="name">{{ user()?.nombre }} + {{ user()?.apellido }}</h4>
+    <h3 class="designation">{{ user()?.email }}</h3>
+
+    <mat-divider></mat-divider>
+
+    <button mat-icon-button mat-button class="menu-button" title="MENU PRINCIPAL">
+      <mat-icon>dashboard</mat-icon>
+      <a [routerLink]="['/dashboard']"><span>Usuarios</span></a>
+    </button>
+
+    <button mat-icon-button mat-button class="menu-button" title="MENU PRINCIPAL">
+      <mat-icon>dashboard</mat-icon>
+      <a [routerLink]="['/dashboard']"><span>Dashboard</span></a>
+    </button>
+
+    <button mat-icon-button mat-button class="menu-button" title="FUENTES DE EMISIONES">
+      <mat-icon>task</mat-icon>
+      <a [routerLink]="['/dashboard/emisiones/registrar']"><span> FNA</span> </a>
+    </button>
+
+    <button mat-icon-button mat-button class="menu-button" title="REPORTE DE LAS EMISIONES DEL FNA">
+      <mat-icon>assessment</mat-icon>
+      <a [routerLink]="['/dashboard/emisiones/reporte']"><span>Reporte</span></a>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button (click)="onLogout()" mat-icon-button mat-button class="menu-button" title="Texto flotante">
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar Sesión</span>
+    </button>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet/>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->

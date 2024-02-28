@@ -1,0 +1,55 @@
+<section class="vh-100 bs-fondo">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="../../../../assets/images/logo/logo.jpg"
+                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form class="login100-form"
+                  autocomplete="off"
+                  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                    <span class="h1 fw-bold mb-0">HUELLA DE CARBONO</span>
+                  </div>
+
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Footloose</h5>
+
+                  <mat-form-field class="example-full-width">
+                    <mat-label>CODIGO</mat-label>
+                    <input matInput type="text" placeholder="Codigo" required formControlName="code">
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" placeholder="Contraseña" required formControlName="password">
+                  </mat-form-field>
+
+                  <div class="pt-1 mb-4">
+                    <button class="btn btn-dark btn-lg btn-block"  type="submit"
+                    [disabled]="loginForm.invalid">Iniciar Sesión
+                    </button>
+                  </div>
+
+                  <a class="small text-muted" href="#!">Recuperar Contraseña</a>
+                  <br>
+                  <a href="#!" class="small text-muted">Terms of use.</a>
+                  <a href="#!" class="small text-muted">Privacy policy</a>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
