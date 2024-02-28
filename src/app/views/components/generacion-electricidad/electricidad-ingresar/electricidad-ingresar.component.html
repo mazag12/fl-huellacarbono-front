@@ -1,0 +1,101 @@
+<div class="container mt-3 text-center">
+  <div class="row">
+    <div class="col-md-4">
+      <button [routerLink]="['/dashboard/emisiones/fna/electricidad']" class="btn btn-primary">Regresar</button>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-md-4 p-3 border">
+      <h3>Consumo de energía eléctrica</h3>
+      <p>Se cuantifica emisiones de GEI generadas por el consumo de la energía eléctrica de la RED PÚBLICA (el consumo de combustible de las diferentes plantas de generadoras de energía eléctrica que abastacen la red pública nacional [SEIN].).</p>
+      <div>
+        <h3>Adjunte documento de sustento.</h3>
+        <p>
+          En caso de ser necesario adjunte archivo que sustente la información ingresada.
+          Debe de tener en cuenta que debe ser archivo de extensión PDF y no debe pesar más de 4Mb.
+        </p>
+          <div class="mb-3">
+            <div class="col p-2">
+              <input class="form-control form-control-sm"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              name="file"
+              type="file"
+              #fileUpload
+              id="formFile"
+              (change)="ImportExcel($event)"
+              >
+            </div>
+            <div class="col p-2">
+              <button type="button" (click)="GuardarExcel()" class="btn btn-primary">GUARDAR</button>
+            </div>
+              <div *ngIf="campoVacioError" class="text-bg-warning">¡Por favor, completa todos los campos en el archivo Excel!</div>
+          </div>
+
+      </div>
+    </div>
+    <div class="col-md-7 p-3 offset-md-1 text-center border">
+      <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
+        <fieldset>
+          <legend>Generación electricidad</legend>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">Identificador:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Identificador</mat-label>
+              <input matInput type="text" placeholder="Factura" value="sin factura" required formControlName="id" readonly>
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledSelect" class="form-label">1. Seleccione la fecha de ingreso:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Fecha de Registro</mat-label>
+              <input matInput [matDatepicker]="picker" required formControlName="fecha_ingreso">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">2. Ingresa valor generico de la factura:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Factura</mat-label>
+              <input matInput type="text" placeholder="Factura" value="sin factura" required formControlName="factura">
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledSelect" class="form-label">3. Seleccione la unidad de ingreso:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Combustible</mat-label>
+              <mat-select required formControlName="tipo_electricidad_id">
+                <mat-option *ngFor="let  combustible of tipos_electricidad" [value]="combustible.id">
+                  {{ combustible.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">4. Ingrese el consumo:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>cantidad</mat-label>
+              <input matInput type="number" placeholder="00.00" min="01.00" value="00.00" required formControlName="cantidad">
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">5. Area:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Area</mat-label>
+              <input matInput type="text" placeholder="Evidencia" value="sin url" required formControlName="area">
+            </mat-form-field>
+          </div>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">6. Evidencia:</label>
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Evidencia</mat-label>
+              <input matInput type="text" placeholder="Evidencia" value="sin url" formControlName="evidencia_url">
+            </mat-form-field>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!Form.valid" >Guardar</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

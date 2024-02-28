@@ -10,7 +10,6 @@ export * from './fugas_sf6/fugas.interface';
 export * from './fugas_sf6/fugas_tipo.interface';
 
 export * from './consumo_sein/consumo_sein.interface';
-export * from './consumo_sein/consumo_sein_tipo.interface';
 export * from './consumo_sein/consumo_sein_grub.interface';
 
 export * from './transporte_casa_trabajo/transporte_casa_trabajo.interface';
@@ -40,7 +39,6 @@ export * from './transporte_residuos/transporte_residuos_seds.interface';
 export * from './transporte_residuos/transporte_residuos.interface';
 
 export * from './transporte_propio/transporte_propio.interface';
-export * from './transporte_propio/transporte_propio_tipo.interface';
 
 export * from './consumo_papel/consumo_papel_tipo.interface';
 export * from './consumo_papel/consumo_papel_tipo.interface';

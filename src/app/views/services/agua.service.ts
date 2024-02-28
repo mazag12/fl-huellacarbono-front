@@ -22,12 +22,12 @@ export class AguaService {
     return this.http.get<ConsumoaguaResponsive>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });
   }
 
-  ingresar_actualizar(consumoagua : ConsumoaguaRegister): Observable<ConsumoaguaRegister> {
+  ingresar_actualizar(data : ConsumoaguaRegister): Observable<ConsumoaguaRegister> {
 
-    if(consumoagua.id != 0 ){
-      return this.http.post<ConsumoaguaRegister>(`${this.baseUrl}${this.electricidad}ingreso`,consumoagua,{ headers: this.headers });
+    if(data.id != 0 ){
+      return this.http.post<ConsumoaguaRegister>(`${this.baseUrl}${this.electricidad}ingreso`,data,{ headers: this.headers });
     }else{
-      const { id, ...objElectricidad } = consumoagua;
+      const { id, ...objElectricidad } = data;
       return this.http.post<ConsumoaguaRegister>(`${this.baseUrl}${this.electricidad}ingreso`,objElectricidad,{ headers: this.headers });
     }
 

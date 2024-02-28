@@ -18,23 +18,23 @@ export class ElectricidadService {
 
   private electricidad: string = "electricidad/";
 
-  obtener_Electricidad( limit: number,page: number ): Observable<Electricidad> {
+  obtener( limit: number,page: number ): Observable<Electricidad> {
     return this.http.get<Electricidad>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });
   }
 
-  ingresar_actualizar_Electricidad(electricidad : ElectricidadRegister): Observable<ElectricidadRegister> {
+  ingresar_actualizar(data : ElectricidadRegister): Observable<ElectricidadRegister> {
 
-    if(electricidad.id != 0 ){
-      return this.http.post<ElectricidadRegister>(`${this.baseUrl}${this.electricidad}ingreso`,electricidad,{ headers: this.headers });
+    if(data.id != 0 ){
+      return this.http.post<ElectricidadRegister>(`${this.baseUrl}${this.electricidad}ingreso`,data,{ headers: this.headers });
     }else{
-      const { id, ...objElectricidad } = electricidad;
-      return this.http.post<ElectricidadRegister>(`${this.baseUrl}${this.electricidad}ingreso`,objElectricidad,{ headers: this.headers });
+      const { id, ...obj } = data;
+      return this.http.post<ElectricidadRegister>(`${this.baseUrl}${this.electricidad}ingreso`,obj,{ headers: this.headers });
     }
 
   }
 
   //TODO: TIPO GENERADOR DE ELECTRICIDAD
-  tipo_electricidad(): Observable<TipoElectricidadResponse> {
+  tipo(): Observable<TipoElectricidadResponse> {
     return this.http.get<TipoElectricidadResponse>(`${this.baseUrl}${this.electricidad}tipo`, { headers: this.headers });
   }
 

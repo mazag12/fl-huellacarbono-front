@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { Observable, catchError, map, of } from 'rxjs';
-import { TipoElectricidad, Electricidad, Refrigerante, RefrigeranteTipo, RefrigeranteEquipo, Fugas, FugasTipo, ConsumoSein, ConsumoSeinTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds, TransportePropio, TransportePropioTipo } from '../interfaces';
+import { TipoElectricidad, Electricidad, Refrigerante, RefrigeranteTipo, RefrigeranteEquipo, Fugas, FugasTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -60,41 +60,6 @@ export class ApiService {
   //TODO: TIPO FUGAS
   obtenerTipoFugas(): Observable<FugasTipo[]> {
     return this.http.get<FugasTipo[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
-  }
-
-  //TODO: CONSUMO SEIN
-  obtenerConsumoSein(): Observable<ConsumoSein[]> {
-    return this.http.get<ConsumoSein[]>(`${this.baseUrl}huellacarbono/regfrigerante`);
-  }
-
-  addConsumoSein(consumosein : ConsumoSein): Observable<ConsumoSein> {
-    // const electricidades =  {
-    //   fecha: electricida.fecha,
-    //   factura: electricida.factura,
-    //   tipocombustible: electricida.tipocombustible,
-    //   cantidad: electricida.cantidad,
-    //   evidencia: electricida.evidencia,
-    //   user: electricida.user
-    // };
-    return this.http.post<ConsumoSein>(`${this.baseUrl}huellacarbono/electricida`,consumosein);
-  }
-
-  updateConsumoSein(consumosein : ConsumoSein): Observable<ConsumoSein> {
-    if( !consumosein.id ) throw Error('Error en Actualizar datos');
-    return this.http.patch<ConsumoSein>(`${this.baseUrl}huellacarbono/electricida/${consumosein.id}`,consumosein);
-  }
-
-  deleteConsumoSein(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}huellacarbono/electricida/${ id }`)
-    .pipe(
-      catchError( err => of(false) ),
-      map(resp => true)
-    );
-  }
-
-  //TODO: TIPO FUGAS
-  obtenerTipoConsumoSein(): Observable<ConsumoSeinTipo[]> {
-    return this.http.get<ConsumoSeinTipo[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
   }
 
   //TODO: TRANSPORTE CASA TRABAJO
@@ -311,41 +276,6 @@ export class ApiService {
   //TODO: SEDS TRANSPORTE RESIDUOS
   obtenerSedsTransporteResiduos(): Observable<TransporteResiduosSeds[]> {
     return this.http.get<TransporteResiduosSeds[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
-  }
-
-  //TODO: TRANSPORTE PROPIO
-  obtenerTransportePropio(): Observable<TransportePropio[]> {
-    return this.http.get<TransportePropio[]>(`${this.baseUrl}huellacarbono/regfrigerante`);
-  }
-
-  addTransportePropio(transportePropio : TransportePropio): Observable<TransportePropio> {
-    // const electricidades =  {
-    //   fecha: electricida.fecha,
-    //   factura: electricida.factura,
-    //   tipocombustible: electricida.tipocombustible,
-    //   cantidad: electricida.cantidad,
-    //   evidencia: electricida.evidencia,
-    //   user: electricida.user
-    // };
-    return this.http.post<TransportePropio>(`${this.baseUrl}huellacarbono/electricida`,transportePropio);
-  }
-
-  updateTransportePropio(transportePropio : TransportePropio): Observable<TransportePropio> {
-    if( !transportePropio.id ) throw Error('Error en Actualizar datos');
-    return this.http.patch<TransportePropio>(`${this.baseUrl}huellacarbono/electricida/${transportePropio.id}`,transportePropio);
-  }
-
-  deleteTransportePropio(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}huellacarbono/electricida/${ id }`)
-    .pipe(
-      catchError( err => of(false) ),
-      map(resp => true)
-    );
-  }
-
-  //TODO: TIPO TRANSPORTE PROPIO
-  obtenerTipoTransportePropio(): Observable<TransportePropioTipo[]> {
-    return this.http.get<TransportePropioTipo[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
   }
 
 }
