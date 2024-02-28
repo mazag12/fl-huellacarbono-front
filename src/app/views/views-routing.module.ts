@@ -27,6 +27,7 @@ import { ConsumoAguaReporteComponent } from './components/report/consumo-agua-re
 import { TransporteInsumosReporteComponent } from './components/report/transporte-insumos-reporte/transporte-insumos-reporte.component';
 import { GeneracionResiduosReporteComponent } from './components/report/generacion-residuos-reporte/generacion-residuos-reporte.component';
 import { ElectricidadIngresarComponent } from './components/fna/generacion-electricidad/electricidad-ingresar/electricidad-ingresar.component';
+import { ConsumoAguaIngresarComponent } from './components/fna/consumo-agua/consumo-agua-ingresar/consumo-agua-ingresar.component';
 
 
 const routes: Routes = [
@@ -185,7 +186,7 @@ const routes: Routes = [
       },
       {
         path: 'consumoagua',
-        component: ConsumoAguaComponent,
+        component: ConsumoAguaIngresarComponent,
       },
       {
         path: 'transporte_insumos',

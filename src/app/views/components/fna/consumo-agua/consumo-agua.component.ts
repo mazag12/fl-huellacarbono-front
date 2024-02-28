@@ -55,7 +55,7 @@ export class ConsumoAguaComponent {
   }
 
   getelectricidad(limit: number, page: number){
-    this.consumo_aguaservice.obtener_Electricidad(limit,page)
+    this.consumo_aguaservice.obtener(limit,page)
     .subscribe( (reponse) => {
       this.electricidades = reponse.data;
       this.dataSource = new MatTableDataSource(reponse.data);
@@ -84,7 +84,7 @@ export class ConsumoAguaComponent {
 
   updateElectricidad(id: number){
 
-    this.consumo_aguaservice.obtener_Electricidad(5,1)
+    this.consumo_aguaservice.obtener(5,1)
     .subscribe( (reponse) => {
       this.electricidades = reponse.data;
       this.dataSource = new MatTableDataSource(reponse.data);

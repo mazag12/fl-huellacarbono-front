@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { Observable, catchError, map, of } from 'rxjs';
-import { TipoElectricidad, Electricidad, Refrigerante, RefrigeranteTipo, RefrigeranteEquipo, Fugas, FugasTipo, ConsumoSein, ConsumoSeinTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, ConsumoAgua, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds, TransportePropio, TransportePropioTipo } from '../interfaces';
+import { TipoElectricidad, Electricidad, Refrigerante, RefrigeranteTipo, RefrigeranteEquipo, Fugas, FugasTipo, ConsumoSein, ConsumoSeinTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds, TransportePropio, TransportePropioTipo } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,54 +17,6 @@ export class ApiService {
   public headers = new HttpHeaders()
   .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
-  //TODO: GENERA ELECTRICIDAD
-
-  // deleteElectricidad(id: string): Observable<boolean> {
-  //   return this.http.delete(`${this.baseUrl}huellacarbono/electricida/${ id }`)
-  //   .pipe(
-  //     catchError( err => of(false) ),
-  //     map(resp => true)
-  //   );
-  // }
-
-  //TODO: TIPO GENERADOR DE ELECTRICIDAD
-  tipo_electricidad(): Observable<TipoElectricidad[]> {
-    return this.http.get<TipoElectricidad[]>(`${this.baseUrl}electricidad/tipo`, { headers: this.headers });
-  }
-
-  obtenerCombustibleA1A2_id(id: number): Observable<TipoElectricidad> {
-    return this.http.get<TipoElectricidad>(`${this.baseUrl}huellacarbono/combustiblea1/${id}`);
-  }
-
-  //TODO: REFRIGERANTE
-  obtenerRefrigerante(): Observable<Refrigerante[]> {
-    return this.http.get<Refrigerante[]>(`${this.baseUrl}huellacarbono/regfrigerante`);
-  }
-
-  addRefrigerante(refrigerante : Refrigerante): Observable<Refrigerante> {
-    // const electricidades =  {
-    //   fecha: electricida.fecha,
-    //   factura: electricida.factura,
-    //   tipocombustible: electricida.tipocombustible,
-    //   cantidad: electricida.cantidad,
-    //   evidencia: electricida.evidencia,
-    //   user: electricida.user
-    // };
-    return this.http.post<Refrigerante>(`${this.baseUrl}huellacarbono/electricida`,refrigerante);
-  }
-
-  updateRefrigerante(refrigerante : Refrigerante): Observable<Refrigerante> {
-    if( !refrigerante.id ) throw Error('Error en Actualizar datos');
-    return this.http.patch<Refrigerante>(`${this.baseUrl}huellacarbono/electricida/${refrigerante.id}`,refrigerante);
-  }
-
-  deleteRefrigerante(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}huellacarbono/electricida/${ id }`)
-    .pipe(
-      catchError( err => of(false) ),
-      map(resp => true)
-    );
-  }
 
   //TODO: TIPO REFRIGERANTE
   obtenerTiporefrigerante(): Observable<RefrigeranteTipo[]> {
@@ -285,35 +237,6 @@ export class ApiService {
     return this.http.get<ConsumoPapelTipo[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
   }
 
-  //TODO: CONSUMO AGUA
-  obtenerConsumoAgua(): Observable<ConsumoAgua[]> {
-    return this.http.get<ConsumoAgua[]>(`${this.baseUrl}huellacarbono/regfrigerante`);
-  }
-
-  addConsumoAgua(consumoAgua : ConsumoAgua): Observable<ConsumoAgua> {
-    // const electricidades =  {
-    //   fecha: electricida.fecha,
-    //   factura: electricida.factura,
-    //   tipocombustible: electricida.tipocombustible,
-    //   cantidad: electricida.cantidad,
-    //   evidencia: electricida.evidencia,
-    //   user: electricida.user
-    // };
-    return this.http.post<ConsumoAgua>(`${this.baseUrl}huellacarbono/electricida`,consumoAgua);
-  }
-
-  updateConsumoAgua(consumoAgua : ConsumoAgua): Observable<ConsumoAgua> {
-    if( !consumoAgua.id ) throw Error('Error en Actualizar datos');
-    return this.http.patch<ConsumoAgua>(`${this.baseUrl}huellacarbono/electricida/${consumoAgua.id}`,consumoAgua);
-  }
-
-  deleteConsumoAgua(id: string): Observable<boolean> {
-    return this.http.delete(`${this.baseUrl}huellacarbono/electricida/${ id }`)
-    .pipe(
-      catchError( err => of(false) ),
-      map(resp => true)
-    );
-  }
 
   //TODO: TRANSPORTE INSUMO
   obtenerTransporteInsumo(): Observable<TransporteInsumos[]> {
