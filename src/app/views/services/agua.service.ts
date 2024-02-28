@@ -18,11 +18,11 @@ export class AguaService {
 
   private electricidad: string = "agua/";
 
-  obtener_Electricidad( limit: number,page: number ): Observable<ConsumoaguaResponsive> {
+  obtener( limit: number,page: number ): Observable<ConsumoaguaResponsive> {
     return this.http.get<ConsumoaguaResponsive>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });
   }
 
-  ingresar_actualizar_Electricidad(consumoagua : ConsumoaguaRegister): Observable<ConsumoaguaRegister> {
+  ingresar_actualizar(consumoagua : ConsumoaguaRegister): Observable<ConsumoaguaRegister> {
 
     if(consumoagua.id != 0 ){
       return this.http.post<ConsumoaguaRegister>(`${this.baseUrl}${this.electricidad}ingreso`,consumoagua,{ headers: this.headers });
