@@ -33,7 +33,7 @@ export class ElectricidadService {
 
   }
 
-  //TODO: TIPO GENERADOR DE ELECTRICIDAD
+  //TODO: TIPO
   tipo(): Observable<TipoElectricidadResponse> {
     return this.http.get<TipoElectricidadResponse>(`${this.baseUrl}${this.electricidad}tipo`, { headers: this.headers });
   }

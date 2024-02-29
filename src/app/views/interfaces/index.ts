@@ -3,8 +3,6 @@ export * from './generador_electricidad/electricidad.interface';
 
 export * from './refrigerante/refrigerantes_grub.interface';
 export * from './refrigerante/refrigerantes.interface';
-export * from './refrigerante/refrigerantes_tipo.interface';
-export * from './refrigerante/refrigerantes_equipo.interface';
 
 export * from './fugas_sf6/fugas.interface';
 export * from './fugas_sf6/fugas_tipo.interface';

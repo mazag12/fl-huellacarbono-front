@@ -28,6 +28,7 @@ import { RefrigerantesReporteComponent } from './components/refrigerantes/refrig
 import { TransportePropioReporteComponent } from './components/transporte-propio/transporte-propio-reporte/transporte-propio-reporte.component';
 import { ListaReporteComponent } from './components/listar_reporte/lista.component';
 import { ElectricidadReporteComponent } from './components/generacion-electricidad/electricidad-reporte/electricidad-reporte.component';
+import { TransportePropioRegistrarComponent } from './components/transporte-propio/transporte-propio-registrar/transporte-propio-registrar.component';
 
 const routes: Routes = [
   {
@@ -153,7 +154,7 @@ const routes: Routes = [
       },
       {
         path: 'transportepropio',
-        component: TransportePropioComponent,
+        component: TransportePropioRegistrarComponent,
       },
       {
         path: 'refrigerante',

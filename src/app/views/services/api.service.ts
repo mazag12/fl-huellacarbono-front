@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { Observable, catchError, map, of } from 'rxjs';
-import { TipoElectricidad, Electricidad, Refrigerante, RefrigeranteTipo, RefrigeranteEquipo, Fugas, FugasTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds} from '../interfaces';
+import { TipoElectricidad, Electricidad, Fugas, FugasTipo, TransporteCasaTrabajo, TransporteCasaTrabajoTipo, TransporteAereo, TransporteAereoTipo, TransporteTerrestre, TransporteTerrestreTipo, ConsumoPapel, ConsumoPapelTipo, TransporteInsumos, TransporteInsumosTipo, TransporteResiduos, TransporteResiduosTipo, TransporteResiduosSeds} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,6 @@ export class ApiService {
 
   public headers = new HttpHeaders()
   .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-
-
-  //TODO: TIPO REFRIGERANTE
-  obtenerTiporefrigerante(): Observable<RefrigeranteTipo[]> {
-    return this.http.get<RefrigeranteTipo[]>(`${this.baseUrl}huellacarbono/combustiblea1`);
-  }
-
-  //TODO: TIPO EQUIPO REFRIGERANTE
-  obtenerTipoequiporefrigerante(id: number): Observable<RefrigeranteEquipo> {
-    return this.http.get<RefrigeranteEquipo>(`${this.baseUrl}huellacarbono/combustiblea1/${id}`);
-  }
 
   //TODO: REFRIGERANTE
   obtenerFugasf6(): Observable<Fugas[]> {

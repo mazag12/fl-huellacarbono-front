@@ -47,8 +47,8 @@ import { TransporteTerrestreReporteComponent } from './components/transporte-ter
 import { ElectricidadIngresarComponent } from './components/generacion-electricidad/electricidad-ingresar/electricidad-ingresar.component';
 import { ElectricidadReporteComponent } from './components/generacion-electricidad/electricidad-reporte/electricidad-reporte.component';
 import { ConsumoAguaIngresarComponent } from './components/consumo-agua/consumo-agua-ingresar/consumo-agua-ingresar.component';
-
-
+import { TransportePropioRegistrarComponent } from './components/transporte-propio/transporte-propio-registrar/transporte-propio-registrar.component';
+import { RefrigerantesRegistrarComponent } from './components/refrigerantes/refrigerantes-registrar/refrigerantes-registrar.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +81,8 @@ import { ConsumoAguaIngresarComponent } from './components/consumo-agua/consumo-
     ElectricidadIngresarComponent,
     ElectricidadReporteComponent,
     ConsumoAguaIngresarComponent,
+    TransportePropioRegistrarComponent,
+    RefrigerantesRegistrarComponent,
   ],
   imports: [
     CommonModule,
