@@ -37,14 +37,10 @@
     <div class="col-md-7 p-3 offset-md-1 text-center border">
       <form class="grid" [formGroup]="ElectricidadForm" (ngSubmit)="onSubmit()">
         <fieldset>
-          <legend>Generación electricidad</legend>
-          <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">Identificador:</label>
-            <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Identificador</mat-label>
-              <input matInput type="text" placeholder="0" value="0" required formControlName="id" readonly>
-            </mat-form-field>
-          </div>
+          <legend>CONSUMO AGUA</legend>
+
+          <input matInput type="text" placeholder="0" value="0" required formControlName="id" hidden>
+
           <div class="mb-3">
             <label for="disabledTextInput" class="form-label">1. Ingrese el Numero del Medidor:</label>
             <mat-form-field class="col-12 sm:col-6">
@@ -70,10 +66,20 @@
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">5. Area:</label>
+            <label for="disabledSelect" class="form-label">5. Lozalización</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Area</mat-label>
-              <input matInput type="text" placeholder="Evidencia" value="sin url" required formControlName="area">
+              <mat-label>Localización</mat-label>
+              <mat-select required formControlName="area">
+                <mat-option  value="CD principal">
+                  CD principal
+                </mat-option>
+                <mat-option  value="Oficinas">
+                  Oficinas
+                </mat-option>
+                <mat-option  value="Tiendas">
+                  Tiendas
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="mb-3">

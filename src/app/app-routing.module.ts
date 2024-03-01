@@ -18,10 +18,6 @@ const routes: Routes = [
     canActivate: [ isAuthenticatedGuard ],
     children:[
       {
-        path: '',
-        component: DashboardComponent
-      },
-      {
         path: 'emisiones',
         loadChildren: () => import('./views/views.module').then( m => m.ViewsModule )
       }

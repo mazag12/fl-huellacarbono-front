@@ -9,7 +9,7 @@ export interface TipoElectricidadResponse{
 
 export interface ElectricidadResponse {
   id:                   string;
-  tipo_electricidad_id: string;
+  tipo_electricidad_id: number;
   cantidad:             number;
   fecha_ingreso:        string;
   factura:              string;
@@ -41,4 +41,39 @@ export interface ElectricidadRegister{
   factura:              string,
   area:                 string,
   evidencia_url:        string
+}
+
+export interface ElectricidadReporteData{
+  data: ElectricidadReporte;
+}
+
+export interface ElectricidadReporte{
+  forEach(arg0: (reportes: any) => void): unknown;
+  id: number;
+  nombre: string;
+  unidad: string;
+  area: string;
+  cantidad: number;
+  factor: number;
+  valor_neto: number;
+  co2: number;
+  n2o: number;
+  ch4: number;
+}
+
+export interface ElectricidadAgrupada {
+  id: string;
+  nombre: string;
+  unidad: string;
+  cantidad: number;
+  a: number;
+  neto: number;
+  c: number;
+  co2: number;
+  e: number;
+  ch4: number;
+  g: number;
+  n2o: number;
+  i: number;
+  j: number;
 }

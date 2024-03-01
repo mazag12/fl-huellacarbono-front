@@ -17,7 +17,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class ConsumoAguaComponent {
   constructor(
-    private consumo_aguaservice: AguaService ,
+    private service: AguaService ,
     public dialog: MatDialog) {}
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Medidor', 'Area', 'Cantidad', 'Evidencia', 'accion'];
@@ -40,12 +40,12 @@ export class ConsumoAguaComponent {
   ngOnInit(): void{
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.getelectricidad(5,this.pageIndex + 1);
+    this.get(5,this.pageIndex + 1);
     this.length = this.data.length = 5 ?  this.length + 5 : 5;
   }
 
-  getelectricidad(limit: number, page: number){
-    this.consumo_aguaservice.obtener(limit,page)
+  get(limit: number, page: number){
+    this.service.obtener(limit,page)
     .subscribe( (reponse) => {
       this.data = reponse.data;
       this.dataSource = new MatTableDataSource(reponse.data);
@@ -54,7 +54,7 @@ export class ConsumoAguaComponent {
 
   onPageChange(event: PageEvent) {
     this.length = (event.pageSize * (event.pageIndex + 2))+ 1;
-    this.getelectricidad(event.pageSize,event.pageIndex + 1);
+    this.get(event.pageSize,event.pageIndex + 1);
   }
 
   applyFilter(event: Event) {

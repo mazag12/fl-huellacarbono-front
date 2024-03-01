@@ -26,15 +26,10 @@ export class GeneracionElectricidadComponent implements OnInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   public authService = inject ( AuthService );
-
   public user = computed( () => this.authService.currentUser() );
-
   public data: ElectricidadResponse[] = [];
-
   public dataSource: any = [];
-
   public length = 5;
-
   public pageIndex = 0;
 
   ngOnInit(): void{
@@ -59,9 +54,7 @@ export class GeneracionElectricidadComponent implements OnInit{
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

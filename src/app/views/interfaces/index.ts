@@ -1,4 +1,3 @@
-export * from './generador_electricidad/electricidad_grub.interface';
 export * from './generador_electricidad/electricidad.interface';
 
 export * from './refrigerante/refrigerantes_grub.interface';

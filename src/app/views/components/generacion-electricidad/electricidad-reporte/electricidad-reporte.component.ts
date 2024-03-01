@@ -11,9 +11,9 @@ import { ExportExcelService } from 'src/app/views/services/export-excel.service'
   styleUrls: ['./electricidad-reporte.component.scss']
 })
 export class ElectricidadReporteComponent {
-  constructor(private electricidadservice: ElectricidadService, private exportExcelService: ExportExcelService) {}
+  constructor(private service: ElectricidadService, private exportExcelService: ExportExcelService) {}
 
-  public electricidadesArray: ElectricidadAgrupada[] = [];
+  public array: ElectricidadAgrupada[] = [];
 
   public cabecera: string[] =
   ['Tipo de combustible',
@@ -43,46 +43,48 @@ export class ElectricidadReporteComponent {
 
   ngOnInit(): void{
 
-    this.electricidadservice.tipo()
-    .subscribe( combustible =>  {
-      combustible.data.forEach(combustibles => {
+    this.service.tipo()
+    .subscribe( tipo =>  {
+      tipo.data.forEach(tipos => {
         //LISTA DE LOS COMBUSTIBLES
-        this.electricidadesArray.push({
-          tipocombustible: combustibles.nombre,
-          unidad: combustibles.unidad,
-          cantidad: 0,
-          a: 0,
-          neto: combustibles.valor_neto,
-          c: 0,
-          co2: combustibles.co2,
-          e: 0,
-          ch4: combustibles.ch4,
-          g: 0,
-          n2o: combustibles.n2o,
-          i: 0,
-          j: 0,
-        });
-        this.electricidadservice.obtener(1000,1)
-        .subscribe( electricidades =>  {
-          electricidades.data.forEach(electricidad => {
+        if(tipos.flag_activo = true){
+          this.array.push({
+            id: tipos.id,
+            nombre: tipos.nombre,
+            unidad: tipos.unidad,
+            cantidad: 0,
+            a: 0,
+            neto: tipos.valor_neto,
+            c: 0,
+            co2: tipos.co2,
+            e: 0,
+            ch4: tipos.ch4,
+            g: 0,
+            n2o: tipos.n2o,
+            i: 0,
+            j: 0,
+          });
+        }
+        this.service.reporte('YEAR', '2024')
+        .subscribe( reporte =>  {
+          reporte.data.forEach(reportes => {
             //LISTA DE LOS DATOS DE ELECTRICIDAD
-            const tipocombustible = electricidad.tipo_electricidad.nombre;
             let encontrado = false;
-            if(tipocombustible === combustibles.nombre){
-              for (let i = 0; i < this.electricidadesArray.length; i++) {
-                if (this.electricidadesArray[i].tipocombustible === tipocombustible) {
-                  this.electricidadesArray[i].unidad = electricidad.tipo_electricidad.unidad;
-                  this.electricidadesArray[i].cantidad += electricidad.cantidad;
-                  this.electricidadesArray[i].a = electricidad.tipo_electricidad.factor === 0 ? this.electricidadesArray[i].cantidad : (this.electricidadesArray[i].cantidad * electricidad.tipo_electricidad.factor);
-                  this.electricidadesArray[i].neto = electricidad.tipo_electricidad.valor_neto;
-                  this.electricidadesArray[i].c = (this.electricidadesArray[i].a *  electricidad.tipo_electricidad.valor_neto);
-                  this.electricidadesArray[i].co2 = electricidad.tipo_electricidad.co2;
-                  this.electricidadesArray[i].e = (this.electricidadesArray[i].c * electricidad.tipo_electricidad.co2)/1000;
-                  this.electricidadesArray[i].ch4 = electricidad.tipo_electricidad.ch4;
-                  this.electricidadesArray[i].g = (this.electricidadesArray[i].c * electricidad.tipo_electricidad.ch4)/1000;
-                  this.electricidadesArray[i].n2o = electricidad.tipo_electricidad.n2o;
-                  this.electricidadesArray[i].i = (this.electricidadesArray[i].c * electricidad.tipo_electricidad.n2o)/1000;
-                  this.electricidadesArray[i].j = this.electricidadesArray[i].e + this.electricidadesArray[i].g  * 30 + this.electricidadesArray[i].i * 265;
+            if(reportes.id === tipos.id){
+              for (let i = 0; i < this.array.length; i++) {
+                if (this.array[i].id === tipos.id) {
+                  this.array[i].unidad = reportes.unidad;
+                  this.array[i].cantidad += reportes.cantidad;
+                  this.array[i].a = reportes.factor === 0 ? this.array[i].cantidad : (this.array[i].cantidad * reportes.factor);
+                  this.array[i].neto = reportes.valor_neto;
+                  this.array[i].c = (this.array[i].a *  reportes.valor_neto);
+                  this.array[i].co2 = reportes.co2;
+                  this.array[i].e = (this.array[i].c * reportes.co2)/1000;
+                  this.array[i].ch4 = reportes.ch4;
+                  this.array[i].g = (this.array[i].c * reportes.ch4)/1000;
+                  this.array[i].n2o = reportes.n2o;
+                  this.array[i].i = (this.array[i].c * reportes.n2o)/1000;
+                  this.array[i].j = this.array[i].e + this.array[i].g  * 30 + this.array[i].i * 265;
                   encontrado = true;
                   break;
                 }
@@ -91,43 +93,12 @@ export class ElectricidadReporteComponent {
           });
         });
       })
+      console.log(this.array);
     });
   }
 
-  calcularSumaDatosco2(): number {
-    let suma = 0;
-    for (let datos of this.electricidadesArray) {
-      suma += datos.e;
-    }
-    return suma;
-  }
-
-  calcularSumaDatosch4(): number {
-    let suma = 0;
-    for (let datos of this.electricidadesArray) {
-      suma += datos.g;
-    }
-    return suma;
-  }
-
-  calcularSumaDatosn2o(): number {
-    let suma = 0;
-    for (let datos of this.electricidadesArray) {
-      suma += datos.i;
-    }
-    return suma;
-  }
-
-  calcularSumaDatostotal(): number {
-    let co2 = 0;
-    let ch4 = 0;
-    let n2o = 0;
-    for (let datos of this.electricidadesArray) {
-      co2 += datos.e;
-      ch4 += datos.g;
-      n2o += datos.i;
-    }
-    return co2 + ch4 * 30 + n2o * 265;
+  exportToExcel(): void {
+    this.exportExcel( this.array, 'Electricidad' );
   }
 
   exportExcel(data: ElectricidadAgrupada[], filename: string): void {
@@ -143,8 +114,6 @@ export class ElectricidadReporteComponent {
     //estructura de los datos en excel
     this._createtable(data, sheet);
 
-
-
     //se envia para crear el excecel
     this.exportExcelService.generateExcel(this._workbook, sheet, filename, this.fna, this.alcance);
   }
@@ -152,6 +121,8 @@ export class ElectricidadReporteComponent {
   private _createtable(data: ElectricidadAgrupada[], sheet:Worksheet ): void{
 
     //DISEÑO DE LOS DATOS PARA EL REPORTE--------------------------------------------
+
+    console.log(data.length);
 
     sheet.addConditionalFormatting({
       ref: 'B10:M12',
@@ -219,9 +190,9 @@ export class ElectricidadReporteComponent {
     });
 
     let count = 0;
-    for (let index = 13; index < 29; index++) {
+    for (let index = 13; index < (13 + data.length); index++) {
 
-      sheet.getCell(cabecera1[0]+index).value = data[count].tipocombustible;
+      sheet.getCell(cabecera1[0]+index).value = data[count].nombre;
       sheet.getCell(cabecera1[1]+index).value = data[count].unidad;
       sheet.getCell(cabecera1[2]+index).value = parseFloat(data[count].a.toFixed(4));
       sheet.getCell(cabecera1[3]+index).value = parseFloat(data[count].neto.toFixed(4));
@@ -300,8 +271,40 @@ export class ElectricidadReporteComponent {
     sheet.mergeCells('M10:M11');
   }
 
-  exportToExcel(): void {
-    this.exportExcel( this.electricidadesArray, 'Electricidad' );
+  calcularSumaDatosco2(): number {
+    let suma = 0;
+    for (let datos of this.array) {
+      suma += datos.e;
+    }
+    return suma;
+  }
+
+  calcularSumaDatosch4(): number {
+    let suma = 0;
+    for (let datos of this.array) {
+      suma += datos.g;
+    }
+    return suma;
+  }
+
+  calcularSumaDatosn2o(): number {
+    let suma = 0;
+    for (let datos of this.array) {
+      suma += datos.i;
+    }
+    return suma;
+  }
+
+  calcularSumaDatostotal(): number {
+    let co2 = 0;
+    let ch4 = 0;
+    let n2o = 0;
+    for (let datos of this.array) {
+      co2 += datos.e;
+      ch4 += datos.g;
+      n2o += datos.i;
+    }
+    return co2 + ch4 * 30 + n2o * 265;
   }
 
 }

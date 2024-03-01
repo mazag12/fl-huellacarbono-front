@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild, computed, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../auth/services/auth.service';
 
-import { Transportepropioresponsive } from 'src/app/views/interfaces';
-import { TranportepropioService } from '../../services/tranportepropio.service';
+import { Refrigerante } from 'src/app/views/interfaces';
 
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { RefrigerantesService } from '../../services/refrigerantes.service';
 
 @Component({
   selector: 'app-refrigerantes',
@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class RefrigerantesComponent implements OnInit {
   constructor(
-    private service: TranportepropioService ,
+    private service: RefrigerantesService,
     public dialog: MatDialog) {}
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Tipo', 'Unidad', 'Cantidad', 'Evidencia', 'accion'];
@@ -28,7 +28,7 @@ export class RefrigerantesComponent implements OnInit {
 
   public user = computed( () => this.authService.currentUser() );
 
-  public data: Transportepropioresponsive[] = [];
+  public data: Refrigerante[] = [];
 
   public dataSource: any = [];
 

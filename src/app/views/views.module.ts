@@ -49,6 +49,10 @@ import { ElectricidadReporteComponent } from './components/generacion-electricid
 import { ConsumoAguaIngresarComponent } from './components/consumo-agua/consumo-agua-ingresar/consumo-agua-ingresar.component';
 import { TransportePropioRegistrarComponent } from './components/transporte-propio/transporte-propio-registrar/transporte-propio-registrar.component';
 import { RefrigerantesRegistrarComponent } from './components/refrigerantes/refrigerantes-registrar/refrigerantes-registrar.component';
+import { ElectricidadTipoComponent } from './components/generacion-electricidad/electricidad-tipo/electricidad-tipo.component';
+import { BarChartComponent } from './components/dashboard/bar-chart/bar-chart.component';
+import { LineChartComponent } from './components/dashboard/line-chart/line-chart.component';
+import { PolarAreaChartComponent } from './components/dashboard/polar-area-chart/polar-area-chart.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +87,10 @@ import { RefrigerantesRegistrarComponent } from './components/refrigerantes/refr
     ConsumoAguaIngresarComponent,
     TransportePropioRegistrarComponent,
     RefrigerantesRegistrarComponent,
+    ElectricidadTipoComponent,
+    BarChartComponent,
+    LineChartComponent,
+    PolarAreaChartComponent,
   ],
   imports: [
     CommonModule,

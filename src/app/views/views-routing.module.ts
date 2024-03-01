@@ -29,8 +29,19 @@ import { TransportePropioReporteComponent } from './components/transporte-propio
 import { ListaReporteComponent } from './components/listar_reporte/lista.component';
 import { ElectricidadReporteComponent } from './components/generacion-electricidad/electricidad-reporte/electricidad-reporte.component';
 import { TransportePropioRegistrarComponent } from './components/transporte-propio/transporte-propio-registrar/transporte-propio-registrar.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
+  {path: 'lista',component: DashboardComponent},
+  {
+    path: 'electricidad',
+    children:[
+      {path: 'lista',component: GeneracionElectricidadComponent},
+      {path: 'registrar',component: ElectricidadIngresarComponent},
+      {path: 'editar/:id',component: ElectricidadIngresarComponent},
+      {path: 'reporte',component: ElectricidadReporteComponent}
+    ]
+  },
   {
     path: 'fna',
     children:[

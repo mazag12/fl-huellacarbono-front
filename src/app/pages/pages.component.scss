@@ -31,7 +31,19 @@ mat-sidenav-content {
   height: calc(100vh - 65px);
 }
 
-a {
-  text-decoration: none;
+.navbar-footloose{
+  background-color: #9A616D;
 }
 
+a:link, a:visited, a:active {
+  text-decoration:none;
+  color: black;
+}
+
+.active-link{
+  background-color: #9A616D;
+}
+
+.active-link a{
+  color: white;
+}

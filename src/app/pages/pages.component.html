@@ -1,4 +1,4 @@
-<mat-toolbar class="navbar bg-primary" data-bs-theme="dark">
+<mat-toolbar class="navbar-footloose">
   <a (click)="drawer.toggle()" mat-icon-button>
       <mat-icon class="text-light">menu</mat-icon>
   </a>
@@ -19,23 +19,20 @@
 <mat-drawer-container autosize >
   <mat-drawer #drawer opened="true" mode="side" position="start" class="text-bg-light">
   <mat-nav-list role="list" class="list-group">
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action" aria-current="true">
-        <a routerLink="/dashboard" mat-button><mat-icon>dashboard</mat-icon> Dashboard</a>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/lista" routerLinkActive="active-link">
+        <a  mat-button><mat-icon>dashboard</mat-icon> Dashboard</a>
       </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
-          <a routerLink="/dashboard/emisiones/fna" mat-button><mat-icon>explore</mat-icon>Fuentes de Emisiones</a>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/fna" routerLinkActive="active-link">
+          <a  mat-button><mat-icon>explore</mat-icon>Fuentes de Emisiones</a>
       </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
-          <a routerLink="/dashboard/emisiones/reporte" mat-button><mat-icon>table</mat-icon>Reporte de Emisiones</a>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/reporte" routerLinkActive="active-link">
+          <a  mat-button><mat-icon>table</mat-icon>Reporte de Emisiones</a>
       </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
-          <a mat-button><mat-icon>settings</mat-icon> Ajuste</a>
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLinkActive="active-link">
+          <a mat-button><mat-icon>settings</mat-icon > Ajuste</a>
       </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
+      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLinkActive="active-link">
           <a mat-button><mat-icon>help</mat-icon> Ayuda</a>
-      </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action">
-          <a mat-button><mat-icon>analytics</mat-icon> Analitica</a>
       </mat-list-item>
   </mat-nav-list>
   </mat-drawer>

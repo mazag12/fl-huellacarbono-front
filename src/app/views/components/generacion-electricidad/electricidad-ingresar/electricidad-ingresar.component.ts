@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, computed, inject, AfterViewInit, ElementRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, computed, inject, ElementRef  } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { read, utils } from 'xlsx';
 import { AuthService } from '../../../../auth/services/auth.service';
 
-import { ElectricidadResponse, TipoElectricidad, ElectricidadRegister } from 'src/app/views/interfaces';
+import { TipoElectricidad, ElectricidadRegister, ElectricidadResponse, Electricidad } from 'src/app/views/interfaces';
 import { ElectricidadService } from '../../../services/electricidad.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -17,45 +17,66 @@ import { ElectricidadService } from '../../../services/electricidad.service';
 export class ElectricidadIngresarComponent implements OnInit{
 
   constructor(
-    private electricidadservice: ElectricidadService ,
-    public dialog: MatDialog) {}
+    private service: ElectricidadService ,
+    private route:Router,
+    private activatedRoute:ActivatedRoute) {}
 
     @ViewChild('fileUpload') fileUpload!: ElementRef;
 
     private authService = inject ( AuthService );
 
     public user = computed( () => this.authService.currentUser() );
-
-    public electricidades: ElectricidadResponse[] = [];
-
-    public tipos_electricidad: TipoElectricidad[] = [];
-
-    file: File | null = null;
-
-    excelData: any[] = [];
+    public tipos  : TipoElectricidad[] = [];
+    public campoVacioError: boolean = false;
 
     public Form = new FormGroup({
       id:                   new FormControl<number>(0),
       tipo_electricidad_id: new FormControl<number>(0,[Validators.min(1)]),
       cantidad:             new FormControl<number>(0,[Validators.required, Validators.min(1)]),
       fecha_ingreso:        new FormControl<string>('',[Validators.required]),
-      factura:              new FormControl<string>('',[Validators.required]),
+      factura:              new FormControl<string>('',[Validators.required, Validators.pattern('[A-Z0-9-]*')]),
       area:                 new FormControl<string>('',[Validators.required]),
-      evidencia_url:        new FormControl<string>(''),
+      evidencia_url:        new FormControl<string>('',[Validators.pattern('(ftp|http|https):\/\/[^ "]*')]),
     })
+    public editing: boolean = false;
+
+    file: File | null = null;
+    excelData: any[] = [];
+    public data:ElectricidadRegister[] = [];
+    id: any;
 
     ngOnInit(): void{
 
-      this.electricidadservice.tipo()
-      .subscribe( reponse => this.tipos_electricidad = reponse.data);
+      this.service.tipo()
+      .subscribe( reponse => this.tipos = reponse.data);
 
+      this.id = this.activatedRoute.snapshot.params['id'];
+
+      if(this.id){
+        this.editing = true;
+        this.service.obtenerbyid(this.id)
+        .subscribe(response => {
+          response.data.forEach(tipos => {
+            const dataAdaptada = {
+              id:                   this.id,
+              tipo_electricidad_id: tipos.tipo_electricidad_id,
+              cantidad:             tipos.cantidad,
+              fecha_ingreso:        tipos.fecha_ingreso,
+              factura:              tipos.factura,
+              area:                 tipos.area,
+              evidencia_url:        tipos.evidencia_url
+            };
+            this.Form.patchValue(dataAdaptada);
+          });
+        });
+      }
     }
 
     onSubmit():void{
       let data =  this.Form.value as ElectricidadRegister;
       data.fecha_ingreso = new Date(data.fecha_ingreso ).toISOString();
 
-      this.electricidadservice.ingresar_actualizar( data )
+      this.service.ingresar_actualizar( data )
       .subscribe({
         // TODO: mostrar snackbar, y navegar a /electricidad/editar/electricidad.id
         error: (err) => {
@@ -74,8 +95,6 @@ export class ElectricidadIngresarComponent implements OnInit{
       }
       });
     }
-
-    public campoVacioError: boolean = false;
 
     ImportExcel(event: any) {
       const file: File = event.target.files[0];
@@ -130,7 +149,7 @@ export class ElectricidadIngresarComponent implements OnInit{
           evidencia_url: element.evidencia,
         };
 
-        this.electricidadservice.ingresar_actualizar( lista )
+        this.service.ingresar_actualizar( lista )
         .subscribe( {
           // TODO: mostrar snackbar, y navegar a /electricidad/editar/electricidad.id
           error: (message) => {

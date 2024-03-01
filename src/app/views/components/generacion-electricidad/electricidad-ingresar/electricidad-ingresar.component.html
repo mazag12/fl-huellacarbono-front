@@ -1,3 +1,7 @@
+<div class="rounded-top p-3 mb-2 bg-secondary bg-gradient text-white text-center">
+  <div *ngIf="editing; else contenidoAlternativo" class="container-fluid" >EDITAR</div>
+  <ng-template #contenidoAlternativo>REGISTRO</ng-template>
+</div>
 <div class="container mt-3 text-center">
   <div class="row">
     <div class="col-md-4">
@@ -6,7 +10,7 @@
   </div>
   <div class="row p-2">
     <div class="col-md-4 p-3 border">
-      <h3>Transporte Propio</h3>
+      <h3>GENERACION DE ELECTRICIDAD</h3>
       <p></p>
       <div>
         <h3>Adjunte documento de sustento.</h3>
@@ -30,7 +34,6 @@
             </div>
               <div *ngIf="campoVacioError" class="text-bg-warning">¡Por favor, completa todos los campos en el archivo Excel!</div>
           </div>
-
       </div>
     </div>
     <div class="col-md-7 p-3 offset-md-1 text-center border">
@@ -38,13 +41,13 @@
         <fieldset>
           <legend>Generación electricidad</legend>
 
-          <input matInput type="text" placeholder="Factura" value="sin factura" required formControlName="id" hidden>
+          <input matInput type="text" placeholder="Factura" value="0" required formControlName="id" hidden>
 
           <div class="mb-3">
             <label for="disabledSelect" class="form-label">1. Seleccione la fecha de ingreso:</label>
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>Fecha de Registro</mat-label>
-              <input matInput [matDatepicker]="picker" required formControlName="fecha_ingreso">
+              <input matInput [matDatepicker]="picker" required formControlName="fecha_ingreso" readonly>
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -62,7 +65,7 @@
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>Combustible</mat-label>
               <mat-select required formControlName="tipo_electricidad_id">
-                <mat-option *ngFor="let  combustible of tipos_electricidad" [value]="combustible.id">
+                <mat-option *ngFor="let  combustible of tipos" [value]="combustible.id">
                   {{ combustible.nombre }}
                 </mat-option>
               </mat-select>
@@ -78,8 +81,8 @@
           <div class="mb-3">
             <label for="disabledSelect" class="form-label">5. Lozalización</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Combustible</mat-label>
-              <mat-select required formControlName="tipo_electricidad_id">
+              <mat-label>Localización</mat-label>
+              <mat-select required formControlName="area">
                 <mat-option  value="CD principal">
                   CD principal
                 </mat-option>
@@ -93,20 +96,13 @@
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">5. Area:</label>
-            <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Area</mat-label>
-              <input matInput type="text" placeholder="Evidencia" value="sin url" required formControlName="area">
-            </mat-form-field>
-          </div>
-          <div class="mb-3">
             <label for="disabledTextInput" class="form-label">6. Evidencia:</label>
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>Evidencia</mat-label>
               <input matInput type="text" placeholder="Evidencia" value="sin url" formControlName="evidencia_url">
             </mat-form-field>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!Form.valid" >Guardar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
         </fieldset>
       </form>
     </div>
