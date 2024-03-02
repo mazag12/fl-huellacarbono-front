@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { read, utils } from 'xlsx';
 import { AuthService } from '../../../../auth/services/auth.service';
 
-import { TipoElectricidad, ElectricidadRegister, ElectricidadResponse, Electricidad } from 'src/app/views/interfaces';
+import { TipoElectricidad, ElectricidadRegister } from 'src/app/views/interfaces';
 import { ElectricidadService } from '../../../services/electricidad.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -30,13 +30,13 @@ export class ElectricidadIngresarComponent implements OnInit{
     public campoVacioError: boolean = false;
 
     public Form = new FormGroup({
-      id:                   new FormControl<number>(0),
-      tipo_electricidad_id: new FormControl<number>(0,[Validators.min(1)]),
+      id:                   new FormControl<string>('0'),
+      tipo_electricidad_id: new FormControl<string>('0',[Validators.min(1)]),
       cantidad:             new FormControl<number>(0,[Validators.required, Validators.min(1)]),
       fecha_ingreso:        new FormControl<string>('',[Validators.required]),
       factura:              new FormControl<string>('',[Validators.required, Validators.pattern('[A-Z0-9-]*')]),
       area:                 new FormControl<string>('',[Validators.required]),
-      evidencia_url:        new FormControl<string>('',[Validators.pattern('(ftp|http|https):\/\/[^ "]*')]),
+      evidencia_url:        new FormControl<string>('',[Validators.required, Validators.pattern('(ftp|http|https):\/\/[^ "]*')]),
     })
     public editing: boolean = false;
 
@@ -55,19 +55,18 @@ export class ElectricidadIngresarComponent implements OnInit{
       if(this.id){
         this.editing = true;
         this.service.obtenerbyid(this.id)
-        .subscribe(response => {
-          response.data.forEach(tipos => {
-            const dataAdaptada = {
-              id:                   this.id,
-              tipo_electricidad_id: tipos.tipo_electricidad_id,
-              cantidad:             tipos.cantidad,
-              fecha_ingreso:        tipos.fecha_ingreso,
-              factura:              tipos.factura,
-              area:                 tipos.area,
-              evidencia_url:        tipos.evidencia_url
-            };
-            this.Form.patchValue(dataAdaptada);
-          });
+        .subscribe (response => {
+          console.log(response.data.tipo_electricidad_id)
+          const dataAdaptada = {
+            id:                   response.data.id,
+            tipo_electricidad_id: response.data.tipo_electricidad_id,
+            cantidad:             response.data.cantidad,
+            fecha_ingreso:        response.data.fecha_ingreso,
+            factura:              response.data.factura,
+            area:                 response.data.area,
+            evidencia_url:        response.data.evidencia_url
+          };
+          this.Form.patchValue(dataAdaptada);
         });
       }
     }
@@ -89,9 +88,21 @@ export class ElectricidadIngresarComponent implements OnInit{
       complete: () => {
         Swal.fire({
           title: "Se guardo correctamente",
-          text: "presiona el boton!",
+          text: "",
           icon: "success"
         });
+
+        const dataAdaptada = {
+          id:                   '0',
+          tipo_electricidad_id: '0',
+          cantidad:             0,
+          fecha_ingreso:        '',
+          factura:              '',
+          area:                 '',
+          evidencia_url:        ''
+        };
+        this.Form.patchValue(dataAdaptada);
+
       }
       });
     }
@@ -140,7 +151,7 @@ export class ElectricidadIngresarComponent implements OnInit{
       this.excelData?.forEach(element => {
 
         let lista = {
-          id: 0,
+          id: '0',
           fecha_ingreso: element.fecha,
           tipo_electricidad_id: element.id_tipo,
           cantidad: element.cantidad,

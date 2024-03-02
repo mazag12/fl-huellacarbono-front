@@ -23,41 +23,43 @@
 
         <!-- Position Column -->
         <ng-container matColumnDef="ID">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-warning"> No. </th>
-          <td mat-cell *matCellDef="let element" class="text-bg-warning"> {{element.id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+            No.
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"
+          class="text-bg-warning"> No. </th>
+          <td mat-cell *matCellDef="let element" class="text-bg-warning"> {{element.id}} </td>
+        </ng-container> -->
+
         <ng-container matColumnDef="Fecha">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Fecha Registro </th>
           <td mat-cell *matCellDef="let element"> {{element.fecha_ingreso}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="Factura">
-          <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Factura </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Factura </th>
           <td mat-cell *matCellDef="let element"> {{element.factura}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="TipoCombustible">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Tipo Combustible </th>
           <td mat-cell *matCellDef="let element"> {{element.tipo_electricidad.nombre}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="Unidad">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Unidad </th>
           <td mat-cell *matCellDef="let element"> {{element.tipo_electricidad.unidad}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="Cantidad">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Cantidad </th>
           <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="Evidencia">
           <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Evidencia </th>
           <td mat-cell *matCellDef="let element"> {{element.evidencia_url}} </td>

@@ -16,7 +16,7 @@
         <h3>Adjunte documento de sustento.</h3>
         <p>
           En caso de ser necesario adjunte archivo que sustente la información ingresada.
-          Debe de tener en cuenta que debe ser archivo de extensión PDF y no debe pesar más de 4Mb.
+          Debe de tener en cuenta que debe ser archivo de extensión Excel y no debe pesar más de 4Mb.
         </p>
           <div class="mb-3">
             <div class="col p-2">
@@ -44,9 +44,8 @@
           <input matInput type="text" placeholder="Factura" value="0" required formControlName="id" hidden>
 
           <div class="mb-3">
-            <label for="disabledSelect" class="form-label">1. Seleccione la fecha de ingreso:</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Fecha de Registro</mat-label>
+              <mat-label>FECHA DE REGISTRO</mat-label>
               <input matInput [matDatepicker]="picker" required formControlName="fecha_ingreso" readonly>
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -54,16 +53,14 @@
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">2. Ingresa valor generico de la factura:</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Factura</mat-label>
+              <mat-label>N° COMPROBANTE</mat-label>
               <input matInput type="text" placeholder="Factura" value="sin factura" required formControlName="factura">
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledSelect" class="form-label">3. Seleccione la unidad de ingreso:</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Combustible</mat-label>
+              <mat-label>TIPO DE COMBUSTIBLE</mat-label>
               <mat-select required formControlName="tipo_electricidad_id">
                 <mat-option *ngFor="let  combustible of tipos" [value]="combustible.id">
                   {{ combustible.nombre }}
@@ -72,22 +69,17 @@
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">4. Ingrese el consumo:</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>cantidad</mat-label>
+              <mat-label>CANTIDAD</mat-label>
               <input matInput type="number" placeholder="00.00" min="01.00" value="00.00" required formControlName="cantidad">
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledSelect" class="form-label">5. Lozalización</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Localización</mat-label>
+              <mat-label>LOCALIZACIÓN</mat-label>
               <mat-select required formControlName="area">
-                <mat-option  value="CD principal">
-                  CD principal
-                </mat-option>
-                <mat-option  value="Oficinas">
-                  Oficinas
+                <mat-option  value="CD principal - Oficina">
+                  CD principal - Oficina
                 </mat-option>
                 <mat-option  value="Tiendas">
                   Tiendas
@@ -96,9 +88,8 @@
             </mat-form-field>
           </div>
           <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">6. Evidencia:</label>
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>Evidencia</mat-label>
+              <mat-label>EVIDENCIA</mat-label>
               <input matInput type="text" placeholder="Evidencia" value="sin url" formControlName="evidencia_url">
             </mat-form-field>
           </div>

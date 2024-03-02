@@ -11,13 +11,10 @@ export class LineChartComponent implements OnInit {
   public chart: Chart | undefined;
 
   ngOnInit(): void {
-
     this.grafico();
-
   }
 
   grafico(){
-
     const data = {
       labels: ['Enero',
       'Febrero',
@@ -34,7 +31,6 @@ export class LineChartComponent implements OnInit {
         tension: 0.1
       }]
     };
-
     // Creamos la gráfica
     this.chart = new Chart ("line",{
       type: 'line' as ChartType,

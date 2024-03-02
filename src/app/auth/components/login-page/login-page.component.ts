@@ -31,7 +31,10 @@ export class LoginPageComponent {
         .subscribe({
           next: () => this.router.navigateByUrl('/dashboard'),
           error: (message) => {
-            Swal.fire('Error al Iniciar Sesion, ingrese de Nuevo su Codigo y Contraseña', message, 'error');
+            Swal.fire(
+              'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
+                message,
+              'error');
           }
         })
   }

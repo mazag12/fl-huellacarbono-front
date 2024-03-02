@@ -7,9 +7,13 @@ export interface TipoElectricidadResponse{
   data: TipoElectricidad[];
 }
 
+export interface ElectricidadById {
+  data: ElectricidadResponse;
+}
+
 export interface ElectricidadResponse {
   id:                   string;
-  tipo_electricidad_id: number;
+  tipo_electricidad_id: string;
   cantidad:             number;
   fecha_ingreso:        string;
   factura:              string;
@@ -34,8 +38,8 @@ export interface TipoElectricidad {
 }
 
 export interface ElectricidadRegister{
-  id:                   number,
-  tipo_electricidad_id: number,
+  id:                   string,
+  tipo_electricidad_id: string,
   cantidad:             number,
   fecha_ingreso:        string,
   factura:              string,
@@ -44,12 +48,11 @@ export interface ElectricidadRegister{
 }
 
 export interface ElectricidadReporteData{
-  data: ElectricidadReporte;
+  data: ElectricidadReporte[];
 }
 
 export interface ElectricidadReporte{
-  forEach(arg0: (reportes: any) => void): unknown;
-  id: number;
+  id: string;
   nombre: string;
   unidad: string;
   area: string;
@@ -77,3 +80,4 @@ export interface ElectricidadAgrupada {
   i: number;
   j: number;
 }
+

@@ -1,7 +1,6 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import { ElectricidadAgrupada } from 'src/app/views/interfaces';
 import { ElectricidadService } from 'src/app/views/services/electricidad.service';
-import * as FileSaver from 'file-saver';
 import { Workbook, Worksheet } from 'exceljs';
 import { ExportExcelService } from 'src/app/views/services/export-excel.service';
 
@@ -93,7 +92,6 @@ export class ElectricidadReporteComponent {
           });
         });
       })
-      console.log(this.array);
     });
   }
 
@@ -121,9 +119,6 @@ export class ElectricidadReporteComponent {
   private _createtable(data: ElectricidadAgrupada[], sheet:Worksheet ): void{
 
     //DISEÑO DE LOS DATOS PARA EL REPORTE--------------------------------------------
-
-    console.log(data.length);
-
     sheet.addConditionalFormatting({
       ref: 'B10:M12',
       rules: [

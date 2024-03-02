@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData } from '../interfaces';
+import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +22,12 @@ export class ElectricidadService {
     return this.http.get<Electricidad>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });
   }
 
-  obtenerbyid( id: number ): Observable<Electricidad> {
-    return this.http.get<Electricidad>(`${this.baseUrl}${this.electricidad}ingreso/${id}`, { headers: this.headers });
+  obtenerbyid( id: number ): Observable<ElectricidadById> {
+    return this.http.get<ElectricidadById>(`${this.baseUrl}${this.electricidad}ingreso/${id}`, { headers: this.headers });
   }
 
   ingresar_actualizar(data : ElectricidadRegister): Observable<ElectricidadRegister> {
-    if(data.id != 0 ){
+    if(data.id != '0' ){
       return this.http.post<ElectricidadRegister>(`${this.baseUrl}${this.electricidad}ingreso`,data,{ headers: this.headers });
     }else{
       const { id, ...obj } = data;
