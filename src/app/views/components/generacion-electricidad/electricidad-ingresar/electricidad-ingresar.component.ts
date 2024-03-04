@@ -81,19 +81,8 @@ export class ElectricidadIngresarComponent implements OnInit{
       let data =  this.Form.value as ElectricidadRegister;
       data.fecha_ingreso = new Date(data.fecha_ingreso ).toISOString();
 
-      if(this.id){
-        this.actualizar_update(data);
-      }else{
-        const factura = this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id));
-        if(factura){
-          Swal.fire({
-            title: "Se encontro que la Factura y el tipo de combustible registrados",
-            icon: "warning"
-          });
-        }else{
-          this.actualizar_update(data);
-        }
-      }
+       this.actualizar_update(data);
+
     }
 
     actualizar_update(data: any){
@@ -221,15 +210,8 @@ export class ElectricidadIngresarComponent implements OnInit{
                 this.campoVacioError = true;
                 this.fileUpload.nativeElement.value = '';
               } else {
-                const factura = this.service.obtenerfactura(rowObj.factura, rowObj.id_tipo);
-                if (factura) {
-                  this.campoVacioError = true;
-                  this.mensaje_error.push(`Fila ${rowIndex + 2}: La factura ya está registrada.`);
-                  this.fileUpload.nativeElement.value = '';
-                } else {
-                  this.campoVacioError = false;
-                  this.excelData.push(rowObj);
-                }
+                this.campoVacioError = false;
+                this.excelData.push(rowObj);
               }
             });
           }

@@ -13,14 +13,12 @@ export class BarChartComponent implements OnInit{
 
   ngOnInit(): void {
 
-    //console.log(this.getMonths(7));
-
     this.grafico();
 
   }
 
   grafico(){
-    // datos
+
     const data = {
       labels: ['Enero',
       'Febrero',
