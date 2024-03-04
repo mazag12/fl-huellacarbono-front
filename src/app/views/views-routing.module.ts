@@ -30,6 +30,8 @@ import { ListaReporteComponent } from './components/listar_reporte/lista.compone
 import { ElectricidadReporteComponent } from './components/generacion-electricidad/electricidad-reporte/electricidad-reporte.component';
 import { TransportePropioRegistrarComponent } from './components/transporte-propio/transporte-propio-registrar/transporte-propio-registrar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
 
 const routes: Routes = [
   {path: 'lista',component: DashboardComponent},
@@ -40,6 +42,14 @@ const routes: Routes = [
       {path: 'registrar',component: ElectricidadIngresarComponent},
       {path: 'editar/:id',component: ElectricidadIngresarComponent},
       {path: 'reporte',component: ElectricidadReporteComponent}
+    ]
+  },
+  {
+    path: 'usuario',
+    children:[
+      {path: 'lista',component: UsuarioComponent},
+      {path: 'registrar',component: UsuarioRegistroUpdateComponent},
+      {path: 'editar/:id',component: UsuarioRegistroUpdateComponent}
     ]
   },
   {

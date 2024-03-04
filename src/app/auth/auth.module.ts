@@ -9,13 +9,15 @@ import { AuthPageComponent } from './components/auth-page/auth-page.component';
 
 import {MatInputModule} from '@angular/material/input';
 import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
+import { RestablecerPasswordComponent } from './components/restablecer-password/restablecer-password.component';
 
 @NgModule({
   declarations: [
     LoginPageComponent,
     RegisterPageComponent,
     AuthPageComponent,
-    RecuperarPasswordComponent
+    RecuperarPasswordComponent,
+    RestablecerPasswordComponent
   ],
   imports: [
     CommonModule,

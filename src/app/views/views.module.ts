@@ -53,6 +53,8 @@ import { ElectricidadTipoComponent } from './components/generacion-electricidad/
 import { BarChartComponent } from './components/dashboard/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/dashboard/line-chart/line-chart.component';
 import { PolarAreaChartComponent } from './components/dashboard/polar-area-chart/polar-area-chart.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { PolarAreaChartComponent } from './components/dashboard/polar-area-chart
     BarChartComponent,
     LineChartComponent,
     PolarAreaChartComponent,
+    UsuarioComponent,
+    UsuarioRegistroUpdateComponent,
   ],
   imports: [
     CommonModule,

@@ -35,6 +35,10 @@ export class ElectricidadService {
     }
   }
 
+  obtenerfactura(factura:string, tipo_electricidad_id: number): Observable<ElectricidadReporteData> {
+    return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}factura?factura=${factura}&tipo_electricidad_id=${tipo_electricidad_id}`, { headers: this.headers });
+  }
+
   //TODO: TIPO
   tipo(): Observable<TipoElectricidadResponse> {
     return this.http.get<TipoElectricidadResponse>(`${this.baseUrl}${this.electricidad}tipo`, { headers: this.headers });

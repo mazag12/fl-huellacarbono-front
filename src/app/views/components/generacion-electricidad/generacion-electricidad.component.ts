@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, computed, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, computed, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../auth/services/auth.service';
 
@@ -7,18 +7,20 @@ import { ElectricidadService } from '../../services/electricidad.service';
 
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-generacion-electricidad',
   templateUrl: './generacion-electricidad.component.html',
   styleUrls: ['./generacion-electricidad.component.scss']
 })
-export class GeneracionElectricidadComponent implements OnInit{
+export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   constructor(
       private service: ElectricidadService ,
-      public dialog: MatDialog) {}
+      public dialog: MatDialog,
+      private _liveAnnouncer: LiveAnnouncer) {}
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Factura', 'TipoCombustible', 'Unidad', 'Cantidad', 'Evidencia', 'accion'];
 
@@ -37,6 +39,11 @@ export class GeneracionElectricidadComponent implements OnInit{
     this.dataSource.sort = this.sort;
     this.get(5,this.pageIndex + 1);
     this.length = this.data.length = 5 ?  this.length + 5 : 5;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   get(limit: number, page: number){

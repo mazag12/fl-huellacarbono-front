@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environments';
 import { LoginResponse, User } from '../interfaces';
 import { AuthStatus } from '../Enum/auth-status.enum';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,6 +32,7 @@ export class AuthService {
     const ahora = new Date();
     const expiracion = new Date(ahora.getTime() + 21600 * 1000);
 
+
     this._authSatatus.set( AuthStatus.authenticated );
     localStorage.setItem('token', token);
     localStorage.setItem('codigo', code);
@@ -52,6 +54,7 @@ export class AuthService {
       catchError( err => throwError( () => err.error.message ))
       );
   }
+
 
 
   checkAuthStatus():Observable<boolean>{
@@ -83,3 +86,5 @@ export class AuthService {
   }
 
 }
+
+

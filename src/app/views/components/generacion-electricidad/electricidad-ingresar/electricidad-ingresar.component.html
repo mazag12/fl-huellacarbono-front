@@ -8,8 +8,8 @@
       <button [routerLink]="['/dashboard/emisiones/fna/electricidad']" class="btn btn-primary">Regresar</button>
     </div>
   </div>
-  <div class="row p-2">
-    <div class="col-md-4 p-3 border">
+  <div class="row p-2  d-flex justify-content-center">
+    <div *ngIf="!editing" class="col-md-4 p-3 border">
       <h3>GENERACION DE ELECTRICIDAD</h3>
       <p></p>
       <div>
@@ -17,6 +17,9 @@
         <p>
           En caso de ser necesario adjunte archivo que sustente la información ingresada.
           Debe de tener en cuenta que debe ser archivo de extensión Excel y no debe pesar más de 4Mb.
+        </p>
+        <p>
+          <a href="../../../../../assets/document/plantillas/plantilla_electricidad.xlsx">Descargar Plantilla</a>
         </p>
           <div class="mb-3">
             <div class="col p-2">
@@ -32,7 +35,11 @@
             <div class="col p-2">
               <button type="button" (click)="GuardarExcel()" class="btn btn-primary">GUARDAR</button>
             </div>
-              <div *ngIf="campoVacioError" class="text-bg-warning">¡Por favor, completa todos los campos en el archivo Excel!</div>
+            <div *ngIf="campoVacioError">
+              <div *ngFor="let mensaje of mensaje_error" class="alert alert-warning" role="alert" >
+                {{ mensaje }}
+              </div>
+            </div>
           </div>
       </div>
     </div>
@@ -41,7 +48,7 @@
         <fieldset>
           <legend>Generación electricidad</legend>
 
-          <input matInput type="text" placeholder="Factura" value="0" required formControlName="id" hidden>
+          <input matInput type="text" placeholder="Factura" value="0" formControlName="id" hidden>
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
@@ -55,15 +62,18 @@
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>N° COMPROBANTE</mat-label>
-              <input matInput type="text" placeholder="Factura" value="sin factura" required formControlName="factura">
+              <input matInput type="text" placeholder="N° COMPROBANTE" value="sin factura"
+             formControlName="factura"
+             [(ngModel)]='comprobante'
+             (ngModelChange)="TextoComprobante($event)">
             </mat-form-field>
           </div>
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>TIPO DE COMBUSTIBLE</mat-label>
-              <mat-select required formControlName="tipo_electricidad_id">
-                <mat-option *ngFor="let  combustible of tipos" [value]="combustible.id">
-                  {{ combustible.nombre }}
+              <mat-select formControlName="tipo_electricidad_id">
+                <mat-option *ngFor="let  tipo of tipos" [value]="tipo.id">
+                  {{ tipo.nombre }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -71,18 +81,16 @@
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>CANTIDAD</mat-label>
-              <input matInput type="number" placeholder="00.00" min="01.00" value="00.00" required formControlName="cantidad">
+              <input matInput type="number" placeholder="00.00" min="01.00" value="01.00"
+              formControlName="cantidad">
             </mat-form-field>
           </div>
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>LOCALIZACIÓN</mat-label>
-              <mat-select required formControlName="area">
-                <mat-option  value="CD principal - Oficina">
-                  CD principal - Oficina
-                </mat-option>
-                <mat-option  value="Tiendas">
-                  Tiendas
+              <mat-select formControlName="area">
+                <mat-option  *ngFor="let  tipo of localizacion" [value]="tipo">
+                  {{tipo}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
