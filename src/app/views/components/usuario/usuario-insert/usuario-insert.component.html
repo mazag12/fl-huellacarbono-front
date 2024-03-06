@@ -1,5 +1,5 @@
 <div class="rounded-top p-3 mb-2 bg-secondary bg-gradient text-white text-center">
-  <div class="container-fluid" >EDITAR</div>
+  <div class="container-fluid" >REGISTRO</div>
 </div>
 <div class="container mt-3 text-center">
   <div class="row">
@@ -14,8 +14,6 @@
       <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
         <fieldset>
           <legend>USUARIO</legend>
-
-          <input matInput type="text" placeholder="ID" value="0" formControlName="id" hidden>
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
@@ -49,18 +47,11 @@
             </mat-form-field>
           </div>
 
-
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>ESTADO</mat-label>
-              <mat-select formControlName="isActive">
-                <mat-option [value]="true">
-                  ACTIVO
-                </mat-option>
-                <mat-option [value]="false">
-                  INACTIVO
-                </mat-option>
-              </mat-select>
+              <mat-label>CONTRASEÑA</mat-label>
+              <input matInput type="password" placeholder="CONTRASEÑA"
+              formControlName="password">
             </mat-form-field>
           </div>
 
@@ -81,26 +72,13 @@
             </mat-form-field>
           </div>
 
-          <h2 >PERMISOS PARA MODULOS</h2>
-
-          <ul class="list-group text-start">
-            <li class="list-group-item" *ngFor="let permiso of permisosDisponibles">
-              <input class="form-check-input me-1" type="checkbox"
-                    value="{{ permiso.id }}"
-                    id="firstCheckbox-{{ permiso.id }}"
-                    [checked]="permisosGuardados.includes(permiso.id.toString())"
-                    (change)="actualizarPermisosMarcados(permiso.id)">
-              <label class="form-check-label" for="checkbox-{{ permiso.id }}">{{ permiso.nombre }}</label>
-            </li>
-          </ul>
-
           <div class="p-3">
             <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
           </div>
         </fieldset>
       </form>
-
     </div>
   </div>
 </div>
+
 

@@ -51,6 +51,16 @@ export class ElectricidadIngresarComponent implements OnInit{
     file: File | null = null;
     excelData: any[] = [];
 
+    // Fecha actual
+    currentDate = new Date();
+
+    // Primer día del año actual
+    public minDate = new Date(this.currentDate.getFullYear(), 0, 1);
+
+    // Fecha del día actual
+    public maxDate = new Date(this.currentDate.setDate(this.currentDate.getDate()));
+
+
     //mensaje de error
     public mensaje_error: any[] = [];
 
@@ -81,8 +91,23 @@ export class ElectricidadIngresarComponent implements OnInit{
       let data =  this.Form.value as ElectricidadRegister;
       data.fecha_ingreso = new Date(data.fecha_ingreso ).toISOString();
 
-       this.actualizar_update(data);
-
+      this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id))
+      .subscribe(
+        response => {
+          if (response && response.data) {
+            Swal.fire({
+              title: "Se encontro que la Factura y el tipo de combustible registrados",
+              icon: "warning"
+            });
+          } else {
+            this.actualizar_update(data);
+          }
+      },
+      error => {
+          // Manejar errores aquí
+          console.error('Ocurrió un error al obtener la factura:', error);
+      }
+      );
     }
 
     actualizar_update(data: any){

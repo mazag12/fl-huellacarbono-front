@@ -44,6 +44,7 @@
       </div>
     </div>
     <div class="col-md-7 p-3 offset-md-1 text-center border">
+
       <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
         <fieldset>
           <legend>Generación electricidad</legend>
@@ -52,13 +53,14 @@
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>FECHA DE REGISTRO</mat-label>
-              <input matInput [matDatepicker]="picker" required formControlName="fecha_ingreso" readonly>
+              <mat-label>FECHA DEL COMPROBANTE</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" required formControlName="fecha_ingreso" readonly>
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
+
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>N° COMPROBANTE</mat-label>
@@ -68,6 +70,7 @@
              (ngModelChange)="TextoComprobante($event)">
             </mat-form-field>
           </div>
+
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>TIPO DE COMBUSTIBLE</mat-label>
@@ -78,6 +81,7 @@
               </mat-select>
             </mat-form-field>
           </div>
+
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>CANTIDAD</mat-label>
@@ -85,6 +89,7 @@
               formControlName="cantidad">
             </mat-form-field>
           </div>
+
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>LOCALIZACIÓN</mat-label>
@@ -95,15 +100,18 @@
               </mat-select>
             </mat-form-field>
           </div>
+
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>EVIDENCIA</mat-label>
               <input matInput type="text" placeholder="Evidencia" value="sin url" formControlName="evidencia_url">
             </mat-form-field>
           </div>
+
           <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
         </fieldset>
       </form>
+
     </div>
   </div>
 </div>

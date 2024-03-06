@@ -19,8 +19,8 @@ export class PagesComponent {
 
   title = 'Footloose';
 
-
   badgevisible = false;
+
   badgevisibility() {
     this.badgevisible = true;
   }
@@ -33,29 +33,13 @@ export class PagesComponent {
   }
 
   ngAfterViewInit(){
-
     this.breakpointObserver.observe(['(max-width: 800px)']).subscribe((res: any) => {
       if(res.matches){
         this.sidenav.opened = 'false';
       }else{
         this.sidenav.opened = 'true';
       }
-
       this.cd.detectChanges();
-
     });
-
-    // this.breakpointObserver.observe(['(max-width: 800px)']).subscribe((res: any) => {
-    //   if(res.matches){
-    //     this.sidenav.mode = 'over';
-    //     this.sidenav.close();
-    //   }else{
-    //     this.sidenav.mode = 'side';
-    //     this.sidenav.open();
-    //   }
-    // });
-
-    // this.cd.detectChanges();
-
   }
 }

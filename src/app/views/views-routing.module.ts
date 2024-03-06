@@ -32,9 +32,13 @@ import { TransportePropioRegistrarComponent } from './components/transporte-prop
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
+import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
 
 const routes: Routes = [
-  {path: 'lista',component: DashboardComponent},
+  {
+    path: 'lista',
+    component: DashboardComponent
+  },
   {
     path: 'electricidad',
     children:[
@@ -48,7 +52,7 @@ const routes: Routes = [
     path: 'usuario',
     children:[
       {path: 'lista',component: UsuarioComponent},
-      {path: 'registrar',component: UsuarioRegistroUpdateComponent},
+      {path: 'registrar',component: UsuarioInsertComponent},
       {path: 'editar/:id',component: UsuarioRegistroUpdateComponent}
     ]
   },

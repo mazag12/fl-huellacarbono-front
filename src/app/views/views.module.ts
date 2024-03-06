@@ -55,6 +55,8 @@ import { LineChartComponent } from './components/dashboard/line-chart/line-chart
 import { PolarAreaChartComponent } from './components/dashboard/polar-area-chart/polar-area-chart.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
+import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
+import { BarFnaComponent } from './components/dashboard/bar-fna/bar-fna.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-reg
     PolarAreaChartComponent,
     UsuarioComponent,
     UsuarioRegistroUpdateComponent,
+    UsuarioInsertComponent,
+    BarFnaComponent,
   ],
   imports: [
     CommonModule,
