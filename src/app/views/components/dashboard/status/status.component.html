@@ -1,0 +1,22 @@
+<table class="table table-bordered border-dark">
+  <thead>
+    <tr class="text-center">
+      <th scope="col" *ngFor="let item of Cabecera">{{ item }}</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let item of fna">
+      <th scope="row"  [ngStyle]="{'background': item.background}">{{ item.nombre }}</th>
+      <td [ngStyle]="{'background': item.background}">{{  CO2[item.id] | number:'1.2-2' }}</td>
+      <td [ngStyle]="{'background': item.background}">{{  CH4[item.id] | number:'1.2-2' }}</td>
+      <td [ngStyle]="{'background': item.background}">{{  N2O[item.id] | number:'1.2-2' }}</td>
+      <td [ngStyle]="{'background': item.background}"></td>
+      <td [ngStyle]="{'background': item.background}"></td>
+      <td [ngStyle]="{'background': item.background}"></td>
+      <td [ngStyle]="{'background': item.background}"></td>
+      <td [ngStyle]="{'background': item.background}"></td>
+      <td [ngStyle]="{'background': item.background}">{{  GEI[item.id] | number:'1.2-2' }}</td>
+    </tr>
+  </tbody>
+</table>

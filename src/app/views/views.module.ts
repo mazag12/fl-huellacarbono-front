@@ -57,6 +57,7 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
 import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
 import { BarFnaComponent } from './components/dashboard/bar-fna/bar-fna.component';
+import { StatusComponent } from './components/dashboard/status/status.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { BarFnaComponent } from './components/dashboard/bar-fna/bar-fna.componen
     UsuarioRegistroUpdateComponent,
     UsuarioInsertComponent,
     BarFnaComponent,
+    StatusComponent,
   ],
   imports: [
     CommonModule,
