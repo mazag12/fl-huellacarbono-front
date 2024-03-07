@@ -29,3 +29,13 @@ export interface Token {
   exp:      number;
   aud:      string;
 }
+
+export interface UserRegister {
+  code: string,
+  email: string,
+  password: string,
+  nombre: string,
+  apellido: string,
+  role: string,
+}
+

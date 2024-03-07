@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserData, UserById } from 'src/app/auth/interfaces';
+import { User, UserData, UserById, UserRegister } from 'src/app/auth/interfaces';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -31,8 +31,8 @@ export class UsuarioService {
       return this.http.post<UserData>(`${this.baseUrl}${this.usuario}user`,data,{ headers: this.headers });
   }
 
-  register(data : any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}${this.usuario}singnup`,data,{ headers: this.headers });
+  register(data : any): Observable<UserRegister> {
+    return this.http.post<UserRegister>(`${this.baseUrl}${this.usuario}signup`,data,{ headers: this.headers });
 }
 
 

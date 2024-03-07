@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserData } from 'src/app/auth/interfaces';
+import { UserRegister } from 'src/app/auth/interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UsuarioService } from 'src/app/views/services/usuario.service';
 import Swal from 'sweetalert2';
@@ -21,13 +21,10 @@ export class UsuarioInsertComponent {
   private authService = inject ( AuthService );
 
   public user = computed( () => this.authService.currentUser() );
-  public permisosGuardados: string = '';
-  public permisosDisponibles: any[] = permisosDisponibles;
-  permisosMarcados: string[] = [];
 
   public Form: any;
 
-  public data:UserData[] = [];
+  public data:UserRegister[] = [];
 
   id: any;
 
@@ -44,9 +41,7 @@ export class UsuarioInsertComponent {
   }
 
   onSubmit():void{
-    let data =  this.Form.value as UserData;
-
-    data.permissions =  this.permisosMarcados.toString();
+    let data =  this.Form.value as UserRegister;
 
     this.service.register( data )
     .subscribe({
@@ -63,8 +58,8 @@ export class UsuarioInsertComponent {
         email:        '',
         nombre:       '',
         apellido:     '',
-        isActive:     true,
-        role:         'USER',
+        password:     '',
+        role:         '',
       };
       this.Form.patchValue(dataAdaptada);
         Swal.fire({

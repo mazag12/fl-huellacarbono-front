@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById } from '../interfaces';
+import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById, ElectricidadVerificacion } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,8 @@ export class ElectricidadService {
     }
   }
 
-  obtenerfactura(factura:string, tipo_electricidad_id: number): Observable<ElectricidadReporteData> {
-    return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}factura?factura=${factura}&tipo_electricidad_id=${tipo_electricidad_id}`, { headers: this.headers });
+  obtenerfactura(factura:string, tipo_electricidad_id: number): Observable<ElectricidadVerificacion> {
+    return this.http.get<ElectricidadVerificacion>(`${this.baseUrl}${this.electricidad}factura?factura=${factura}&tipo_electricidad_id=${tipo_electricidad_id}`, { headers: this.headers });
   }
 
   //TODO: TIPO
@@ -44,10 +44,12 @@ export class ElectricidadService {
     return this.http.get<TipoElectricidadResponse>(`${this.baseUrl}${this.electricidad}tipo`, { headers: this.headers });
   }
 
+  //TODO: EDITAR TIPO
+
+
   //TODO: REPORTE
   reporte(tipodate:string, date: string): Observable<ElectricidadReporteData> {
     return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}reporte?tipoDate=${tipodate}&valueDate=${date}`, { headers: this.headers });
   }
-
 
 }

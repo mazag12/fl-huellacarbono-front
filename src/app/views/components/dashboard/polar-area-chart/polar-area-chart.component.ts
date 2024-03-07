@@ -35,13 +35,16 @@ export class PolarAreaChartComponent implements OnInit {
 
     forkJoin(requests).subscribe(reportsArray => {
       reportsArray.forEach((reporte, index) => {
-        reporte.data.forEach(reportes => {
-          this.sumasJPorMes[index] += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
-          (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.ch4) / 1000) * 30) +
-          (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.n2o) / 1000) * 265);
-        });
+        if (reporte && reporte.data) {
+          reporte.data.forEach(reportes => {
+            this.sumasJPorMes[index] += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
+            (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.ch4) / 1000) * 30) +
+            (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.n2o) / 1000) * 265);
+          });
+        }else{
+          console.error('El reporte es null o no tiene la propiedad data');
+        }
       });
-
       this.grafico(this.sumasJPorMes);
     });
   }

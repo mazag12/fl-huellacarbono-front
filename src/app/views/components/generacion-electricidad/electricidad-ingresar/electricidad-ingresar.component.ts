@@ -91,26 +91,22 @@ export class ElectricidadIngresarComponent implements OnInit{
       let data =  this.Form.value as ElectricidadRegister;
       data.fecha_ingreso = new Date(data.fecha_ingreso ).toISOString();
 
-      this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id))
-      .subscribe(
-        response => {
-          if (response && response.data) {
+      this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id)).subscribe((response) => {
+        response.data.forEach(element => {
+          if(element[''] === 0){
+            this.actualizar_update(data);
+          }else{
             Swal.fire({
-              title: "Se encontro que la Factura y el tipo de combustible registrados",
+              title: "Se encontro que la Factura y el tipo de combustible se encuentra registrado",
               icon: "warning"
             });
-          } else {
-            this.actualizar_update(data);
           }
-      },
-      error => {
-          // Manejar errores aquí
-          console.error('Ocurrió un error al obtener la factura:', error);
-      }
-      );
+        });
+      })
     }
 
     actualizar_update(data: any){
+
       this.service.ingresar_actualizar( data )
         .subscribe({
           // TODO: mostrar snackbar, y navegar a /electricidad/editar/electricidad.id
@@ -161,7 +157,7 @@ export class ElectricidadIngresarComponent implements OnInit{
       this.cantidad = match ? match[0] : '';
     }
 
-    ImportExcel(event: any) {
+    async  ImportExcel(event: any) {
       const file: File = event.target.files[0];
       let filteredData: any[];
       this.mensaje_error = [];
@@ -193,6 +189,7 @@ export class ElectricidadIngresarComponent implements OnInit{
             filteredData.pop();
 
               filteredData.forEach((row, rowIndex) => {
+                let error = false;
                 const rowObj = row.reduce((obj: any, cell: any, index: any) => {
                   switch (index) {
                     case 1:
@@ -200,14 +197,18 @@ export class ElectricidadIngresarComponent implements OnInit{
                       if (!isNaN(cell)) {
                         obj[headers[index]] = cell;
                       } else {
-                        this.mensaje_error.push(`Fila ${rowIndex + 2}: No es un número.`);
+                        obj[headers[index]] = cell;
+                        this.mensaje_error.push(`Fila ${rowIndex + 2}: Cantidad no es un número.`);
+                        error = false;
                       }
                       break;
                     case 3:
                       if (/^\d{4}-\d{2}-\d{2}$/.test(cell)) {
                         obj[headers[index]] = cell;
                       } else {
-                        this.mensaje_error.push(`Fila ${rowIndex + 2}: No tiene el formato 'YYYY-MM-DD'.`);
+                        obj[headers[index]] = cell;
+                        this.mensaje_error.push(`Fila ${rowIndex + 2}: Fecha no tiene el formato 'YYYY-MM-DD'.`);
+                        error = false;
                       }
                       break;
                     case 4:
@@ -217,7 +218,9 @@ export class ElectricidadIngresarComponent implements OnInit{
                       if (this.isValidURL(cell)) {
                         obj[headers[index]] = cell;
                       } else {
-                        this.mensaje_error.push(`Fila ${rowIndex + 2}: No es una URL válida.`);
+                        obj[headers[index]] = cell;
+                        this.mensaje_error.push(`Fila ${rowIndex + 2}: La evidencia no es una URL válida.`);
+                        error = false;
                       }
                       break;
                     default:
@@ -227,6 +230,24 @@ export class ElectricidadIngresarComponent implements OnInit{
 
                   return obj;
                 }, {});
+
+                if(!error){
+                  this.campoVacioError = true;
+                  this.fileUpload.nativeElement.value = '';
+                }
+
+                try {
+                  this.service.obtenerfactura(rowObj.factura, rowObj.id_tipo).subscribe(response => {
+                    response.data.forEach(element => {
+                      if(element[''] === 1){
+                        this.mensaje_error.push(`Fila ${rowIndex + 2} : Ya se encuentra registrado`);
+                        this.campoVacioError = true;
+                        this.fileUpload.nativeElement.value = '';
+                      }
+                    });
+                  })
+                } catch (error) {
+                }
 
               const missingFields = headers.filter((header: string | number) => !rowObj[header]);
 

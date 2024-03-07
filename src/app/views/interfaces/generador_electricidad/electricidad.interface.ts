@@ -81,3 +81,10 @@ export interface ElectricidadAgrupada {
   j: number;
 }
 
+export interface ElectricidadVerificacion {
+  data: Datum[];
+}
+
+export interface Datum {
+  "": number;
+}

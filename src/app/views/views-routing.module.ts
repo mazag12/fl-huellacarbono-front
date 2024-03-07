@@ -33,6 +33,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
 import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
+import { ElectricidadTipoComponent } from './components/generacion-electricidad/electricidad-tipo/electricidad-tipo.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       {path: 'lista',component: GeneracionElectricidadComponent},
       {path: 'registrar',component: ElectricidadIngresarComponent},
       {path: 'editar/:id',component: ElectricidadIngresarComponent},
+      {path: 'tipo',component: ElectricidadTipoComponent},
       {path: 'reporte',component: ElectricidadReporteComponent}
     ]
   },

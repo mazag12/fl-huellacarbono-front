@@ -7,7 +7,12 @@
       <button [routerLink]="['/dashboard/emisiones/electricidad/lista']" class="btn btn-primary">Regresar</button>
     </div>
     <div class="col text-end">
-      <button [routerLink]="['/dashboard/emisiones/registrar/electricidad']" class="btn btn-primary">Registrar</button>
+      <div class="col-md-6">
+        <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn btn-primary">Tipo de Combustible</button>
+      </div>
+      <div class="col-md-6">
+        <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn btn-primary">Registrar</button>
+      </div>
     </div>
   </div>
 
