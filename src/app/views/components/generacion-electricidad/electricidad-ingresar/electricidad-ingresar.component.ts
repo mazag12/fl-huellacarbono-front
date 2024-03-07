@@ -194,11 +194,11 @@ export class ElectricidadIngresarComponent implements OnInit{
                   switch (index) {
                     case 1:
                     case 2:
-                      if (!isNaN(cell)) {
+                      if (!isNaN(cell) && cell > 0) {
                         obj[headers[index]] = cell;
                       } else {
                         obj[headers[index]] = cell;
-                        this.mensaje_error.push(`Fila ${rowIndex + 2}: Cantidad no es un número.`);
+                        this.mensaje_error.push(`Fila ${rowIndex + 2}: Cantidad no es un valor correcto.`);
                         error = false;
                       }
                       break;
