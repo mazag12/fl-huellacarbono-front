@@ -86,11 +86,14 @@ export class AuthService {
       this.logout();
       return of(false);
     };
+    const token = localStorage.getItem('token');
+    let currentUser;
 
-    // if (!expiration || new Date(expiration) < new Date()) {
-    //   this.logout();
-    //   return of(false);
-    // }
+    if(token){
+      currentUser = this.getJwtPayload(token.toString());
+    }
+
+    this._currentUser.set(currentUser)
 
     this._authSatatus.set( AuthStatus.authenticated );
 
