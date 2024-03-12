@@ -1,6 +1,6 @@
-<ul class="list-group">
+<ul class="list-group" style="font-size: small;">
   <li class="list-group-item d-flex justify-content-between align-items-center text-start" *ngFor="let item of PermisosDisponibles">
     {{ item.nombre }}
-    <span class="badge text-dark">{{ fna_total[item.id] | number:'1.2-2' }}</span>
+    <span class="badge text-dark">{{ item.cantidad | number:'1.2-2' }}</span>
     </li>
 </ul>

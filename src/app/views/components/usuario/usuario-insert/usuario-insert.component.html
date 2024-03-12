@@ -20,6 +20,7 @@
               <mat-label>CODIGO COLABORADOR</mat-label>
               <input matInput type="text" placeholder="CODIGO COLABORADOR" value="0"
              formControlName="code">
+             <button type="button" (click)="Obtener_Usuario()">Buscar</button>
             </mat-form-field>
           </div>
 
@@ -51,7 +52,8 @@
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>CONTRASEÑA</mat-label>
               <input matInput type="password" placeholder="CONTRASEÑA"
-              formControlName="password">
+              formControlName="password"
+              maxlength="20">
             </mat-form-field>
           </div>
 

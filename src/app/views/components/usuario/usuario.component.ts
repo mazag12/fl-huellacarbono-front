@@ -1,11 +1,11 @@
 import { Component, ViewChild, computed, inject } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { MatDialog } from '@angular/material/dialog';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Row } from 'src/app/auth/interfaces';
 
 @Component({
   selector: 'app-usuario',
@@ -15,8 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class UsuarioComponent {
   constructor(
     private service: UsuarioService,
-    public dialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer) {}
+    public dialog: MatDialog) {}
 
 displayedColumns: string[] = ['ID', 'Code', 'email', 'Nombre', 'activo', 'role', 'accion'];
 
@@ -26,23 +25,37 @@ displayedColumns: string[] = ['ID', 'Code', 'email', 'Nombre', 'activo', 'role',
 public authService = inject ( AuthService );
 public user = computed( () => this.authService.currentUser() );
 public dataSource: any = [];
+public length = 5;
+public pageIndex = 0;
+
+public data: Row[] = [];
 
 ngOnInit(): void{
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-  this.get();
+  this.get(this.length, this.pageIndex + 1);
+}
+
+get(limit: number, page: number){
+  this.service.obtener(limit,page)
+  .subscribe( (reponse) => {
+    if (reponse && reponse.data) {
+      this.data = reponse.data.rows;
+      this.dataSource = new MatTableDataSource(this.data);
+      if(reponse.data.count === 5){
+        this.length = (limit * (page + 2))+ 1;
+      }
+    }
+  });
+}
+
+onPageChange(event: PageEvent) {
+  this.get(event.pageSize,event.pageIndex + 1);
 }
 
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-}
-
-get(){
-  this.service.obtener()
-  .subscribe( (reponse) => {
-    this.dataSource = new MatTableDataSource(reponse.data);
-  });
 }
 
 applyFilter(event: Event) {

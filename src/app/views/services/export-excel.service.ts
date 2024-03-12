@@ -27,23 +27,6 @@ export class ExportExcelService {
       ]
     });
 
-    sheet.addConditionalFormatting({
-      ref: 'B29:G29',
-      rules: [
-        {
-          type: 'expression',
-          priority: 1,
-          formulae: ['MOD(ROW()+COLUMN(),1)=0'],
-          style: {
-            fill: {
-              type: 'pattern' ,
-              pattern: 'solid',
-              bgColor: {argb: 'B0DAF7'}
-            }
-          },
-        }
-      ]
-    });
 
     sheet.addConditionalFormatting({
       ref: 'B4:B7',

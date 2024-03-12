@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { ElectricidadService } from 'src/app/views/services/electricidad.service';
 import { forkJoin } from 'rxjs';
-import { meses } from 'src/app/views/utils/constans';
+import { meses, permisosDisponibles } from 'src/app/views/utils/constans';
 
 @Component({
   selector: 'app-line-chart',
@@ -24,8 +24,65 @@ export class LineChartComponent implements OnInit {
 
   public mesesHastaActual: string[] = [];
 
-  ngOnInit(): void {
+  public PermisosDisponibles: any[] =  permisosDisponibles;
 
+  ngOnInit(): void {
+    this.generador_electricidad();
+  }
+
+  obtenerMesesHastaActual(): string[] {
+    const mesActual = new Date().getMonth();
+    return meses.slice(0, mesActual + 1);
+  }
+
+  onSelectChange(selectedValue: any) {
+    switch (selectedValue.value) {
+      case 1:
+        this.generador_electricidad();
+        break;
+      case 2:
+        this.sin_registro();
+        break;
+      case 3:
+        this.sin_registro();
+        break;
+      case 4:
+        this.sin_registro();
+        break;
+      case 5:
+        this.sin_registro();
+        break;
+      case 6:
+        this.sin_registro();
+        break;
+      case 7:
+        this.sin_registro();
+        break;
+      case 8:
+        this.sin_registro();
+        break;
+      case 9:
+        this.sin_registro();
+        break;
+      case 10:
+        this.sin_registro();
+        break;
+      case 11:
+        this.sin_registro();
+        break;
+      case 12:
+        this.sin_registro();
+        break;
+      default:
+        break;
+    }
+  }
+
+  sin_registro(){
+    this.grafico([0,0,0]);
+  }
+
+  generador_electricidad(){
     const requests = [];
 
     for (let mes = 1; mes < this.numeroMes + 1; mes++) {
@@ -49,34 +106,27 @@ export class LineChartComponent implements OnInit {
     });
   }
 
-
-  obtenerMesesHastaActual(): string[] {
-    const mesActual = new Date().getMonth();
-    return meses.slice(0, mesActual + 1);
-  }
-
-  grafico(data_electricidad: any){
+  grafico(data_fna: any){
 
     this.mesesHastaActual = this.obtenerMesesHastaActual();
 
     const data = {
       labels: this.mesesHastaActual,
       datasets: [{
-        label: 'Generación Electricidad',
-        data: data_electricidad,
-        borderColor: '#6A4588',
-        backgroundColor: 'rgba(106, 69, 136, 0.3)',
+        data: data_fna,
+        borderColor: 'rgba(255, 165, 0, 1)',
+        backgroundColor: 'rgba(255, 165, 0, 0.3)',
         pointStyle: 'circle',
         pointRadius: 5,
         pointHoverRadius: 15,
         fill: true,
-      }]
+      }
+    ]
     };
     this.chart = new Chart ("line",{
       type: 'line' as ChartType,
       data: data,
       options: {
-        responsive: true,
       }
     })
   }

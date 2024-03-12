@@ -3,15 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { ViewsRoutingModule } from './views-routing.module';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
-
 import {NgFor} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -58,6 +49,26 @@ import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-reg
 import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
 import { BarFnaComponent } from './components/dashboard/bar-fna/bar-fna.component';
 import { StatusComponent } from './components/dashboard/status/status.component';
+import { ViewsComponent } from './views.component';
+
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatListModule} from "@angular/material/list"
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatCardModule} from '@angular/material/card';
+import {LayoutModule} from '@angular/cdk/layout';
+
 
 @NgModule({
   declarations: [
@@ -101,6 +112,7 @@ import { StatusComponent } from './components/dashboard/status/status.component'
     UsuarioInsertComponent,
     BarFnaComponent,
     StatusComponent,
+    ViewsComponent,
   ],
   imports: [
     CommonModule,
@@ -116,7 +128,17 @@ import { StatusComponent } from './components/dashboard/status/status.component'
     ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatTreeModule,
+    MatDividerModule,
+    MatSlideToggleModule,
+    LayoutModule,
+    MatListModule,
+    MatCardModule
   ],
 
 })

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { LoginResponse, Token } from '../interfaces';
+import { LoginResponse, Token, Userverificar } from '../interfaces';
 import { AuthStatus } from '../Enum/auth-status.enum';
 import { jwtDecode } from "jwt-decode";
 
@@ -25,10 +25,11 @@ export class AuthService {
   public currentUser = computed( () => this._currentUser() );
   public authStatus = computed( () => this._authSatatus() );
 
+  private dataSource = new BehaviorSubject<any>(null);
+  currentData = this.dataSource.asObservable();
+
   login( code: string, password: string ): Observable<boolean>{
-
     const body = { code, password} ;
-
     return this.http.post<LoginResponse>(`${ this.baseUrl }auth/signin`, body)
     .pipe(
       map(token => {
@@ -38,23 +39,30 @@ export class AuthService {
     );
   }
 
+  recuperar( code: string, password: string ): Observable<boolean>{
+    const body = { code, password} ;
+    return this.http.post<LoginResponse>(`${ this.baseUrl }auth/password-reset`, body)
+    .pipe(
+      map(token => {
+        return this.setAuthentication(token.data);
+      }),
+      catchError( err => throwError( () => err.error.message ))
+    );
+  }
+
+  getuser( code: string ): Observable<Userverificar> {
+    return this.http.get<Userverificar>(`${this.baseUrl}auth/${code}`);
+  }
+
+  sendMail( code: number, email: string, nombre: string): Observable<SendMail>{
+    const body = { code, email, nombre} ;
+    return this.http.post<SendMail>(`${ this.baseUrl }auth/password-recovery`, body);
+  }
+
   private setAuthentication(token: string): boolean{
+    const payload: Token  = this.getJwtPayload(token);
 
-    const payload = this.getJwtPayload(token);
-
-    const user: Token = {
-      sub: payload.sub,
-      code: payload.code,
-      email: payload.email,
-      nombre: payload.nombre,
-      apellido: payload.apellido,
-      role: payload.role,
-      iat: payload.iat,
-      exp: payload.exp,
-      aud: payload.aud
-    };
-
-    this._currentUser.set(user);
+    this._currentUser.set(payload);
     this._authSatatus.set( AuthStatus.authenticated );
 
     localStorage.setItem('token', token);
@@ -79,8 +87,6 @@ export class AuthService {
       return of(false);
     };
 
-    console.log(this.authStatus);
-
     // if (!expiration || new Date(expiration) < new Date()) {
     //   this.logout();
     //   return of(false);
@@ -97,6 +103,18 @@ export class AuthService {
     localStorage.clear();
   }
 
+  updateData(data: any) {
+    this.dataSource.next(data);
+  }
+
+}
+
+export interface SendMail {
+  data: Data;
+}
+
+export interface Data {
+  message: string;
 }
 
 

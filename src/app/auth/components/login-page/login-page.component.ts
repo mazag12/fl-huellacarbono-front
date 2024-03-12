@@ -1,9 +1,12 @@
 import { Component, inject} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { DialogComponent } from './dialog/dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -11,11 +14,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPageComponent {
 
-  //loginForm: FormGroup;
+  constructor(public dialog: MatDialog){}
 
-  private fb          = inject( FormBuilder );
-  private authService = inject( AuthService );
-  private router      = inject( Router );
+  private fb              = inject( FormBuilder );
+  private authService     = inject( AuthService );
+  private router          = inject( Router );
 
   public loginForm: FormGroup = this.fb.group({
     code: ['', [Validators.required]],
@@ -23,20 +26,55 @@ export class LoginPageComponent {
   })
 
   onSubmit() {
-      // Realiza las acciones que desees con los valores del formulario.
-      const {code, password} = this.loginForm.value;
+    const {code, password} = this.loginForm.value;
 
-      // Aquí puedes enviar los datos al servidor o realizar otras acciones.
-      this.authService.login( code, password )
-        .subscribe({
-          next: () => this.router.navigateByUrl('/dashboard'),
-          error: (message) => {
-            Swal.fire(
-              'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
-                message,
-              'error');
-          }
-        })
+    this.authService.login( code, password )
+      .subscribe({
+        next: () => this.router.navigateByUrl('/dashboard'),
+        error: (message) => {
+          Swal.fire(
+            'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
+              message,
+            'error');
+        }
+      })
   }
 
+  async recovery(enterAnimationDuration: string, exitAnimationDuration: string){
+    const {code} = this.loginForm.value;
+    if(code){
+      this.authService.getuser(code).subscribe( (response) => {
+        if (response && response.data) {
+          this.authService.updateData(code);
+          this.dialog.open(DialogComponent, {
+            data: {code: '', email: response.data.email, nombre: response.data.nombre + response.data.apellido, id: code },
+            autoFocus: true,
+            closeOnNavigation: true,
+            hasBackdrop: true,
+            enterAnimationDuration,
+            exitAnimationDuration,
+          });
+        }else{
+          Swal.fire(
+            'ERROR',
+            'No existe el Codigo del Colaborador : ' + code,
+            'error');
+        }
+      },
+      (error) => {
+        Swal.fire(
+          'ERROR',
+          'No existe el Codigo del Colaborador ',
+          'error');
+      }
+      );
+    }else{
+      Swal.fire({
+        title: "Codigo Colaborador",
+        text: "No se ingreso el Codigo del Colaborador",
+        icon: "warning"
+      });
+    }
+
+  }
 }

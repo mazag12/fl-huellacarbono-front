@@ -16,11 +16,8 @@ export class UsuarioInsertComponent {
   constructor(
     private service: UsuarioService ,
     private router:Router,
+    private user: AuthService,
     private activatedRoute:ActivatedRoute) {}
-
-  private authService = inject ( AuthService );
-
-  public user = computed( () => this.authService.currentUser() );
 
   public Form: any;
 
@@ -33,7 +30,7 @@ export class UsuarioInsertComponent {
       this.Form = new FormGroup({
         code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
         email:                new FormControl<string>('',[Validators.required, Validators.email]),
-        password:             new FormControl<string>('',[Validators.required, Validators.maxLength(200)]),
+        password:             new FormControl<string>('',[Validators.required, Validators.maxLength(20)]),
         nombre:               new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
         apellido:             new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
         role:                 new FormControl<string>('',[Validators.required]),
@@ -70,4 +67,26 @@ export class UsuarioInsertComponent {
     });
 
   }
+
+  Obtener_Usuario(){
+
+    const {code} = this.Form.value;
+
+    this.user.getuser(code).subscribe(response =>{
+      if (response && response.data) {
+        this.Form.patchValue({
+          nombre: response.data.nombre,
+          apellido: response.data.apellido,
+          email: response.data.email
+      });
+      }else{
+        Swal.fire({
+          title: "Codigo Colaborador",
+          text: "No se encuentra el Codigo",
+          icon: "warning"
+        });
+      }
+    })
+  }
+
 }

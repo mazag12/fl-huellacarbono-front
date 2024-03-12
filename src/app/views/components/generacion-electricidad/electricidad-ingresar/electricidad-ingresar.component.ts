@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, computed, inject, ElementRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, computed, inject, ElementRef, HostListener  } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { read, utils } from 'xlsx';
@@ -20,7 +20,8 @@ export class ElectricidadIngresarComponent implements OnInit{
   constructor(
     private service: ElectricidadService ,
     private router:Router,
-    private activatedRoute:ActivatedRoute) {}
+    private activatedRoute:ActivatedRoute,
+    private el: ElementRef) {}
 
     @ViewChild('fileUpload') fileUpload!: ElementRef;
 
@@ -48,7 +49,15 @@ export class ElectricidadIngresarComponent implements OnInit{
     comprobante: string = '';
     cantidad: string = '';
 
+    botonActivo: boolean = false;
+
+    //valores iniciales del formulario
+    DataInitial: any;
+
+    //Se obtiene los datos del archivo
     file: File | null = null;
+
+    //Data del excel
     excelData: any[] = [];
 
     // Fecha actual
@@ -60,7 +69,6 @@ export class ElectricidadIngresarComponent implements OnInit{
     // Fecha del día actual
     public maxDate = new Date(this.currentDate.setDate(this.currentDate.getDate()));
 
-
     //mensaje de error
     public mensaje_error: any[] = [];
 
@@ -71,6 +79,7 @@ export class ElectricidadIngresarComponent implements OnInit{
       this.id = this.activatedRoute.snapshot.params['id'];
       if(this.id){
         this.editing = true;
+
         this.service.obtenerbyid(this.id)
         .subscribe (response => {
           const dataAdaptada = {
@@ -83,6 +92,7 @@ export class ElectricidadIngresarComponent implements OnInit{
             evidencia_url:        response.data.evidencia_url
           };
           this.Form.patchValue(dataAdaptada);
+          this.DataInitial = dataAdaptada;
         });
       }
     }
@@ -91,18 +101,23 @@ export class ElectricidadIngresarComponent implements OnInit{
       let data =  this.Form.value as ElectricidadRegister;
       data.fecha_ingreso = new Date(data.fecha_ingreso ).toISOString();
 
-      this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id)).subscribe((response) => {
-        response.data.forEach(element => {
-          if(element[''] === 0){
-            this.actualizar_update(data);
-          }else{
-            Swal.fire({
-              title: "Se encontro que la Factura y el tipo de combustible se encuentra registrado",
-              icon: "warning"
-            });
-          }
-        });
-      })
+      if(!this.id){
+        this.service.obtenerfactura(data.factura, parseInt(data.tipo_electricidad_id)).subscribe((response) => {
+          response.data.forEach(element => {
+            if(element[''] === 0){
+              this.actualizar_update(data);
+            }else{
+              Swal.fire({
+                title: "Se encontro que la Factura y el tipo de combustible se encuentra registrado",
+                icon: "warning"
+              });
+            }
+          });
+        })
+      }else{
+        this.actualizar_update(data);
+      }
+
     }
 
     actualizar_update(data: any){
@@ -147,6 +162,10 @@ export class ElectricidadIngresarComponent implements OnInit{
       });
     }
 
+    verificarCambios(){
+      return JSON.stringify(this.DataInitial) !== JSON.stringify(this.Form.value);
+    }
+
     TextoComprobante(valor: string): void {
       this.comprobante = valor.toUpperCase();
     }
@@ -155,6 +174,23 @@ export class ElectricidadIngresarComponent implements OnInit{
       const valor: string = event.target.value;
       const match = valor.match(/^([0-9]{1,10}(\.[0-9]{1,2})?)$/); // Acepta números con hasta dos decimales
       this.cantidad = match ? match[0] : '';
+    }
+
+    onInputChange(event: any) {
+      const input = event.target.value;
+
+      // Expresión regular para permitir solo números con exactamente dos decimales
+      const regex = /^([0-9]{1,10}(\.[0-9]{1,2})?)$/;
+
+      if (!regex.test(input)) {
+        // Si la entrada no cumple con el formato deseado, elimina la última entrada
+        event.target.value = input.slice(0, input.length - 1);
+      }
+    }
+
+    isValidURL(url: string) {
+      const pattern = new RegExp('(ftp|http|https):\/\/[^ "]*'); // fragmento
+      return pattern.test(url);
     }
 
     async  ImportExcel(event: any) {
@@ -264,11 +300,6 @@ export class ElectricidadIngresarComponent implements OnInit{
         }
         reader.readAsArrayBuffer(file);
       }
-    }
-
-    isValidURL(url: string) {
-      const pattern = new RegExp('(ftp|http|https):\/\/[^ "]*'); // fragmento
-      return pattern.test(url);
     }
 
     GuardarExcel(){

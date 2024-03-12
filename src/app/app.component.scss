@@ -1,0 +1,29 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #3e1151 !important;;
+}
+
+.textwhite{
+  color: white !important;
+}
+.textalternativo{
+  color: #f7323f !important;
+}
+
+#loading-text {
+  font-size: 30px;
+  animation: enlarge 1s infinite alternate;
+}
+
+@keyframes enlarge {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+

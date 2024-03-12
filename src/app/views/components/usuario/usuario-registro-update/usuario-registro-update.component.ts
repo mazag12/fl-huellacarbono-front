@@ -56,9 +56,9 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
         isActive:     response.data.isActive,
         role:         response.data.role,
       };
-      const datos = response.data.permissions;
-      this.permisosGuardados = datos.split(',').toString();
-      this. permisosMarcados = datos.split(',');
+      //const datos = response.data.permissions;
+      // this.permisosGuardados = datos.split(',').toString();
+      // this. permisosMarcados = datos.split(',');
       this.Form.patchValue(dataAdaptada)
     });
 
@@ -67,9 +67,9 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
   onSubmit():void{
     let data =  this.Form.value as UserData;
 
-    data.permissions =  this.permisosMarcados.toString();
+    // data.permissions =  this.permisosMarcados.toString();
 
-    this.service.update( data )
+    this.service.register( data )
       .subscribe({
         // TODO: mostrar snackbar, y navegar a /electricidad/editar/electricidad.id
         error: (err) => {

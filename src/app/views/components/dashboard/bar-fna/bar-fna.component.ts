@@ -15,11 +15,9 @@ export class BarFnaComponent implements OnInit {
 
   PermisosDisponibles: any[] =  permisosDisponibles;
 
-  public fechaActual = new Date();
+  fechaActual = new Date();
 
-  public numeroMes = this.fechaActual.getMonth() + 1;
-
-  public fna_total = new Array(12).fill(0);
+  numeroMes = this.fechaActual.getMonth() + 1;
 
   ngOnInit(): void {
     const requests = [];
@@ -34,7 +32,7 @@ export class BarFnaComponent implements OnInit {
       reportsArray.forEach((reporte) => {
         if (reporte && reporte.data) {
           reporte.data.forEach(reportes => {
-            this.fna_total[1] += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
+            this.PermisosDisponibles[0].cantidad += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
             (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.ch4) / 1000) * 30) +
             (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.n2o) / 1000) * 265);
           });
@@ -42,8 +40,10 @@ export class BarFnaComponent implements OnInit {
           console.error('El reporte es null o no tiene la propiedad data');
         }
       });
+      this.PermisosDisponibles.sort((a, b) => b.cantidad - a.cantidad);
     });
-    //Final de Generación de Electricidad
+
+
 
   }
 

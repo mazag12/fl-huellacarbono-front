@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="col-md-12 col-lg-12 align-items-center">
+    <div class="card-body p-4 p-lg-5 text-black">
+      <h1 mat-dialog-title>Hola: {{data.nombre}}</h1>
+      <div mat-dialog-content>
+        <div class="row">
+          <div class="col-md-12">
+            <p>Ingrese su codigo de Verificación para el restablecimiento de su contraseña, que va ser enviada al correo : {{data.email}}</p>
+          </div>
+          <div class="col-md-6 text-center">
+            <button type="button"
+            class="btn btn-success text-center"
+            (click)="enviar_codigo()"
+            [disabled]="botonDeshabilitado">Obtener Codigo</button>
+            <div *ngIf="botonDeshabilitado">Tiempo restante: {{ tiempoRestante }}</div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label> Codigo de Verificación </mat-label>
+              <input matInput [(ngModel)]="data.code" [disabled] = "DesabilitadoInputVerificador" name="inputverificador" id="inputverificador">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <div class="col-md-6 text-center">
+          <button mat-button
+            (click)="metodo_salir()"
+            class="btn btn-danger text-body-secondary">Salir</button>
+        </div>
+        <div class="col-md-6 text-center">
+          <button mat-button
+            (click)="metodo_enviar()"
+            class="btn btn-success text-body-secondary">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

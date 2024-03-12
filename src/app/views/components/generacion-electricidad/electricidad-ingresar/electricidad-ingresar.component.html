@@ -85,8 +85,10 @@
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
               <mat-label>CANTIDAD</mat-label>
-              <input matInput type="number" placeholder="00.00" min="01.00" value="01.00"
-              formControlName="cantidad">
+              <input matInput type="number" placeholder="00.00" min="01.00"
+              value="01.00" step="0.01"
+              formControlName="cantidad"
+              (input)="onInputChange($event)">
             </mat-form-field>
           </div>
 
@@ -108,7 +110,11 @@
             </mat-form-field>
           </div>
 
-          <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
+          <button type="submit" class="btn btn-primary" *ngIf="editing; else botonalternativo" [disabled]="!Form.valid">Guardar</button>
+          <ng-template #botonalternativo>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </ng-template>
+
         </fieldset>
       </form>
 

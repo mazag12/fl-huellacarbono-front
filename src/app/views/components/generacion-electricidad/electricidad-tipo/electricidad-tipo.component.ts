@@ -40,7 +40,7 @@ export class ElectricidadTipoComponent {
   public user = computed( () => this.authService.currentUser() );
   public data: TipoElectricidadResponse[] = [];
   public dataSource: any = [];
-  public pageSize = 10;
+  public pageSize = 5;
 
   ngOnInit(): void{
     this.get();

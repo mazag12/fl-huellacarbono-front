@@ -1,71 +1,80 @@
-<div class="rounded-top p-3 mb-2 bg-secondary bg-gradient text-white text-center">
-  FUENTE DE EMISION GENERACION DE ELECTRICIDAD
-</div>
 <div class="container mt-3 text-center">
   <div class="row p-2 ">
-    <div class="col text-start ">
-      <button [routerLink]="['/dashboard/emisiones/electricidad/lista']" class="btn btn-primary">Regresar</button>
+    <div class="col-md-6 text-start ">
+      <a><mat-icon [routerLink]="['/dashboard/emisiones/fna']" >keyboard_arrow_left</mat-icon></a>
+      FUENTE DE EMISION GENERACION DE ELECTRICIDAD
     </div>
-    <div class="col text-end">
-      <div class="col-md-6">
-        <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn btn-primary">Tipo de Combustible</button>
-      </div>
-      <div class="col-md-6">
-        <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn btn-primary">Registrar</button>
+    <div class="col-md-6 text-end">
+      <div class="row">
+        <div class="col-md-3">
+          <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Tipo de Combustible</button>
+        </div>
+        <div class="col-md-3">
+          <button mat-button [matMenuTriggerFor]="beforeMenu">Filtro</button>
+          <mat-menu #beforeMenu="matMenu" xPosition="before">
+            <div mat-menu-item>
+              <mat-form-field>
+                <mat-label>Filtrar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
+              </mat-form-field>
+            </div>
+            <div mat-menu-item>
+              <mat-card class="demo-inline-calendar-card">
+                <mat-calendar [(selected)]="selected"></mat-calendar>
+              </mat-card>
+              <p>Selected date: {{selected}}</p>
+            </div>
+          </mat-menu>
+        </div>
+        <div class="col-md-3">
+          <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Registrar</button>
+        </div>
+        <div class="col-md-3">
+          <button (click)="exportToExcel()"  class="btn text-white" style="background-color: #3FAC2D;font-size: small;">Exportar Documento MINAM </button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="row pt-2">
 
-    <mat-form-field>
-      <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
-    </mat-form-field>
-
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="ID">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
-          class="text-bg-warning"> No. </th>
-          <td mat-cell *matCellDef="let element" class="text-bg-warning"> {{element.id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Fecha">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Fecha Registro </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-white"> Fecha Registro </th>
           <td mat-cell *matCellDef="let element"> {{element.fecha_ingreso}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Factura">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Factura </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-white"> Factura </th>
           <td mat-cell *matCellDef="let element"> {{element.factura}} </td>
         </ng-container>
 
         <ng-container matColumnDef="TipoCombustible">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Tipo Combustible </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-white"> Tipo Combustible </th>
           <td mat-cell *matCellDef="let element"> {{element.tipo_electricidad.nombre}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Unidad">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Unidad </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-white"> Unidad </th>
           <td mat-cell *matCellDef="let element"> {{element.tipo_electricidad.unidad}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Cantidad">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Cantidad </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-white"> Cantidad </th>
           <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Evidencia">
-          <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Evidencia </th>
-          <td mat-cell *matCellDef="let element"> {{element.evidencia_url}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="accion">
-          <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Acción </th>
+          <th mat-header-cell *matHeaderCellDef class="text-bg-white"> Acción </th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <a color="pointer text-warning" matTooltip="Editar">
+            <a class="btn btn-outline-warning" matTooltip="Editar">
               <mat-icon [routerLink]="['/dashboard/emisiones/electricidad/editar/'+ element.id]" >edit</mat-icon>
             </a>
           </td>
@@ -74,16 +83,16 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <tr class="mat-row" *matNoDataRow>
+        <!-- <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4"> No hay información "{{input.value}}"</td>
-        </tr>
+        </tr> -->
       </table>
 
       <mat-paginator
                     [pageIndex]="pageIndex"
                     [length]="length"
                     [pageSizeOptions]="[5, 10, 25, 100]"
-                     aria-label="Select page of periodic elements"
+                     aria-label="Selecciona la pagina"
                      (page)="onPageChange($event)"
                      >
       </mat-paginator>

@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards';
-import { PagesComponent } from './pages/pages.component';
-import { DashboardComponent } from './views/components/dashboard/dashboard.component';
+import { ViewsComponent } from './views/views.component';
 
 const routes: Routes = [
 
@@ -14,7 +13,7 @@ const routes: Routes = [
   },
   {
     path:'dashboard',
-    component: PagesComponent,
+    component: ViewsComponent,
     canActivate: [ isAuthenticatedGuard ],
     children:[
       {

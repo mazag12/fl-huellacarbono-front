@@ -1,8 +1,9 @@
-<h1 *ngIf="!finishAuthCheck()">
-  <div class="fade show" style="text-align: center; padding-top: calc(100vh / 2); height: 100vh">
-    <i class="spinner-grow spinner-grow-sm"></i>
-    <span class="m-1">Loading...</span>
-  </div>
-</h1>
+<div class="container-fluid loader" *ngIf="!verificacion">
+  <span id="loading-text" class="fs-1 p-1 textwhite">F</span>
+  <span id="loading-text" class="fs-1 p-1 textalternativo">OO</span>
+  <span id="loading-text" class="fs-1 p-1 textwhite">TL</span>
+  <span id="loading-text" class="fs-1 p-1 textalternativo">OO</span>
+  <span id="loading-text" class="fs-1 p-1 textwhite">SE</span>
+</div>
 
-<router-outlet *ngIf="finishAuthCheck()" />
+<router-outlet *ngIf="verificacion"></router-outlet>

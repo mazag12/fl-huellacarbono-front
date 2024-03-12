@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserData, UserById, UserRegister } from 'src/app/auth/interfaces';
+import { UserData, UserDataList, UserRegister, Userverificar, UserbyID } from 'src/app/auth/interfaces';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -16,24 +16,24 @@ export class UsuarioService {
    private headers = new HttpHeaders()
    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
-   private usuario: string = "auth/";
-
-   obtener(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}${this.usuario}user-all`, { headers: this.headers });
+  obtener( limit: number, page: number ): Observable<UserDataList> {
+    return this.http.get<UserDataList>(`${this.baseUrl}user?limit=${limit}&page=${page}`, { headers: this.headers });
   }
 
-  obtenerbyid( id: number ): Observable<UserById> {
-    return this.http.get<UserById>(`${this.baseUrl}${this.usuario}user/${id}`, { headers: this.headers });
-  }
-
-  update(data : UserData): Observable<UserData> {
-      //const { id, ...obj } = data;
-      return this.http.post<UserData>(`${this.baseUrl}${this.usuario}user`,data,{ headers: this.headers });
+  obtenerbyid( id: number ): Observable<UserbyID> {
+    return this.http.get<UserbyID>(`${this.baseUrl}user/${id}`, { headers: this.headers });
   }
 
   register(data : any): Observable<UserRegister> {
-    return this.http.post<UserRegister>(`${this.baseUrl}${this.usuario}signup`,data,{ headers: this.headers });
-}
+    return this.http.post<UserRegister>(`${this.baseUrl}auth/ingreso`,data,{ headers: this.headers });
+  }
 
+  obtenerbycode(code: string): Observable<Userverificar>{
+    return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);
+  }
+
+  sendEmail(code: string): Observable<Userverificar>{
+    return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);
+  }
 
 }

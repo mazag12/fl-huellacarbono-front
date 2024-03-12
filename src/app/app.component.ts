@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
 import { Router } from '@angular/router';
@@ -8,19 +8,24 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
+  public verificacion: boolean = false;
   private authService = inject( AuthService );
   private router      = inject( Router );
 
-  public finishAuthCheck = computed<boolean>( () => {
-    if( this.authService.authStatus() == AuthStatus.checking ){return false; }
+  ngOnInit(): void {
+    setTimeout(() => {
+    this.verificacion =  this.finishAuthCheck();
+    }, 2000);
+  }
 
-    return true;
+  finishAuthCheck = computed<boolean>( () => {
+      if( this.authService.authStatus() == AuthStatus.checking ){return false; }
+      return true;
   });
 
   public authStatusChangeEffect = effect( () => {
-
     switch( this.authService.authStatus() ){
       case AuthStatus.checking:
         return;
@@ -31,7 +36,6 @@ export class AppComponent {
         this.router.navigateByUrl('/auth/login');
         return;
     }
-
   } );
 
 }
