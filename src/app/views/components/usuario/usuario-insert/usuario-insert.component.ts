@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { UsuarioService } from 'src/app/views/services/usuario.service';
 import Swal from 'sweetalert2';
 import {permisosDisponibles} from '../../../utils/constans';
-import { ModuloService } from 'src/app/views/services/modulo.service';
+
 
 @Component({
   selector: 'app-usuario-insert',
@@ -16,7 +16,7 @@ import { ModuloService } from 'src/app/views/services/modulo.service';
 export class UsuarioInsertComponent {
   constructor(
     private service: UsuarioService ,
-    private serviceModule: ModuloService ,
+
     private router:Router,
     private user: AuthService,
     private activatedRoute:ActivatedRoute) {}
@@ -80,7 +80,7 @@ export class UsuarioInsertComponent {
             user_id: response.data.id,
             modulo_id: modulo
           }
-          this.serviceModule.register( auxData )
+          this.service.registerAcceso( auxData )
           .subscribe({
             error: (err) => {
               console.log(err)

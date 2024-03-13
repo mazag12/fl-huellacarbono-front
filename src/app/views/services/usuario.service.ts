@@ -28,6 +28,10 @@ export class UsuarioService {
     return this.http.post<UserRegister>(`${this.baseUrl}auth/signup`,data,{ headers: this.headers });
   }
 
+  registerAcceso(data : any): Observable<any> {
+    return this.http.post<UserRegister>(`${this.baseUrl}user/acceso`,data,{ headers: this.headers });
+  }
+
 
   obtenerbycode(code: string): Observable<Userverificar>{
     return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);
