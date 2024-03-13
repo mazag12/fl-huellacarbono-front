@@ -26,7 +26,7 @@ export interface ElectricidadResponse {
 }
 
 export interface TipoElectricidad {
-  id:          string;
+  id?:         string;
   nombre:      string;
   unidad:      string;
   factor:      number;
@@ -34,7 +34,7 @@ export interface TipoElectricidad {
   co2:         number;
   ch4:         number;
   n2o:         number;
-  flag_activo: boolean;
+  flag_activo?: boolean;
 }
 
 export interface ElectricidadRegister{

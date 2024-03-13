@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Filtro } from '../../interface/filtro';
 
 @Component({
   selector: 'app-dialog',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Filtro,
+  ) {}
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  oka(): void {
+    this.dialogRef.close();
+  }
 }

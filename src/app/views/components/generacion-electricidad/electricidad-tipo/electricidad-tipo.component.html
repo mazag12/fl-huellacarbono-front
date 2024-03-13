@@ -12,31 +12,56 @@
     <div class="col-md-4">
       <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
         <fieldset>
-          <legend>Generación electricidad</legend>
+          <legend>Tipo de Combustibles</legend>
 
           <input matInput type="text" placeholder="Factura" value="0" formControlName="id" hidden>
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>N° COMPROBANTE</mat-label>
-              <input matInput type="text" placeholder="N° COMPROBANTE" value="sin factura"
-             formControlName="factura">
+              <mat-label>Nombre</mat-label>
+              <input matInput type="text" formControlName="nombre">
             </mat-form-field>
           </div>
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>CANTIDAD</mat-label>
-              <input matInput type="number" placeholder="00.00" min="01.00" value="01.00"
-              formControlName="cantidad">
+              <mat-label>Unidad</mat-label>
+              <input matInput type="text" formControlName="unidad">
             </mat-form-field>
           </div>
 
+          <div class="mb-3">
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Factor</mat-label>
+              <input matInput type="text" formControlName="factor">
+            </mat-form-field>
+          </div>
 
           <div class="mb-3">
             <mat-form-field class="col-12 sm:col-6">
-              <mat-label>EVIDENCIA</mat-label>
-              <input matInput type="text" placeholder="Evidencia" value="sin url" formControlName="evidencia_url">
+              <mat-label>Valor Neto</mat-label>
+              <input matInput type="text" formControlName="valor_neto">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-3">
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Co2</mat-label>
+              <input matInput type="text" formControlName="co2">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-3">
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Ch4</mat-label>
+              <input matInput type="text" formControlName="ch4">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-3">
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label><Nav></Nav>2o</mat-label>
+              <input matInput type="text" formControlName="n2o">
             </mat-form-field>
           </div>
 
@@ -60,49 +85,51 @@
           </ng-container>
 
           <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Fecha Registro </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
           </ng-container>
 
           <ng-container matColumnDef="unidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Factura </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Unidad </th>
             <td mat-cell *matCellDef="let element"> {{element.unidad}} </td>
           </ng-container>
 
           <ng-container matColumnDef="factor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Tipo Combustible </th>
-            <td mat-cell *matCellDef="let element"> {{element.factor}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Factor </th>
+            <td mat-cell *matCellDef="let element"> {{element.factor | number:'1.2-2' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="valor_neto">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Unidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.valor_neto}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Valor Neto </th>
+            <td mat-cell *matCellDef="let element"> {{element.valor_neto | number:'1.2-2' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="co2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Cantidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.co2}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Co2 </th>
+            <td mat-cell *matCellDef="let element"> {{ element.co2 | number:'1.2-2' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="ch4">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Evidencia </th>
-            <td mat-cell *matCellDef="let element"> {{element.ch4}} </td>
+            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> CHo </th>
+            <td mat-cell *matCellDef="let element"> {{element.ch4 | number:'1.2-2' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="n2o">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Evidencia </th>
-            <td mat-cell *matCellDef="let element"> {{element.n2o}} </td>
+            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> C2o </th>
+            <td mat-cell *matCellDef="let element"> {{element.n2o | number:'1.2-2' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="activo">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Evidencia </th>
+            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Url </th>
             <td mat-cell *matCellDef="let element"> {{element.flag_activo}} </td>
           </ng-container>
 
           <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Acción </th>
             <td mat-cell *matCellDef="let element; let i = index">
-              <a color="pointer text-warning" matTooltip="Editar">
+              <a color="pointer text-warning" matTooltip="Editar"
+              class="btn btn-outline-warning"
+                (click)="edit(element.id)">
                 <mat-icon>edit</mat-icon>
               </a>
             </td>
