@@ -39,6 +39,7 @@ export interface UserRegister {
   nombre: string,
   apellido: string,
   isActive: boolean,
+  accesos?: any,
   role: string,
 }
 

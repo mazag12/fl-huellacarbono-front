@@ -21,12 +21,13 @@ export class UsuarioService {
   }
 
   obtenerbyid( id: number ): Observable<UserbyID> {
-    return this.http.get<UserbyID>(`${this.baseUrl}user/${id}`, { headers: this.headers });
+    return this.http.get<UserbyID>(`${this.baseUrl}user/user/${id}`, { headers: this.headers });
   }
 
-  register(data : any): Observable<UserRegister> {
-    return this.http.post<UserRegister>(`${this.baseUrl}auth/ingreso`,data,{ headers: this.headers });
+  register(data : any): Observable<any> {
+    return this.http.post<UserRegister>(`${this.baseUrl}auth/signup`,data,{ headers: this.headers });
   }
+
 
   obtenerbycode(code: string): Observable<Userverificar>{
     return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);

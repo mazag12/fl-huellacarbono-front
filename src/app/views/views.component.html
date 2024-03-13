@@ -10,21 +10,19 @@
 <mat-drawer-container autosize >
   <mat-drawer #drawer opened="true" mode="side" position="start" class="text-bg-light">
   <mat-nav-list role="list" class="list-group">
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/lista" routerLinkActive="active-link">
-        <a  mat-button><mat-icon>dashboard</mat-icon> Dashboard</a>
-      </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/fna" routerLinkActive="active-link">
-          <a  mat-button><mat-icon>insert_drive_file</mat-icon>Fuentes de Emisiones</a>
-      </mat-list-item>
-      <!-- <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/reporte" routerLinkActive="active-link">
-          <a  mat-button><mat-icon>table</mat-icon>Reporte de Emisiones</a>
-      </mat-list-item> -->
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLink="/dashboard/emisiones/usuario/lista" routerLinkActive="active-link">
-          <a mat-button><mat-icon>person_pin</mat-icon > Usuarios</a>
-      </mat-list-item>
-      <mat-list-item role="listitem" class="list-group-item list-group-item-action" routerLinkActive="active-link">
-          <a mat-button><mat-icon>help</mat-icon> Ayuda</a>
-      </mat-list-item>
+    <ng-container *ngFor="let permiso of permisosDisponibles">
+      <ng-container *ngFor="let acceso of permisosMarcados">
+        
+        <ng-container *ngIf="permiso.id == acceso.modulo_id">
+          <mat-list-item  role="listitem" class="list-group-item list-group-item-action" [routerLink]="permiso.url" routerLinkActive="active-link">
+            <a  mat-button><mat-icon>{{permiso.icono}}</mat-icon> {{permiso.nombre}}</a>
+          </mat-list-item>
+        </ng-container>
+
+      </ng-container>
+    </ng-container>
+    
+      
   </mat-nav-list>
   <mat-nav-list role="list" class="list-group">
     <mat-list-item role="listitem" class="list-group-item list-group-item-action">

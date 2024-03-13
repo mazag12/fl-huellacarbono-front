@@ -14,7 +14,7 @@ import {permisosDisponibles} from '../../../utils/constans';
 })
 export class UsuarioRegistroUpdateComponent implements OnInit{
   constructor(
-    private service: UsuarioService ,
+    private service: UsuarioService,
     private router:Router,
     private activatedRoute:ActivatedRoute) {}
 
@@ -34,7 +34,6 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
 
     this.id = this.activatedRoute.snapshot.params['id'];
 
-
     this.Form = new FormGroup({
       id:                   new FormControl<string>('0'),
       code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
@@ -43,10 +42,12 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
       apellido:             new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
       isActive:             new FormControl<boolean>(true,[Validators.required]),
       role:                 new FormControl<string>('',[Validators.required]),
+      accesos: new FormControl<any[]>([],[Validators.required]),
     })
 
     this.service.obtenerbyid(this.id)
     .subscribe (response => {
+      console.log(response.data)
       const dataAdaptada = {
         id:           response.data.id,
         code:         response.data.code,
@@ -56,40 +57,61 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
         isActive:     response.data.isActive,
         role:         response.data.role,
       };
-      //const datos = response.data.permissions;
-      // this.permisosGuardados = datos.split(',').toString();
-      // this. permisosMarcados = datos.split(',');
+      for (let permiso of this.permisosDisponibles) {
+        for (let acceso of response.data.accesos) {
+            const accesoId = parseInt(acceso.modulo_id)
+            if (permiso.id == accesoId) {
+                this.actualizarPermisosMarcados(permiso);
+            }
+        }
+      }
+
       this.Form.patchValue(dataAdaptada)
     });
 
   }
 
+  resetFormState(): void {
+    const dataAdaptada = {
+      id:           '0',
+      code:         '0',
+      email:        '',
+      nombre:       '',
+      apellido:     '',
+      isActive:     true,
+      role:         'USER',
+      accesos: [],
+    };
+  
+    this.permisosMarcados = [];
+    
+    for (let permiso of this.permisosDisponibles) {
+      permiso.check = false;
+    }
+  
+    this.Form.patchValue(dataAdaptada);
+  }
+
+  navigateBackToUserList(): void {
+    this.router.navigate(['/dashboard/emisiones/usuario/lista']);
+    this.resetFormState();
+  }
+
   onSubmit():void{
     let data =  this.Form.value as UserData;
+    console.log(data)
 
-    // data.permissions =  this.permisosMarcados.toString();
 
     this.service.register( data )
       .subscribe({
-        // TODO: mostrar snackbar, y navegar a /electricidad/editar/electricidad.id
         error: (err) => {
           Swal.fire({
-            title: "El Dato que ingresaste esta Incorrecto",
+            title: err.error.data[0],
             icon: "error"
           });
         },
       complete: () => {
-
-        const dataAdaptada = {
-          id:           '0',
-          code:         '0',
-          email:        '',
-          nombre:       '',
-          apellido:     '',
-          isActive:     true,
-          role:         'USER',
-        };
-        this.Form.patchValue(dataAdaptada);
+        this.resetFormState();
           Swal.fire({
             title: "Se guardo correctamente",
             icon: "success",
@@ -101,13 +123,17 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
       });
   }
 
-  actualizarPermisosMarcados(permisoId: string) {
-    const permiso = ''+permisoId;
+  actualizarPermisosMarcados(permisoData: any) {
+    const permiso = ""+permisoData.id;
+    
     if (this.permisosMarcados.includes(permiso)) {
+      permisoData.check = false;
       this.permisosMarcados = this.permisosMarcados.filter(id => id !== permiso);
     } else {
+      permisoData.check = true;
       this.permisosMarcados.push(permiso);
     }
+    this.Form.get('accesos').setValue(this.permisosMarcados);
   }
 
 }
