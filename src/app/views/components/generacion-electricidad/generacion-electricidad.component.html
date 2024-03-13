@@ -10,21 +10,7 @@
           <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Tipo de Combustible</button>
         </div>
         <div class="col-md-3">
-          <button mat-button [matMenuTriggerFor]="beforeMenu">Filtro</button>
-          <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <div mat-menu-item>
-              <mat-form-field>
-                <mat-label>Filtrar</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
-              </mat-form-field>
-            </div>
-            <div mat-menu-item>
-              <mat-card class="demo-inline-calendar-card">
-                <mat-calendar [(selected)]="selected"></mat-calendar>
-              </mat-card>
-              <p>Selected date: {{selected}}</p>
-            </div>
-          </mat-menu>
+          <button (click)="openDialog()" >Filtrar</button>
         </div>
         <div class="col-md-3">
           <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Registrar</button>
@@ -83,9 +69,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <!-- <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4"> No hay información "{{input.value}}"</td>
-        </tr> -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4"> No hay información </td>
+        </tr>
       </table>
 
       <mat-paginator

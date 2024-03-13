@@ -1,6 +1,9 @@
-<h2>INGRESE SU CODIGO PARA RESTABLECER LA Contraseña</h2>
 <div>
-  <input type="text" name="code" id="code">
+  <h2 mat-dialog-title>Hi {{data.buscar}}</h2>
+    <input matInput placeholder="Ex. ium" #input>
 </div>
 
-<button type="button">ENVIAR</button>
+<div>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial (click)="oka()">Ok</button>
+</div>

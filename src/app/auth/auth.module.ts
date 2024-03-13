@@ -29,7 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    FormsModule
+    FormsModule,
   ],
 })
 export class AuthModule { }

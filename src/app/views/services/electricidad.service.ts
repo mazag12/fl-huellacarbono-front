@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById, ElectricidadVerificacion } from '../interfaces';
+import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById, ElectricidadVerificacion, TipoElectricidad } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,13 @@ export class ElectricidadService {
     return this.http.get<TipoElectricidadResponse>(`${this.baseUrl}${this.electricidad}tipo`, { headers: this.headers });
   }
 
-  //TODO: EDITAR TIPO
-
+  //TODO: AGREGAR Y EDITAR TIPO
+  ingresar_actualizar_tipo(data: TipoElectricidad):Observable<TipoElectricidad>{
+    delete data.flag_activo;
+    if(data.id === ""){ delete data.id}
+    console.log(data.id);
+    return this.http.post<TipoElectricidad>(`${this.baseUrl}${this.electricidad}tipo`,data, { headers: this.headers });
+  }
 
   //TODO: REPORTE
   reporte(tipodate:string, date: string): Observable<ElectricidadReporteData> {

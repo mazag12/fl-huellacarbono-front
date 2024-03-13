@@ -7,10 +7,10 @@ import { ElectricidadService } from '../../services/electricidad.service';
 
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort} from '@angular/material/sort';
 import { ExportExcelService } from '../../services/export-excel.service';
 import { Workbook, Worksheet } from 'exceljs';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-generacion-electricidad',
@@ -26,18 +26,6 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['ID', 'Fecha', 'Factura', 'TipoCombustible', 'Unidad', 'Cantidad', 'accion'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  selected = null;
-
-  public authService = inject ( AuthService );
-  public user = computed( () => this.authService.currentUser() );
-  public data: ElectricidadResponse[] = [];
-  public dataSource: any = [];
-  public length = 5;
-  public pageIndex = 0;
-
   public fna: string = "Estimación de GEI de Transporte de Personal";
 
   public alcance: any[] = [
@@ -46,8 +34,26 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     {b : 'Código de categoría', c: 'A3_1'},
     {b : 'Hoja', c: '1 de 1 (CO2, CH4 y N2O para emisiones de transporte de personas)'}];
 
-  private _workbook!: Workbook;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
+  selected = null;
+  buscar = '';
+  fecha_ini = '';
+  fecha_fin = '';
+  tipo = '';
+  unidad = '';
+
+  public authService = inject ( AuthService );
+  public user = computed( () => this.authService.currentUser() );
+  public data: ElectricidadResponse[] = [];
+  public dataSource: any = [];
+  public length = 5;
+  public pageIndex = 0;
+
+
+
+  private _workbook!: Workbook;
 
   ngOnInit(): void{
     this.get(5,this.pageIndex + 1);
@@ -57,27 +63,28 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
       tipo.data.forEach(tipos => {
         //LISTA DE LOS COMBUSTIBLES
         if(tipos.flag_activo = true){
-          this.array.push({
-            id: tipos.id,
-            nombre: tipos.nombre,
-            unidad: tipos.unidad,
-            cantidad: 0,
-            a: 0,
-            neto: tipos.valor_neto,
-            c: 0,
-            co2: tipos.co2,
-            e: 0,
-            ch4: tipos.ch4,
-            g: 0,
-            n2o: tipos.n2o,
-            i: 0,
-            j: 0,
-          });
+          if(tipos.id !== undefined){
+            this.array.push({
+              id: tipos.id,
+              nombre: tipos.nombre,
+              unidad: tipos.unidad,
+              cantidad: 0,
+              a: 0,
+              neto: tipos.valor_neto,
+              c: 0,
+              co2: tipos.co2,
+              e: 0,
+              ch4: tipos.ch4,
+              g: 0,
+              n2o: tipos.n2o,
+              i: 0,
+              j: 0,
+            });
+          }
         }
         this.service.reporte('YEAR', '2024')
         .subscribe( reporte =>  {
           reporte.data.forEach(reportes => {
-            //LISTA DE LOS DATOS DE ELECTRICIDAD
             let encontrado = false;
             if(reportes.id === tipos.id){
               for (let i = 0; i < this.array.length; i++) {
@@ -111,6 +118,19 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {buscar: this.buscar, fecha_ini: this.fecha_ini,
+            fecha_fin: this.fecha_fin, tipo: this.tipo,
+            unidad: this.unidad},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.buscar = result;
+    });
+  }
+
   get(limit: number, page: number){
     this.service.obtener(limit,page)
     .subscribe( (reponse) => {
@@ -123,6 +143,7 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 
   onPageChange(event: PageEvent) {
     this.get(event.pageSize,event.pageIndex + 1);
@@ -397,6 +418,13 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     return co2 + ch4 * 30 + n2o * 265;
   }
 
-
-
 }
+
+export interface Filtro {
+  buscar: string,
+  fecha_ini: string,
+  fecha_fin: string,
+  tipo: string,
+  unidad: string,
+}
+

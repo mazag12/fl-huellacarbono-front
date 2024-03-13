@@ -37,10 +37,10 @@ export class LineChartComponent implements OnInit {
 
   onSelectChange(selectedValue: any) {
     switch (selectedValue.value) {
-      case 1:
+      case '1':
         this.generador_electricidad();
         break;
-      case 2:
+      case '2':
         this.sin_registro();
         break;
       case 3:
@@ -123,11 +123,27 @@ export class LineChartComponent implements OnInit {
       }
     ]
     };
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
     this.chart = new Chart ("line",{
-      type: 'line' as ChartType,
+      type: 'line',
       data: data,
       options: {
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip:{
+            enabled: true
+          },
+        }
       }
     })
+
+    this.chart.update();
+
   }
 }
