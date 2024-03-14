@@ -24,6 +24,7 @@ export class DialogComponent {
   tiempoRestante: number = 0;
   intervalId: any;
   codigo: any;
+  verificar: number = 0;
   DesabilitadoInputVerificador: boolean = true;
 
   metodo_salir(): void {
@@ -31,9 +32,11 @@ export class DialogComponent {
   }
 
   metodo_enviar(): void{
-    if(this.codigo === Number(this.data.code)){
+    console.log(this.verificar)
+    if(this.codigo === Number(this.verificar)){
 
-      this.router.navigateByUrl('auth/recuperar')
+      this.router.navigateByUrl('auth/recuperar');
+
       this.dialogRef.close();
     }else{
       Swal.fire({

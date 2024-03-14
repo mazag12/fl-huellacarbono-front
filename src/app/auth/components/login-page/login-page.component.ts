@@ -47,7 +47,7 @@ export class LoginPageComponent {
         if (response && response.data) {
           this.authService.updateData(code);
           this.dialog.open(DialogComponent, {
-            data: {code: '', email: response.data.email, nombre: response.data.nombre + response.data.apellido, id: code },
+            data: {code: code, email: response.data.email, nombre: response.data.nombre + response.data.apellido },
             autoFocus: true,
             closeOnNavigation: true,
             hasBackdrop: true,

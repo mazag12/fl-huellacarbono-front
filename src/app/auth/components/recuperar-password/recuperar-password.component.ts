@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { UserverificatorData } from '../../interfaces';
+import { Email } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-recuperar-password',
@@ -18,32 +20,59 @@ export class RecuperarPasswordComponent implements OnInit {
   private router      = inject( Router );
 
   data: any;
+  info:UserverificatorData[] = [];
   subscription: Subscription | undefined;
 
   public loginForm: FormGroup = this.fb.group({
     code: [''],
-    password: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
-    confirmPassword: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]]
+    password: ['', [Validators.required]],
+    confirmPassword: ['', [Validators.required]]
   })
 
   ngOnInit(): void {
     this.subscription = this.authService.currentData.subscribe(data => {
       this.data = data;
+      this.authService.getuser(this.data)
+      .subscribe({
+        next: (response) =>{
+         this.info.push(response.data);
+        }
+      });
     });
   }
 
   onSubmit() {
-
-    console.log(this.data);
-
     const { password, confirmPassword } = this.loginForm.value;
 
     const comparacion = password.localeCompare(confirmPassword);
 
-    if(comparacion === 0 ){
-      this.authService.recuperar(  this.data, password )
+    this.info[0].id
+
+    const body = {
+      id:  this.info[0].id,
+      code: this.data,
+      nombre:  this.info[0].nombre,
+      apellido:  this.info[0].apellido,
+      password: password,
+      email:  this.info[0].email,
+      isActive:  this.info[0].isActive,
+    }
+
+
+    this.authService.recuperar( body )
       .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard'),
+        next: () => {
+          this.authService.login( this.data, password )
+          .subscribe({
+            next: () => this.router.navigateByUrl('/dashboard'),
+            error: (message) => {
+              Swal.fire(
+                'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
+                  message,
+                'error');
+            }
+          })
+        },
         error: (message) => {
           Swal.fire(
             'ERROR COMUNICATE CON TI',
@@ -51,6 +80,12 @@ export class RecuperarPasswordComponent implements OnInit {
             'error');
         }
       });
+
+    if(comparacion === 0 ){
+
+      const body = null;
+
+
     }else{
       Swal.fire({
         title: "Error",

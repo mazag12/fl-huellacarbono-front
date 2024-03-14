@@ -39,8 +39,7 @@ export class AuthService {
     );
   }
 
-  recuperar( code: string, password: string ): Observable<boolean>{
-    const body = { code, password} ;
+  recuperar( body: any): Observable<boolean>{
     return this.http.post<LoginResponse>(`${ this.baseUrl }auth/password-reset`, body)
     .pipe(
       map(token => {
@@ -68,6 +67,10 @@ export class AuthService {
     localStorage.setItem('token', token);
 
     return true;
+  }
+
+  obtenerbyid( code: string ): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}auth/${code}`);
   }
 
   getJwtPayload(token: string): any {
