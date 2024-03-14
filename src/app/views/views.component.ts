@@ -23,20 +23,19 @@ export class ViewsComponent implements OnInit {
     .subscribe (response => {
       this.permisosMarcados = response.data.accesos
     });
-    
+
 
     await this.serviceModule.listModule().subscribe(response => {
       this.permisosDisponibles = response.data.rows
     });
 
-    
-    
+
   }
 
 
   private authService = inject ( AuthService );
   //public permisosDisponibles: any[] = permisosDisponibles;
-  public permisosDisponibles: any 
+  public permisosDisponibles: any
 
   permisosMarcados: any[] = [];
   public user = computed( () => this.authService.currentUser() );
@@ -71,5 +70,5 @@ export class ViewsComponent implements OnInit {
 
   }
 
-  
+
 }

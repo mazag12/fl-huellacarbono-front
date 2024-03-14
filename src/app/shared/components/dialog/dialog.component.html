@@ -1,9 +1,29 @@
-<div>
-  <h2 mat-dialog-title>Hi {{data.buscar}}</h2>
-    <input matInput placeholder="Ex. ium" #input>
-</div>
+<div class="container">
 
-<div>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button cdkFocusInitial (click)="oka()">Ok</button>
+  <div class="row">
+
+    <div class="col-md-12">
+      <input type="text" class="">
+    </div>
+
+    <div class="col-md-12">
+      <div class="calendar"></div>
+    </div>
+
+    <div>
+      <h4>Tipos</h4>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>TIPOS</option>
+        <option value="1">PETROLEO</option>
+        <option value="2">ACEITE</option>
+        <option value="3">LEÑA</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+      <button mat-button (click)="onNoClick()">No Thanks</button>
+      <button mat-button cdkFocusInitial (click)="oka()">Ok</button>
+    </div>
+
+  </div>
 </div>

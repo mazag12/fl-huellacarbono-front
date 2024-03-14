@@ -4,13 +4,21 @@ export enum Localizacion {
 }
 
 export const permisosDisponibles: any[] = [
-  { id: 1, nombre: 'Dashboard', alcance: 1, cantidad: 0},
-  { id: 2, nombre: 'Fuentes de Emisiones', alcance: 1, cantidad: 0 },
-  { id: 3, nombre: 'Usuarios', alcance: 1, cantidad: 0 },
-  { id: 8, nombre: 'Ayuda', alcance: 1, cantidad: 0 },
-  
+  { id: 1, nombre: 'Dashboard', check : false},
+  { id: 2, nombre: 'Fuentes de Emisiones', check : false},
+  { id: 3, nombre: 'Usuarios', check : false},
+  { id: 8, nombre: 'Ayuda', check : false}
+
 ];
 
+
+export const listaFna: any[] = [
+  { id: 1, nombre: 'Dashboard', check : true},
+  { id: 2, nombre: 'Fuentes de Emisiones', check : true},
+  { id: 3, nombre: 'Usuarios', check : true},
+  { id: 8, nombre: 'Ayuda', check : true}
+
+];
 
 export const tablafna: any[] = [
   { id: 0, nombre: 'Alcance 1', alcance: 1, background: '#E9B7B1'},

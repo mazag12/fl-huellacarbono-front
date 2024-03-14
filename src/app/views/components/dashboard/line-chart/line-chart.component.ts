@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { ElectricidadService } from 'src/app/views/services/electricidad.service';
 import { forkJoin } from 'rxjs';
-import { meses, permisosDisponibles } from 'src/app/views/utils/constans';
+import { meses, listaFna } from 'src/app/views/utils/constans';
 
 @Component({
   selector: 'app-line-chart',
@@ -24,7 +24,7 @@ export class LineChartComponent implements OnInit {
 
   public mesesHastaActual: string[] = [];
 
-  public PermisosDisponibles: any[] =  permisosDisponibles;
+  public PermisosDisponibles: any[] =  listaFna;
 
   ngOnInit(): void {
     this.generador_electricidad();

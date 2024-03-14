@@ -49,17 +49,18 @@ export class UsuarioInsertComponent {
       email:        '',
       nombre:       '',
       apellido:     '',
+      password:     '',
       isActive:     true,
       role:         'USER',
       accesos: [],
     };
-  
+
     this.permisosMarcados = [];
-    
+
     for (let permiso of this.permisosDisponibles) {
       permiso.check = false;
     }
-  
+
     this.Form.patchValue(dataAdaptada);
   }
 
@@ -71,17 +72,30 @@ export class UsuarioInsertComponent {
   onSubmit():void{
     let data =  this.Form.value as UserRegister;
 
-    this.service.register( data )
+     this.service.register( data )
     .subscribe({
       next: (response) => {
-
-        for(let modulo of data.accesos){
+        for(let permiso of this.permisosDisponibles){
           const auxData = {
             user_id: response.data.id,
-            modulo_id: modulo
+            modulo_id: permiso.id
           }
+          const existe  = this.permisosMarcados.filter(id => id  == permiso.id);
           this.service.registerAcceso( auxData )
           .subscribe({
+            next: (response) => {
+              if(existe.length === 0){
+                this.service.deleteAcceso(response.data.id)
+                .subscribe(
+                  (error) => {
+                    Swal.fire({
+                      title: error.error.data[0],
+                      icon: "error"
+                    })
+                  }
+                );
+              }
+            },
             error: (err) => {
               console.log(err)
               Swal.fire({
@@ -91,8 +105,6 @@ export class UsuarioInsertComponent {
             }
           });
         }
-        
-
       },
       error: (err) => {
         console.log(err)
@@ -108,18 +120,17 @@ export class UsuarioInsertComponent {
             icon: "success"
           });
       }
-    
+
     });
-
-
   }
 
   actualizarPermisosMarcados(permisoData: any) {
     const permiso = ""+permisoData.id;
-    
+
     if (this.permisosMarcados.includes(permiso)) {
       permisoData.check = false;
       this.permisosMarcados = this.permisosMarcados.filter(id => id !== permiso);
+      this.permisosMarcados.push(permiso);
     } else {
       permisoData.check = true;
       this.permisosMarcados.push(permiso);

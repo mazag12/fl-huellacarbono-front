@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserData } from 'src/app/auth/interfaces';
+import { UserData, UserRegister, UserbyIDData } from 'src/app/auth/interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UsuarioService } from 'src/app/views/services/usuario.service';
 import Swal from 'sweetalert2';
@@ -25,15 +25,15 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
   public permisosDisponibles: any[] = permisosDisponibles;
   permisosMarcados: string[] = [];
 
+  datos_personal: UserbyIDData[] = [];
+
   public Form: any;
   public data:UserData[] = [];
 
   id: any;
 
   ngOnInit(): void{
-
     this.id = this.activatedRoute.snapshot.params['id'];
-
     this.Form = new FormGroup({
       id:                   new FormControl<string>('0'),
       code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
@@ -44,10 +44,8 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
       role:                 new FormControl<string>('',[Validators.required]),
       accesos: new FormControl<any[]>([],[Validators.required]),
     })
-
     this.service.obtenerbyid(this.id)
     .subscribe (response => {
-      console.log(response.data)
       const dataAdaptada = {
         id:           response.data.id,
         code:         response.data.code,
@@ -65,10 +63,9 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
             }
         }
       }
-
+      this.datos_personal.push(response.data);
       this.Form.patchValue(dataAdaptada)
     });
-
   }
 
   resetFormState(): void {
@@ -82,13 +79,13 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
       role:         'USER',
       accesos: [],
     };
-  
+
     this.permisosMarcados = [];
-    
+
     for (let permiso of this.permisosDisponibles) {
       permiso.check = false;
     }
-  
+
     this.Form.patchValue(dataAdaptada);
   }
 
@@ -98,34 +95,44 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
   }
 
   onSubmit():void{
-    let data =  this.Form.value as UserData;
-    console.log(data)
 
-
-    this.service.register( data )
-      .subscribe({
-        error: (err) => {
-          Swal.fire({
-            title: err.error.data[0],
-            icon: "error"
-          });
-        },
-      complete: () => {
-        this.resetFormState();
-          Swal.fire({
-            title: "Se guardo correctamente",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 3500
-          });
-          this.router.navigate(['/dashboard/emisiones/usuario/lista']);
+    this.datos_personal.forEach(response => {
+      response.accesos.forEach(data => {
+      const existe  = this.permisosMarcados.filter(id => id  == data.modulo_id);
+      if(existe.length === 0){
+        this.service.deleteAcceso(data.id)
+        .subscribe(
+          (error) => {
+            Swal.fire({
+              title: error.error.data[0],
+              icon: "error"
+            })
+          }
+        );
+      }else{
+        const auxData = {
+          id: 1,
+          user_id: this.id,
+          modulo_id: data.modulo_id
         }
-      });
+        this.service.registerAcceso( auxData )
+        .subscribe({
+          error: (err) => {
+            console.log(err)
+            Swal.fire({
+              title: err.error.data[0],
+              icon: "error"
+            })
+          }
+        });
+      }
+      })
+    })
   }
 
   actualizarPermisosMarcados(permisoData: any) {
     const permiso = ""+permisoData.id;
-    
+
     if (this.permisosMarcados.includes(permiso)) {
       permisoData.check = false;
       this.permisosMarcados = this.permisosMarcados.filter(id => id !== permiso);

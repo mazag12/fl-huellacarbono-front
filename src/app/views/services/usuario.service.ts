@@ -32,12 +32,8 @@ export class UsuarioService {
     return this.http.post<UserRegister>(`${this.baseUrl}user/acceso`,data,{ headers: this.headers });
   }
 
-  obtenerbycode(code: string): Observable<Userverificar>{
-    return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);
-  }
-
-  sendEmail(code: string): Observable<Userverificar>{
-    return this.http.get<Userverificar>(`${this.baseUrl}user/ingreso/${code}`);
+  deleteAcceso(id : number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}user/acceso?acceso_id=${id}`,{ headers: this.headers });
   }
 
 }

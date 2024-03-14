@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Row } from 'src/app/auth/interfaces';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
