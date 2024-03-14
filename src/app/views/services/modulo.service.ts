@@ -1,20 +1,33 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModuloService {
-   //TODO: DIRECCIÓN DE LA API
+   
    private readonly baseUrl: string = environment.baseURL;
 
    constructor(private http: HttpClient) { }
 
-   private headers = new HttpHeaders()
+  private moduloSubject = new BehaviorSubject<any[]>([]);
+  private accesosSubject = new BehaviorSubject<any[]>([]);
+  
+  public modulo$: Observable<any[]> = this.moduloSubject.asObservable();
+  public accesos$: Observable<any[]> = this.accesosSubject.asObservable();
+  
+  private headers = new HttpHeaders()
    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-   
+
+  setModulo(modulo: any[]): void {
+    this.moduloSubject.next(modulo);
+  }
+
+  setAcceso(acceso : any[]): void {
+    this.accesosSubject.next(acceso);
+  }
 
   listModule(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}modulo`, { headers: this.headers });

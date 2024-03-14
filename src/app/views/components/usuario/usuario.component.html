@@ -15,7 +15,7 @@
 
     <mat-form-field>
       <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
+      <input matInput  [(ngModel)]="filterValue"  (input)="applyFilter()" placeholder="Filtrar" #input>
     </mat-form-field>
 
     <div class="mat-elevation-z8">

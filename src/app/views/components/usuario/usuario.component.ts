@@ -1,4 +1,4 @@
-import { Component, ViewChild, computed, inject } from '@angular/core';
+import { Component, ViewChild, NgModule, computed, inject } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material/sort';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Row } from 'src/app/auth/interfaces';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
@@ -28,26 +27,29 @@ public user = computed( () => this.authService.currentUser() );
 public dataSource: any = [];
 public length = 5;
 public pageIndex = 0;
-
+public filterValue: string = '';
 public data: Row[] = [];
 
 ngOnInit(): void{
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-  this.get(this.length, this.pageIndex + 1);
+  
+  this.get(this.length, this.pageIndex + 1 );
 }
 
-get(limit: number, page: number){
-  this.service.obtener(limit,page)
-  .subscribe( (reponse) => {
-    if (reponse && reponse.data) {
-      this.data = reponse.data.rows;
-      this.dataSource = new MatTableDataSource(this.data);
-      if(reponse.data.count === 5){
-        this.length = (limit * (page + 2))+ 1;
+get(limit: number, page: number, textFilter?: string){
+    
+    this.service.obtener(limit, page, textFilter)
+    .subscribe( (reponse) => {
+      if (reponse && reponse.data) {
+        this.data = reponse.data.rows;
+        const totalData = reponse.data.count
+        this.length = totalData;
+        
+        this.dataSource = new MatTableDataSource(this.data);
       }
-    }
-  });
+    });
+  
 }
 
 onPageChange(event: PageEvent) {
@@ -59,11 +61,11 @@ ngAfterViewInit() {
   this.dataSource.sort = this.sort;
 }
 
-applyFilter(event: Event) {
-  const filterValue = (event.target as HTMLInputElement).value;
-  this.dataSource.filter = filterValue.trim().toLowerCase();
-  if (this.dataSource.paginator) {
-    this.dataSource.paginator.firstPage();
-  }
+
+applyFilter() {
+  this.length = 5
+  this.get(this.length, this.pageIndex + 1, this.filterValue);
 }
+
+
 }

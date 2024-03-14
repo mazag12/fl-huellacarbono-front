@@ -16,9 +16,14 @@ export class UsuarioService {
    private headers = new HttpHeaders()
    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
-  obtener( limit: number, page: number ): Observable<UserDataList> {
-    return this.http.get<UserDataList>(`${this.baseUrl}user?limit=${limit}&page=${page}`, { headers: this.headers });
-  }
+  obtener( limit: number, page: number, filter?: any ): Observable<UserDataList> {
+    let url = `${this.baseUrl}user?limit=${limit}&page=${page}`;
+    const filterStr = JSON.stringify(filter);
+    if(filter){
+      url += `&filter=${filterStr}`;
+    }
+    return this.http.get<UserDataList>(url, { headers: this.headers });
+   }
 
   obtenerbyid( id: number ): Observable<UserbyID> {
     return this.http.get<UserbyID>(`${this.baseUrl}user/${id}`, { headers: this.headers });

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { ViewsRoutingModule } from './views-routing.module';
 
 import {NgFor} from '@angular/common';
@@ -125,6 +125,7 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatDatepickerModule,
     MatNativeDateModule,
     NgFor,
+    FormsModule,
     ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
@@ -138,7 +139,9 @@ import {LayoutModule} from '@angular/cdk/layout';
     MatSlideToggleModule,
     LayoutModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    
+     
   ],
 
 })
