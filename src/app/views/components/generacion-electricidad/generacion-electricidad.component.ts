@@ -41,17 +41,13 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
   buscar = '';
   fecha_ini = '';
   fecha_fin = '';
-  tipo = '';
-  unidad = '';
+  tipo:any []= [];
+  unidad:any []= [];
 
-  public authService = inject ( AuthService );
-  public user = computed( () => this.authService.currentUser() );
   public data: ElectricidadResponse[] = [];
   public dataSource: any = [];
   public length = 5;
   public pageIndex = 0;
-
-
 
   private _workbook!: Workbook;
 
@@ -61,7 +57,7 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     this.service.tipo()
     .subscribe( tipo =>  {
       tipo.data.forEach(tipos => {
-        //LISTA DE LOS COMBUSTIBLES
+        this.tipo.push({id: tipos.id, nombre: tipos.nombre, unidad: tipos.unidad});
         if(tipos.flag_activo = true){
           if(tipos.id !== undefined){
             this.array.push({
@@ -120,14 +116,22 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: {buscar: this.buscar, fecha_ini: this.fecha_ini,
-            fecha_fin: this.fecha_fin, tipo: this.tipo,
-            unidad: this.unidad},
+      height: '400px',
+      width: '600px',
+      data: {tipo: this.tipo},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      
       this.buscar = result;
+
+      
+
+      const data: any [] = [];
+
+      this.dataSource = new MatTableDataSource(data);
+
+
     });
   }
 

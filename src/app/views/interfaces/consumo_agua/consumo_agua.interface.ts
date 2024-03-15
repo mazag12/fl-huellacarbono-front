@@ -3,6 +3,17 @@ export interface ConsumoaguaResponsive {
   data: Agua[];
 }
 
+export interface AguaReporte{
+  data: Data[];
+}
+
+export interface Data {
+  medidor:        number;
+  cantidad:       number;
+}
+
+
+
 export interface Agua {
   id:             number;
   medidor:        number;
