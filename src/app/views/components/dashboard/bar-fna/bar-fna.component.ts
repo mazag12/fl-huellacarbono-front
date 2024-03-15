@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { permisosDisponibles } from '../../../utils/constans';
+import { listaFna } from '../../../utils/constans';
 import { ElectricidadService } from 'src/app/views/services/electricidad.service';
 import { forkJoin } from 'rxjs';
+import { AguaService } from 'src/app/views/services/agua.service';
 
 @Component({
   selector: 'app-bar-fna',
@@ -11,28 +12,35 @@ import { forkJoin } from 'rxjs';
 export class BarFnaComponent implements OnInit {
 
   constructor(
-    private service: ElectricidadService) {}
+    private serviceelectricidad: ElectricidadService,
+    private serviceagua: AguaService) {}
 
-  PermisosDisponibles: any[] =  permisosDisponibles;
+  Listadofna: any[] =  listaFna;
 
   fechaActual = new Date();
 
   numeroMes = this.fechaActual.getMonth() + 1;
 
   ngOnInit(): void {
-    const requests = [];
+    const gelectricidad = [];
+
+    const agua = [];
 
     //Generación Electricidad
     for (let mes = 1; mes < this.numeroMes + 1; mes++) {
-      const request = this.service.reporte('MONTH', mes.toString());
-      requests.push(request);
+      const electricidadrequest = this.serviceelectricidad.reporte('MONTH', mes.toString());
+      const aguarequest = this.serviceagua.reporte('MONTH', mes.toString());
+
+      gelectricidad.push(electricidadrequest);
+      agua.push(aguarequest);
+
     }
 
-    forkJoin(requests).subscribe(reportsArray => {
+    forkJoin(gelectricidad).subscribe(reportsArray => {
       reportsArray.forEach((reporte) => {
         if (reporte && reporte.data) {
           reporte.data.forEach(reportes => {
-            this.PermisosDisponibles[0].cantidad += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
+            this.Listadofna[0].cantidad += ((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.co2) / 1000) +
             (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.ch4) / 1000) * 30) +
             (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.n2o) / 1000) * 265);
           });
@@ -40,10 +48,21 @@ export class BarFnaComponent implements OnInit {
           console.error('El reporte es null o no tiene la propiedad data');
         }
       });
-      this.PermisosDisponibles.sort((a, b) => b.cantidad - a.cantidad);
+      this.Listadofna.sort((a, b) => b.cantidad - a.cantidad);
     });
 
-
+    forkJoin(agua).subscribe(reportsArray => {
+      reportsArray.forEach((reporte) => {
+        if (reporte && reporte.data) {
+          reporte.data.forEach(reportes => {
+            this.Listadofna[10].cantidad += (reportes.cantidad * 0.34 )/1000;
+          });
+        }else{
+          console.error('El reporte es null o no tiene la propiedad data');
+        }
+      });
+      this.Listadofna.sort((a, b) => b.cantidad - a.cantidad);
+    });
 
   }
 
