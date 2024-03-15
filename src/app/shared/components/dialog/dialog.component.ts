@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Filtro } from '../../interface/filtro';
-declare var jQuery: any;
+
 
 @Component({
   selector: 'app-dialog',
@@ -14,24 +14,26 @@ export class DialogComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: Filtro,
   ) {}
 
+  selectTipo: number = 0;
+  selectUnidad: number = 0;
+  fecha: string = '';
+  texto: string= '';
+
   ngOnInit(): void {
-    jQuery('.calendar').calendar();
+
   }
-
-  selected!: Date | null;
-
-
-  foods = [
-    {value: 'Tipo 1', viewValue: 'Combustible 98'},
-    {value: 'Tipo 2', viewValue: 'Gasolina'},
-    {value: 'Tipo 3', viewValue: 'Aceite'},
-  ];
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   oka(): void {
-    this.dialogRef.close();
+    const valores = {
+      input: this.texto,
+      fecha: this.fecha,
+      tipo: this.selectTipo,
+      unidad: this.selectUnidad
+    }
+    this.dialogRef.close(valores);
   }
 }

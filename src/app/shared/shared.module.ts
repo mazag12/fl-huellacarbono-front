@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
@@ -11,6 +11,11 @@ import {MatSelectModule} from '@angular/material/select';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+
+import {NgFor} from '@angular/common';
 
 @NgModule({
 
@@ -21,14 +26,23 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   imports: [
     CommonModule,
     SharedRoutingModule,
-    MatDatepickerModule,
-    MatCardModule,
-    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    FormsModule,
+    NgFor,
+    MatSelectModule,
+    MatCardModule,
+    MatDatepickerModule
   ],
   exports: [
-    DialogComponent
+    DialogComponent,
+  ],
+  schemas:[
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 export class SharedModule { }
