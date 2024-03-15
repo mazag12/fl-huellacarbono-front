@@ -49,16 +49,13 @@ export class RecuperarPasswordComponent implements OnInit {
     this.info[0].id
 
     const body = {
-      id:  this.info[0].id,
+      id:  parseInt(this.info[0].id),
       code: this.data,
       nombre:  this.info[0].nombre,
       apellido:  this.info[0].apellido,
       password: password,
-      email:  this.info[0].email,
-      isActive:  this.info[0].isActive,
+      email:  this.info[0].email
     }
-
-
     this.authService.recuperar( body )
       .subscribe({
         next: () => {
@@ -74,17 +71,13 @@ export class RecuperarPasswordComponent implements OnInit {
           })
         },
         error: (message) => {
-          Swal.fire(
-            'ERROR COMUNICATE CON TI',
-              message,
-            'error');
+          console.log(message);
         }
       });
 
     if(comparacion === 0 ){
 
       const body = null;
-
 
     }else{
       Swal.fire({

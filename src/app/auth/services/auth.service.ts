@@ -39,14 +39,8 @@ export class AuthService {
     );
   }
 
-  recuperar( body: any): Observable<boolean>{
-    return this.http.post<LoginResponse>(`${ this.baseUrl }auth/password-reset`, body)
-    .pipe(
-      map(token => {
-        return this.setAuthentication(token.data);
-      }),
-      catchError( err => throwError( () => err.error.message ))
-    );
+  recuperar( body: any): Observable<any>{
+    return this.http.post<any>(`${ this.baseUrl }auth/signup`, body);
   }
 
   getuser( code: string ): Observable<Userverificar> {
