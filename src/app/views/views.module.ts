@@ -14,6 +14,8 @@ import { ListFnaComponent } from './components/listar_fna/list.component';
 import { GeneracionElectricidadComponent } from './components/generacion-electricidad/generacion-electricidad.component';
 import { TransportePropioComponent } from './components/transporte-propio/transporte-propio.component';
 import { RefrigerantesComponent } from './components/refrigerantes/refrigerantes.component';
+import { RefrigerantesUpdateComponent } from './components/refrigerantes/refrigerantes-update/refrigerantes-update.component';
+
 import { ConsumoSeinComponent } from './components/consumo-sein/consumo-sein.component';
 import { FugasSf6Component } from './components/fugas-sf6/fugas-sf6.component';
 import { TransporteCasaTrabajoComponent } from './components/transporte-casa-trabajo/transporte-casa-trabajo.component';
@@ -76,6 +78,7 @@ import {LayoutModule} from '@angular/cdk/layout';
     GeneracionElectricidadComponent,
     TransportePropioComponent,
     RefrigerantesComponent,
+    RefrigerantesUpdateComponent,
     ConsumoSeinComponent,
     FugasSf6Component,
     TransporteCasaTrabajoComponent,

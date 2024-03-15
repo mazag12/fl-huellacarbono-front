@@ -31,36 +31,25 @@ public filterValue: string = '';
 public data: Row[] = [];
 
 ngOnInit(): void{
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.sort;
-  
   this.get(this.length, this.pageIndex + 1 );
 }
 
 get(limit: number, page: number, textFilter?: string){
-    
+    let totalData: any;
     this.service.obtener(limit, page, textFilter)
     .subscribe( (reponse) => {
       if (reponse && reponse.data) {
         this.data = reponse.data.rows;
-        const totalData = reponse.data.count
-        this.length = totalData;
-        
+        totalData = reponse.data.count
         this.dataSource = new MatTableDataSource(this.data);
+        this.length = totalData;
       }
     });
-  
 }
 
 onPageChange(event: PageEvent) {
-  this.get(event.pageSize,event.pageIndex + 1);
+  this.get(event.pageSize,event.pageIndex + 1, this.filterValue);
 }
-
-ngAfterViewInit() {
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.sort;
-}
-
 
 applyFilter() {
   this.length = 5
