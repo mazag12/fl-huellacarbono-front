@@ -35,7 +35,7 @@ export class BarFnaComponent implements OnInit {
       agua.push(aguarequest);
 
     }
-
+    //TODO: GENERACION DE ELECTRICIDAD
     forkJoin(gelectricidad).subscribe(reportsArray => {
       reportsArray.forEach((reporte) => {
         if (reporte && reporte.data) {
@@ -51,11 +51,15 @@ export class BarFnaComponent implements OnInit {
       this.Listadofna.sort((a, b) => b.cantidad - a.cantidad);
     });
 
+    //TODO: Transporte propio
+
+
+    //TODO: AGUA
     forkJoin(agua).subscribe(reportsArray => {
       reportsArray.forEach((reporte) => {
         if (reporte && reporte.data) {
           reporte.data.forEach(reportes => {
-            this.Listadofna[10].cantidad += (reportes.cantidad * 0.34 )/1000;
+            this.Listadofna[9].cantidad += (reportes.cantidad * 0.34 )/1000;
           });
         }else{
           console.error('El reporte es null o no tiene la propiedad data');

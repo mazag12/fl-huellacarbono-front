@@ -41,7 +41,6 @@ export class ViewsComponent implements OnInit {
   async generarSidebar() {
     this.serviceModule.accesos$.subscribe((acceso) => {
       this.permisosMarcados = acceso;
-      console.log(acceso)
     });
 
     this.serviceModule.modulo$.subscribe((modulo) => {

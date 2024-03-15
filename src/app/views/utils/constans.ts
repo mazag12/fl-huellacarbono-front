@@ -26,6 +26,11 @@ export const listaFna: any[] = [
   { id: 12, nombre: 'Generación de residuos sólidos', alcance: 3, cantidad: 0 }
 ]
 
+export const listalocacion: any[] = [
+  { id: 'CD principal - Oficina', nombre: 'CD principal - Oficina'},
+  { id: 'Tiendas', nombre: 'Tiendas'},
+]
+
 export const tablafna: any[] = [
   { id: 0, nombre: 'Alcance 1', alcance: 1, background: '#E9B7B1'},
   { id: 1, nombre: 'Generación electricidad', alcance: 1, background: '#FFFFFF'},

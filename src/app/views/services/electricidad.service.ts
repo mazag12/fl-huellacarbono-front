@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { TipoElectricidadResponse, Electricidad, ElectricidadRegister, ElectricidadReporteData, ElectricidadById, ElectricidadVerificacion, TipoElectricidad } from '../interfaces';
+import { TipoElectricidadResponse, ElectricidadAll, ElectricidadRegister, ElectricidadReporteData, ElectricidadById, ElectricidadVerificacion, TipoElectricidad } from '../interfaces';
+import { Filter } from 'src/app/shared/interface/filtro';
+import { Localizacion } from '../utils/constans';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,25 @@ export class ElectricidadService {
 
   private electricidad: string = "electricidad/";
 
-  obtener( limit: number,page: number ): Observable<Electricidad> {
-    return this.http.get<Electricidad>(`${this.baseUrl}${this.electricidad}ingreso?limit=${limit}&page=${page}`, { headers: this.headers });
+  obtener( filter: Filter): Observable<ElectricidadAll> {
+    let url = `${this.baseUrl}${this.electricidad}ingreso?`;
+    url += `limit=${filter.limit}&page=${filter.page}`;
+    if (filter.factura !== undefined && filter.factura !== '') {
+      url += `factura=${filter.factura}`;
+    }
+    if(filter.fecha !== undefined && filter.fecha !== ''){
+      url += filter.fecha !== undefined?`&`:``;
+      const soloFecha: string = filter.fecha.split('T')[0];
+      url += `fecha=${soloFecha}`;
+    }
+    if (filter.tipo !== undefined) {
+      let data = 0;
+      data += filter.factura !== undefined?1:0;
+      data += filter.factura !== undefined?1:0;
+      url += data>0?`&`:``;
+      url += `tipo=${filter.tipo}`;
+    }
+    return this.http.get<ElectricidadAll>(url, { headers: this.headers });
   }
 
   obtenerbyid( id: number ): Observable<ElectricidadById> {
@@ -53,8 +72,8 @@ export class ElectricidadService {
   }
 
   //TODO: REPORTE
-  reporte(tipodate:string, date: string): Observable<ElectricidadReporteData> {
-    return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}reporte?tipoDate=${tipodate}&valueDate=${date}`, { headers: this.headers });
+  reporte(tipodate:string, date: string , Localizacion?: string): Observable<ElectricidadReporteData> {
+    return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}reporte?tipoDate=${tipodate}&valueDate=${date}&locacion=${Localizacion}`, { headers: this.headers });
   }
 
 }

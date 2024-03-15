@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, computed, inject } from '@
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../auth/services/auth.service';
 
-import { ElectricidadAgrupada, ElectricidadResponse } from 'src/app/views/interfaces';
+import { ElectricidadAgrupada, ElectricidadAll, ElectricidadResponse, ElectricidadRow } from 'src/app/views/interfaces';
 import { ElectricidadService } from '../../services/electricidad.service';
 
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -11,6 +11,7 @@ import { MatSort} from '@angular/material/sort';
 import { ExportExcelService } from '../../services/export-excel.service';
 import { Workbook, Worksheet } from 'exceljs';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { Filter } from 'src/app/shared/interface/filtro';
 
 @Component({
   selector: 'app-generacion-electricidad',
@@ -22,9 +23,26 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
   constructor(
       private service: ElectricidadService ,
       public dialog: MatDialog,
-      private exportExcelService: ExportExcelService) {}
+      private exportExcelService: ExportExcelService) {
+        this.filtro = { limit: 10, page: 5 };
+      }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  //TODO: Datos que se muestra en la tabla
   displayedColumns: string[] = ['ID', 'Fecha', 'Factura', 'TipoCombustible', 'Unidad', 'Cantidad', 'accion'];
+
+  public dataSource: any = [];
+  public length = 5;
+  public pageIndex = 0;
+  public data: ElectricidadRow[] = [];
+
+  //TODO: Filtrado de los datos
+  filtro: Filter;
+
+  //TODO: componente para el excel
+  private _workbook!: Workbook;
 
   public fna: string = "Estimación de GEI de Transporte de Personal";
 
@@ -34,25 +52,12 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     {b : 'Código de categoría', c: 'A3_1'},
     {b : 'Hoja', c: '1 de 1 (CO2, CH4 y N2O para emisiones de transporte de personas)'}];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  selected = null;
-  buscar = '';
-  fecha_ini = '';
-  fecha_fin = '';
+  //TODO: variable para Dialog
   tipo:any []= [];
-  unidad:any []= [];
-
-  public data: ElectricidadResponse[] = [];
-  public dataSource: any = [];
-  public length = 5;
-  public pageIndex = 0;
-
-  private _workbook!: Workbook;
 
   ngOnInit(): void{
-    this.get(5,this.pageIndex + 1);
+
+  this.get({ limit: 5, page: 1});
 
     this.service.tipo()
     .subscribe( tipo =>  {
@@ -122,43 +127,28 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
-      this.buscar = result;
-
-      
-
-      const data: any [] = [];
-
-      this.dataSource = new MatTableDataSource(data);
-
-
+      this.filtro = {limit: 10, page: 5, factura: result.factura, tipo: result.tipo};
+      this.get(this.filtro);
     });
   }
 
-  get(limit: number, page: number){
-    this.service.obtener(limit,page)
-    .subscribe( (reponse) => {
-      if (reponse && reponse.data) {
-        this.data = reponse.data;
-        this.dataSource = new MatTableDataSource(reponse.data);
-        if(this.data.length === 5){
-          this.length = (limit * (page + 2))+ 1;
+  get(filtro: Filter): void {
+    let totalData: any;
+    this.service.obtener(filtro)
+      .subscribe((reponse: ElectricidadAll) => {
+        if (reponse && reponse.data && reponse.data.rows) {
+          const rows: ElectricidadRow[] = reponse.data.rows;
+          this.data = reponse.data.rows;
+          totalData = reponse.data.count;
+          this.dataSource = new MatTableDataSource(rows);
+          this.length = totalData;
         }
-      }
     });
   }
-
 
   onPageChange(event: PageEvent) {
-    this.get(event.pageSize,event.pageIndex + 1);
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.filtro = { ...this.filtro, limit: event.pageSize, page: event.pageIndex + 1 };
+    this.get(this.filtro);
   }
 
   public array: ElectricidadAgrupada[] = [];
@@ -423,12 +413,3 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
   }
 
 }
-
-export interface Filtro {
-  buscar: string,
-  fecha_ini: string,
-  fecha_fin: string,
-  tipo: string,
-  unidad: string,
-}
-
