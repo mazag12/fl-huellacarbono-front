@@ -26,7 +26,8 @@ export class UsuarioService {
    }
 
   obtenerbyid( id: number ): Observable<UserbyID> {
-    return this.http.get<UserbyID>(`${this.baseUrl}user/${id}`, { headers: this.headers });
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<UserbyID>(`${this.baseUrl}user/${id}`, { headers: headers });
   }
 
   register(data : any): Observable<any> {

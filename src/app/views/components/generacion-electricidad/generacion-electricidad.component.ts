@@ -57,7 +57,7 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void{
 
-  this.get({ limit: 5, page: 1});
+  this.get({ limit: 5, page: 1 });
 
     this.service.tipo()
     .subscribe( tipo =>  {
@@ -127,7 +127,8 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.filtro = {limit: 10, page: 5, factura: result.factura, tipo: result.tipo};
+      this.filtro = {limit: 5, page: 1, factura: result.factura, tipo: parseInt(result.tipo)};
+      console.log(this.filtro)
       this.get(this.filtro);
     });
   }
@@ -140,6 +141,7 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
           const rows: ElectricidadRow[] = reponse.data.rows;
           this.data = reponse.data.rows;
           totalData = reponse.data.count;
+          console.log(this.data )
           this.dataSource = new MatTableDataSource(rows);
           this.length = totalData;
         }

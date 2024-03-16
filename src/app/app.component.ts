@@ -12,7 +12,7 @@ import { UsuarioService } from './views/services/usuario.service';
 })
 export class AppComponent implements OnInit {
 
-  public verificacion: boolean = false;
+  public verificacion: boolean = true;
   private authService = inject( AuthService );
   private router      = inject( Router );
   public permisosDisponibles: any
@@ -21,10 +21,11 @@ export class AppComponent implements OnInit {
   constructor(private serviceModule: ModuloService, private service: UsuarioService){}
   
   ngOnInit(): void {
-    this.generarSidebar();
+    
   }
 
   async generarSidebar() {
+    this.verificacion = false;
     const currentUser = this.authService.currentUser();
     if(currentUser)
 
@@ -52,16 +53,19 @@ export class AppComponent implements OnInit {
   });
 
   public authStatusChangeEffect = effect( () => {
+    
     switch( this.authService.authStatus() ){
       case AuthStatus.checking:
         return;
       case AuthStatus.authenticated:
         this.router.navigateByUrl('/dashboard/emisiones/lista');
+        this.generarSidebar();
         return;
       case AuthStatus.notAuthenticated:
         this.router.navigateByUrl('/auth/login');
         return;
     }
+    
   } );
 
 }
