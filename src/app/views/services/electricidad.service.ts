@@ -24,7 +24,7 @@ export class ElectricidadService {
     let url = `${this.baseUrl}${this.electricidad}ingreso?`;
     url += `limit=${filter.limit}&page=${filter.page}`;
     if (filter.factura !== undefined && filter.factura !== '') {
-      url += `factura=${filter.factura}`;
+      url += `&factura=${filter.factura}`;
     }
     if(filter.fecha !== undefined && filter.fecha !== ''){
       url += filter.fecha !== undefined?`&`:``;
@@ -34,10 +34,19 @@ export class ElectricidadService {
     if (filter.tipo !== undefined) {
       let data = 0;
       data += filter.factura !== undefined?1:0;
-      data += filter.factura !== undefined?1:0;
+      data += filter.fecha !== undefined?1:0;
       url += data>0?`&`:``;
       url += `tipo=${filter.tipo}`;
     }
+    if (filter.cantidad !== undefined) {
+      let data = 0;
+      data += filter.factura !== undefined?1:0;
+      data += filter.fecha !== undefined?1:0;
+      data += filter.tipo !== undefined?1:0;
+      url += data>0?`&`:``;
+      url += `cantidad=${filter.cantidad}`;
+    }
+
     return this.http.get<ElectricidadAll>(url, { headers: this.headers });
   }
 

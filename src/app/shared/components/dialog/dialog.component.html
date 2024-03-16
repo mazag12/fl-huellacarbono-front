@@ -9,7 +9,7 @@
 
       <div class="col-md-12">
         <mat-form-field class="example-full-width">
-          <mat-label>Buscar</mat-label>
+          <mat-label>Factura</mat-label>
           <input matInput placeholder="Buscar" [(ngModel)]="texto">
         </mat-form-field>
       </div>
@@ -29,6 +29,13 @@
           <mat-select [(ngModel)]="selectTipo">
             <mat-option *ngFor="let item of this.data.tipo" [value]="item.id">{{item.nombre}}</mat-option>
           </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12">
+        <mat-form-field class="example-full-width">
+          <mat-label>Cantidad</mat-label>
+          <input matInput placeholder="Buscar" [(ngModel)]="cantidad">
         </mat-form-field>
       </div>
 

@@ -127,8 +127,14 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.filtro = {limit: 5, page: 1, factura: result.factura, tipo: parseInt(result.tipo)};
-      console.log(this.filtro)
+      let fechaFormateada = '';
+      if(result.fecha !== ''){
+        const fecha = new Date(result.fecha).toISOString();
+        fechaFormateada = fecha.toString().slice(0, 10);
+      }
+      this.filtro = {limit: 5, page: 1, factura: result.factura,
+                    fecha: fechaFormateada, tipo: result.tipo,
+                    cantidad: result.cantidad};
       this.get(this.filtro);
     });
   }

@@ -27,8 +27,8 @@ export const listaFna: any[] = [
 ]
 
 export const listalocacion: any[] = [
-  { id: 'CD principal - Oficina', nombre: 'CD principal - Oficina'},
-  { id: 'Tiendas', nombre: 'Tiendas'},
+  { id: 1, nombre: 'CD principal - Oficina'},
+  { id: 2, nombre: 'Tiendas'},
 ]
 
 export const tablafna: any[] = [

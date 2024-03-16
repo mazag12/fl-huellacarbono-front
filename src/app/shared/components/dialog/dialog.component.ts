@@ -17,7 +17,7 @@ export class DialogComponent implements OnInit{
   selectTipo: number = 0;
   fecha: string = '';
   texto: string= '';
-
+  cantidad: number=0;
   ngOnInit(): void {
 
   }
@@ -31,6 +31,7 @@ export class DialogComponent implements OnInit{
       factura: this.texto,
       fecha: this.fecha,
       tipo: this.selectTipo,
+      cantidad: this.cantidad,
     }
     this.dialogRef.close(valores);
   }

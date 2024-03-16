@@ -3,5 +3,6 @@ export interface Filter {
   page: number,
   factura?: string,
   fecha?: string,
-  tipo?: any
+  tipo?: any [],
+  cantidad?: number,
 }
