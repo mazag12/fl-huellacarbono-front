@@ -12,18 +12,18 @@ export const permisosDisponibles: any[] = [
 ];
 
 export const listaFna: any[] = [
-  { id: 1, nombre: 'Generación electricidad', alcance: 1, cantidad: 0},
-  { id: 2, nombre: 'Transporte propio', alcance: 1, cantidad: 0 },
-  { id: 3, nombre: 'Refrigerantes', alcance: 1, cantidad: 0 },
-  { id: 4, nombre: 'Fugas de SF6', alcance: 1, cantidad: 0 },
-  { id: 5, nombre: 'Consumo de electricidad del SEIN (en KWh)', alcance: 2, cantidad: 0 },
-  { id: 6, nombre: 'Transporte casa-trabajo', alcance: 3, cantidad: 0 },
-  { id: 7, nombre: 'Transporte aéreo', alcance: 3, cantidad: 0 },
-  { id: 8, nombre: 'Transporte terrestre', alcance: 3, cantidad: 0 },
-  { id: 9, nombre: 'Consumo de papel', alcance: 3, cantidad: 0 },
-  { id: 10, nombre: 'Consumo de agua potable de la red pública (en m3)', alcance: 3, cantidad: 0 },
-  { id: 11, nombre: 'Transporte de insumos por terceros', alcance: 3, cantidad: 0 },
-  { id: 12, nombre: 'Generación de residuos sólidos', alcance: 3, cantidad: 0 }
+  { id: 1, nombre: 'Generación electricidad', alcance: 1, cantidad: 0, color: 'rgba(4,25,5,5,0.1)'},
+  { id: 2, nombre: 'Transporte propio', alcance: 1, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 3, nombre: 'Refrigerantes', alcance: 1, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 4, nombre: 'Fugas de SF6', alcance: 1, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 5, nombre: 'Consumo de electricidad del SEIN (en KWh)', alcance: 2, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 6, nombre: 'Transporte casa-trabajo', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 7, nombre: 'Transporte aéreo', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 8, nombre: 'Transporte terrestre', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 9, nombre: 'Consumo de papel', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 10, nombre: 'Consumo de agua potable de la red pública (en m3)', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 11, nombre: 'Transporte de insumos por terceros', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' },
+  { id: 12, nombre: 'Generación de residuos sólidos', alcance: 3, cantidad: 0, color: 'rgba(4,25,5,5,0.1)' }
 ]
 
 export const listalocacion: any[] = [
