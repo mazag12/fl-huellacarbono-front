@@ -5,7 +5,6 @@ import { isNotAuthenticatedGuard } from './auth/guards';
 import { ViewsComponent } from './views/views.component';
 
 const routes: Routes = [
-
   {
     path: 'auth',
     canActivate: [isNotAuthenticatedGuard],
@@ -17,7 +16,7 @@ const routes: Routes = [
     canActivate: [ isAuthenticatedGuard ],
     children:[
       {
-        path: 'emisiones',
+        path:'emisiones',
         loadChildren: () => import('./views/views.module').then( m => m.ViewsModule )
       }
     ]

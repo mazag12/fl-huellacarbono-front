@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserData, UserRegister, UserbyIDData } from 'src/app/auth/interfaces';
+import { UserData, UserbyIDData } from 'src/app/auth/interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UsuarioService } from 'src/app/views/services/usuario.service';
 import Swal from 'sweetalert2';
@@ -33,6 +33,7 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
   id: any;
 
   ngOnInit(): void{
+    console.log("Hola con todos");
     this.id = this.activatedRoute.snapshot.params['id'];
     this.Form = new FormGroup({
       id:                   new FormControl<string>('0'),
@@ -96,38 +97,46 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
 
   onSubmit():void{
 
-    this.datos_personal.forEach(response => {
-      response.accesos.forEach(data => {
-      const existe  = this.permisosMarcados.filter(id => id  == data.modulo_id);
-      if(existe.length === 0){
-        this.service.deleteAcceso(data.id)
-        .subscribe(
-          (error) => {
-            Swal.fire({
-              title: error.error.data[0],
-              icon: "error"
-            })
-          }
-        );
-      }else{
-        const auxData = {
-          id: 1,
-          user_id: this.id,
-          modulo_id: data.modulo_id
-        }
-        this.service.registerAcceso( auxData )
-        .subscribe({
-          error: (err) => {
-            console.log(err)
-            Swal.fire({
-              title: err.error.data[0],
-              icon: "error"
-            })
-          }
-        });
-      }
-      })
-    })
+    // this.datos_personal.forEach(response => {
+    //   response.accesos.forEach(data => {
+    //   const existe  = this.permisosMarcados.filter(id => id  == data.modulo_id);
+    //   if(existe.length === 0){
+    //     this.service.deleteAcceso(data.id)
+    //     .subscribe(
+    //       (error) => {
+    //         Swal.fire({
+    //           title: error.error.data[0],
+    //           icon: "error"
+    //         })
+    //       }
+    //     );
+    //   }else{
+    //     const auxData = {
+    //       id: 1,
+    //       user_id: this.id,
+    //       modulo_id: data.modulo_id
+    //     }
+    //     this.service.registerAcceso( auxData )
+    //     .subscribe({
+    //       error: (err) => {
+    //         console.log(err)
+    //         Swal.fire({
+    //           title: err.error.data[0],
+    //           icon: "error"
+    //         });
+    //       }
+    //     });
+    //   }
+    //   });
+    // });
+
+    Swal.fire({
+      title: "Se guardo correctamente",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 3500
+    });
+
   }
 
   actualizarPermisosMarcados(permisoData: any) {

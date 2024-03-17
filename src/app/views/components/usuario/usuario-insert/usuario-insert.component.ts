@@ -30,7 +30,6 @@ export class UsuarioInsertComponent {
   id: any;
 
   ngOnInit(): void{
-
       this.Form = new FormGroup({
         code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
         email:                new FormControl<string>('',[Validators.required, Validators.email]),
@@ -97,7 +96,6 @@ export class UsuarioInsertComponent {
               }
             },
             error: (err) => {
-              console.log(err)
               Swal.fire({
                 title: err.error.data[0],
                 icon: "error"
@@ -107,7 +105,6 @@ export class UsuarioInsertComponent {
         }
       },
       error: (err) => {
-        console.log(err)
         Swal.fire({
           title: err.error.data[0],
           icon: "error"

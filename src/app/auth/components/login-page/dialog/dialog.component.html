@@ -9,7 +9,7 @@
           </div>
           <div class="col-md-6 text-center">
             <button type="button"
-            class="btn btn-success text-center"
+            class="btn btn-success"
             (click)="enviar_codigo()"
             [disabled]="botonDeshabilitado">Obtener Codigo</button>
             <div *ngIf="botonDeshabilitado">Tiempo restante: {{ tiempoRestante }}</div>
@@ -23,15 +23,14 @@
         </div>
       </div>
       <div mat-dialog-actions>
-        <div class="col-md-6 text-center">
-          <button mat-button
-            (click)="metodo_salir()"
-            class="btn btn-danger text-body-secondary">Salir</button>
+        <div class="col-md-6 text-center"
+        (click)="metodo_salir()">
+          <button type="button" class="btn btn-outline-danger">Salir</button>
         </div>
         <div class="col-md-6 text-center">
-          <button mat-button
+          <button
             (click)="metodo_enviar()"
-            class="btn btn-success text-body-secondary">Enviar</button>
+            type="button" class="btn btn-outline-success">Enviar</button>
         </div>
       </div>
     </div>

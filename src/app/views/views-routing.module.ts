@@ -42,21 +42,38 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'electricidad',
-    children:[
-      {path: 'lista',component: GeneracionElectricidadComponent},
-      {path: 'registrar',component: ElectricidadIngresarComponent},
-      {path: 'editar/:id',component: ElectricidadIngresarComponent},
-      {path: 'tipo',component: ElectricidadTipoComponent},
-      {path: 'reporte',component: ElectricidadReporteComponent}
-    ]
-  },
-  {
     path: 'usuario',
     children:[
       {path: 'lista',component: UsuarioComponent},
       {path: 'registrar',component: UsuarioInsertComponent},
       {path: 'editar/:id',component: UsuarioRegistroUpdateComponent}
+    ]
+  },
+  {
+    path: 'electricidad',
+    children:[
+      {path: 'lista',component: GeneracionElectricidadComponent},
+      {path: 'registrar',component: ElectricidadIngresarComponent},
+      {path: 'editar/:id',component: ElectricidadIngresarComponent},
+      {path: 'tipo',component: ElectricidadTipoComponent}
+    ]
+  },
+  {
+    path: 'transportePropio',
+    children:[
+      {path: 'lista',component: TransportePropioComponent},
+      {path: 'registrar',component: TransportePropioRegistrarComponent},
+      {path: 'editar/:id',component: TransportePropioRegistrarComponent},
+      {path: 'tipo',component: ElectricidadTipoComponent}
+    ]
+  },
+  {
+    path: 'refrigerantes',
+    children:[
+      {path: 'lista',component: TransportePropioComponent},
+      {path: 'registrar',component: TransportePropioRegistrarComponent},
+      {path: 'editar/:id',component: TransportePropioRegistrarComponent},
+      {path: 'tipo',component: ElectricidadTipoComponent}
     ]
   },
   {

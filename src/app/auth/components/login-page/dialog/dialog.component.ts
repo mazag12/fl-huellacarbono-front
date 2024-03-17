@@ -62,7 +62,6 @@ export class DialogComponent {
 
    this.authService.sendMail(this.codigo, this.data.email, this.data.nombre)
    .subscribe(response => response);
-
     this.intervalId = setInterval(() => {
       this.tiempoRestante--;
       if (this.tiempoRestante <= 0) {
