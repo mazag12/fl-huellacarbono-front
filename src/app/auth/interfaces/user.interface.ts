@@ -29,6 +29,7 @@ export interface Token {
   iat:      number;
   exp:      number;
   aud:      string;
+  isValid?: boolean;
 }
 
 export interface UserRegister {

@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { DialogComponent } from './dialog/dialog.component';
 
 import {MatDialog} from '@angular/material/dialog';
+import { AuthStatus } from '../../interfaces';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -27,17 +28,30 @@ export class LoginPageComponent {
 
   onSubmit() {
     const {code, password} = this.loginForm.value;
+    //this.router.navigateByUrl('auth/recuperar')
 
     this.authService.login( code, password )
-      .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard'),
-        error: (message) => {
-          Swal.fire(
-            'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
-              message,
-            'error');
+    .subscribe({
+      next: () => {
+        const currentUser: any = this.authService.currentUser();
+
+        if(currentUser.isValid == false){ 
+          this.authService.updateData(code);
+          this.router.navigateByUrl('auth/recuperar');
+        }else{
+          this.router.navigateByUrl('/dashboard')
         }
-      })
+        
+        
+      },
+      error: (message) => {
+        Swal.fire(
+          'INGRESE DE NUEVO SU CODIGO COLABORADOR Y CONTRASEÑA',
+            message,
+          'error');
+      }
+    })
+ 
   }
 
   async recovery(enterAnimationDuration: string, exitAnimationDuration: string){

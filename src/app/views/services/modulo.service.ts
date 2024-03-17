@@ -11,6 +11,7 @@ export class ModuloService {
    private readonly baseUrl: string = environment.baseURL;
 
    constructor(private http: HttpClient) { }
+   
 
   private moduloSubject = new BehaviorSubject<any[]>([]);
   private accesosSubject = new BehaviorSubject<any[]>([]);
@@ -30,7 +31,8 @@ export class ModuloService {
   }
 
   listModule(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}modulo`, { headers: this.headers });
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<any>(`${this.baseUrl}modulo`, { headers: headers });
   }
 
   register(data : any): Observable<any> {

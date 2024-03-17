@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environments';
@@ -27,6 +27,7 @@ export class AuthService {
 
   private dataSource = new BehaviorSubject<any>(null);
   currentData = this.dataSource.asObservable();
+  
 
   login( code: string, password: string ): Observable<boolean>{
     const body = { code, password} ;
@@ -43,7 +44,7 @@ export class AuthService {
     return this.http.post<any>(`${ this.baseUrl }auth/signup`, body);
   }
 
-  getuser( code: string ): Observable<Userverificar> {
+  getuser( code: string): Observable<Userverificar> {
     return this.http.get<Userverificar>(`${this.baseUrl}auth/${code}`);
   }
 
@@ -54,11 +55,14 @@ export class AuthService {
 
   private setAuthentication(token: string): boolean{
     const payload: Token  = this.getJwtPayload(token);
-
     this._currentUser.set(payload);
-    this._authSatatus.set( AuthStatus.authenticated );
-
-    localStorage.setItem('token', token);
+    
+    if(payload.isValid == false){
+      this._authSatatus.set( AuthStatus.checking );
+    }else{
+      this._authSatatus.set( AuthStatus.authenticated );
+      localStorage.setItem('token', token);
+    }
 
     return true;
   }

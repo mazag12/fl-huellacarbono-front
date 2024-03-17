@@ -27,7 +27,9 @@ export class AppComponent implements OnInit {
   async generarSidebar() {
     this.verificacion = false;
     const currentUser = this.authService.currentUser();
-    if(currentUser)
+    if(!currentUser){
+      return
+    }
 
     await this.service.obtenerbyid(currentUser.sub)
     .subscribe (response => {
