@@ -13,8 +13,8 @@ import { TranportepropioService } from '../../../services/tranportepropio.servic
   templateUrl: './refrigerantes-update.component.html',
   styleUrls: ['./refrigerantes-update.component.scss']
 })
-  
-  
+
+
 export class RefrigerantesUpdateComponent implements OnInit {
   constructor(
     private service: TranportepropioService ,
@@ -109,7 +109,6 @@ export class RefrigerantesUpdateComponent implements OnInit {
 
     GuardarExcel(){
       if(this.excelData.length == 0){
-        console.log("no hay datos");
         Swal.fire({
           title: "No hay datos en el documento",
           text: "presiona el boton!",
@@ -146,4 +145,4 @@ export class RefrigerantesUpdateComponent implements OnInit {
 
     }
 }
-  
+

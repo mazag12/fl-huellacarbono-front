@@ -61,7 +61,6 @@ export class LineChartComponent implements OnInit {
             this.electricidad(response.nombre, response.id);
           });
           break;
-
         default:
           break;
       }
@@ -76,6 +75,10 @@ export class LineChartComponent implements OnInit {
         default:
           break;
       }
+    }else{
+      //TODO: DEBE APARECER LA SUMA TOTAL DE LAS 2 LOCALIDADES
+      const locaciones = this.listalocacion.find(elemento => elemento.nombre === this.locacion);
+      this.electricidad(locaciones.nombre, locaciones.id);
     }
   }
 
@@ -95,8 +98,6 @@ export class LineChartComponent implements OnInit {
           (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.ch4) / 1000) * 30) +
           (((((reportes.factor === 0 ? reportes.cantidad : (reportes.cantidad * reportes.factor)) * reportes.valor_neto) * reportes.n2o) / 1000) * 265);
         });
-        } else {
-          console.error('El reporte es null o no tiene la propiedad data');
         }
       });
       this.grafico(this.sumatotal, this.titulo);

@@ -107,7 +107,6 @@ export class TransportePropioRegistrarComponent implements OnInit {
 
     GuardarExcel(){
       if(this.excelData.length == 0){
-        console.log("no hay datos");
         Swal.fire({
           title: "No hay datos en el documento",
           text: "presiona el boton!",

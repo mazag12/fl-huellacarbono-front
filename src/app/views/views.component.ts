@@ -20,13 +20,10 @@ export class ViewsComponent implements OnInit {
 
 
   private authService = inject ( AuthService );
-  //public permisosDisponibles: any[] = permisosDisponibles;
   public permisosDisponibles: any
 
   permisosMarcados: any[] = [];
   public user = computed( () => this.authService.currentUser() );
-
-  //public currentUser = this.authService2.currentUser();
 
   estilos: any = {
     'width': 'auto'
