@@ -38,8 +38,6 @@ export class LoginPageComponent {
         }else{
           this.router.navigateByUrl('/dashboard')
         }
-
-
       },
       error: (message) => {
         Swal.fire(
