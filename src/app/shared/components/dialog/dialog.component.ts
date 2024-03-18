@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Filter } from '../../interface/filtro';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -18,6 +19,12 @@ export class DialogComponent implements OnInit{
   fecha: string = '';
   texto: string= '';
   cantidad: number=0;
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
   ngOnInit(): void {
 
   }
