@@ -209,7 +209,6 @@ export class ElectricidadIngresarComponent implements OnInit{
             const rows: any[] = utils.sheet_to_json(wb.Sheets[sheets[0]], { header: 1 });
 
             if (rows.length < 2) {
-              console.log("El documento está vacío o solo contiene encabezados.");
               return;
             }
 

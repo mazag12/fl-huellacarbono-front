@@ -20,6 +20,9 @@ import { Filter } from 'src/app/shared/interface/filtro';
 })
 export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
+  private authService = inject( AuthService );
+  public user: any;
+
   constructor(
       private service: ElectricidadService ,
       public dialog: MatDialog,
@@ -58,6 +61,10 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
   ngOnInit(): void{
 
   this.get({ limit: 5, page: 1 });
+
+  this.user = this.authService.currentUser();
+
+  console.log(this.user);
 
     this.service.tipo()
     .subscribe( tipo =>  {
@@ -121,8 +128,8 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      height: '400px',
-      width: '600px',
+      height: 'auto',
+      width: '400px',
       data: {tipo: this.tipo},
     });
 
@@ -147,9 +154,9 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
           const rows: ElectricidadRow[] = reponse.data.rows;
           this.data = reponse.data.rows;
           totalData = reponse.data.count;
-          console.log(this.data )
           this.dataSource = new MatTableDataSource(rows);
           this.length = totalData;
+          this.paginator._intl.itemsPerPageLabel = 'Paginación';
         }
     });
   }

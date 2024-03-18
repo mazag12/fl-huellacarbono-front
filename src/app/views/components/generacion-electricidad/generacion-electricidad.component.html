@@ -1,22 +1,22 @@
 <div class="container mt-3 text-center">
   <div class="row p-2 ">
-    <div class="col-md-6 text-start ">
+    <div class="col-md-4 text-start ">
       <a><mat-icon [routerLink]="['/dashboard/emisiones/fna']" >keyboard_arrow_left</mat-icon></a>
       FUENTE DE EMISION GENERACION DE ELECTRICIDAD
     </div>
-    <div class="col-md-6 text-end">
-      <div class="row">
-        <div class="col-md-3">
-          <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Tipo de Combustible</button>
+    <div class="col-md-8 text-end">
+      <div class="row justify-content-end">
+        <div class="col-3" *ngIf="user.role == 'ADMIN' ">
+          <button [routerLink]="['/dashboard/emisiones/electricidad/tipo']" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Tipo de Combustible</button>
         </div>
-        <div class="col-md-3">
-          <button (click)="openDialog()" >Filtrar</button>
+        <div class="col-3">
+          <button (click)="openDialog()" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Filtrar</button>
         </div>
-        <div class="col-md-3">
-          <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn text-white" style="background-color: #3e1151;font-size: small;">Registrar</button>
+        <div class="col-3">
+          <button [routerLink]="['/dashboard/emisiones/electricidad/registrar']" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Registrar</button>
         </div>
-        <div class="col-md-3">
-          <button (click)="exportToExcel()"  class="btn text-white" style="background-color: #3FAC2D;font-size: small;">Exportar Documento MINAM </button>
+        <div class="col-3" *ngIf="user.role == 'ADMIN' ">
+          <button (click)="exportToExcel()"  class="btn text-white w-100 btn-footloose-100" style="background-color: #3FAC2D;font-size: small;">Exportar Documento MINAM </button>
         </div>
       </div>
     </div>

@@ -76,7 +76,6 @@ export class ElectricidadService {
   ingresar_actualizar_tipo(data: TipoElectricidad):Observable<TipoElectricidad>{
     delete data.flag_activo;
     if(data.id === ""){ delete data.id}
-    console.log(data.id);
     return this.http.post<TipoElectricidad>(`${this.baseUrl}${this.electricidad}tipo`,data, { headers: this.headers });
   }
 

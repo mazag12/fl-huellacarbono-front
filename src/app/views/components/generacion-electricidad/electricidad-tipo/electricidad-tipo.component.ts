@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { filter } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-electricidad-tipo',
@@ -58,6 +59,7 @@ export class ElectricidadTipoComponent {
       this.dataSource = new MatTableDataSource(reponse.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.paginator._intl.itemsPerPageLabel = 'Paginación';
     });
   }
 
@@ -88,6 +90,10 @@ export class ElectricidadTipoComponent {
 
     this.get();
 
+    Swal.fire({
+      title: "Se guardo correctamente",
+      icon: "success"
+    });
   }
 
   edit(id: string){
@@ -105,6 +111,26 @@ export class ElectricidadTipoComponent {
         n2o:          datoConId1?.n2o,
       };
       this.Form.patchValue(dataAdaptada);
+    });
+  }
+
+  eliminar(id: string){
+    Swal.fire({
+      title: "ELIMINAR",
+      text: "¿Estas Seguro que deseas eliminar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
     });
   }
 
