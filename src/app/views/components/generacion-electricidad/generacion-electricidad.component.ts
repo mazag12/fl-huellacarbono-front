@@ -64,8 +64,6 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   this.user = this.authService.currentUser();
 
-  console.log(this.user);
-
     this.service.tipo()
     .subscribe( tipo =>  {
       tipo.data.forEach(tipos => {

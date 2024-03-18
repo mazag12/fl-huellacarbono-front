@@ -79,6 +79,11 @@ export class ElectricidadService {
     return this.http.post<TipoElectricidad>(`${this.baseUrl}${this.electricidad}tipo`,data, { headers: this.headers });
   }
 
+  deletetipo(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}${this.electricidad}tipo/${id}`, { headers: this.headers });
+  }
+
+
   //TODO: REPORTE
   reporte(tipodate:string, date: string , Localizacion?: string): Observable<ElectricidadReporteData> {
     return this.http.get<ElectricidadReporteData>(`${this.baseUrl}${this.electricidad}reporte?tipoDate=${tipodate}&valueDate=${date}&locacion=${Localizacion}`, { headers: this.headers });

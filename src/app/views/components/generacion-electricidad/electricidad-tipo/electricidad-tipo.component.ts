@@ -25,13 +25,13 @@ export class ElectricidadTipoComponent {
 
   public Form = new FormGroup({
     id:           new FormControl<string>(''),
-    nombre:       new FormControl<string>('',[Validators.required, Validators.maxLength(25)]),
-    unidad:       new FormControl<string>('',[Validators.required]),
-    factor:       new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,8})?)$')]),
-    valor_neto:   new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,8})?)$')]),
-    co2:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,8})?)$')]),
-    ch4:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,8})?)$')]),
-    n2o:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,8})?)$')]),
+    nombre:       new FormControl<string>('',[Validators.required, Validators.pattern('^([a-z0-9]{1,50}?)$')]),
+    unidad:       new FormControl<string>('',[Validators.required, Validators.pattern('^([a-z0-9]{1,50}?)$')]),
+    factor:       new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,6})?)$')]),
+    valor_neto:   new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,6})?)$')]),
+    co2:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,6})?)$')]),
+    ch4:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,6})?)$')]),
+    n2o:          new FormControl<number>(0,[Validators.required, Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,6})?)$')]),
     flag_activo:  new FormControl<boolean>(true),
   })
 
@@ -43,6 +43,8 @@ export class ElectricidadTipoComponent {
   public data: TipoElectricidadResponse[] = [];
   public dataSource: any = [];
   public pageSize = 5;
+
+  cantidad: string = '';
 
   ngOnInit(): void{
     this.get();
@@ -68,6 +70,26 @@ export class ElectricidadTipoComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  onInputlimite(event: any) {
+    const input = event.target.value;
+
+    const regex = /^([a-z0-9]{1,50}?)$/;
+
+    if (!regex.test(input)) {
+      event.target.value = input.slice(0, input.length - 1);
+    }
+  }
+
+  onInputChange(event: any) {
+    const input = event.target.value;
+
+    const regex = /^([0-9]{1,10}(\.[0-9]{1,6})?)$/;
+
+    if (!regex.test(input)) {
+      event.target.value = input.slice(0, input.length - 1);
     }
   }
 
@@ -112,9 +134,10 @@ export class ElectricidadTipoComponent {
       };
       this.Form.patchValue(dataAdaptada);
     });
+    this.get();
   }
 
-  eliminar(id: string){
+  eliminar(id: number){
     Swal.fire({
       title: "ELIMINAR",
       text: "¿Estas Seguro que deseas eliminar?",
@@ -125,6 +148,11 @@ export class ElectricidadTipoComponent {
       confirmButtonText: "Eliminar"
     }).then((result) => {
       if (result.isConfirmed) {
+
+        this.service.deletetipo(id).subscribe({complete: ()=>{
+          console.log("completado");
+        }});
+
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
@@ -132,6 +160,7 @@ export class ElectricidadTipoComponent {
         });
       }
     });
+    this.get();
   }
 
 }
