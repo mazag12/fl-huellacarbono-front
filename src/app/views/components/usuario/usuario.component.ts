@@ -43,7 +43,6 @@ get(limit: number, page: number, textFilter?: string){
         totalData = reponse.data.count
         this.dataSource = new MatTableDataSource(this.data);
         this.length = totalData;
-        this.paginator._intl.itemsPerPageLabel = 'Paginación';
       }
     });
 }
