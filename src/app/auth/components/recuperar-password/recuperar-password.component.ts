@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { UserverificatorData } from '../../interfaces';
-import { Email } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-recuperar-password',
@@ -50,11 +49,7 @@ export class RecuperarPasswordComponent implements OnInit {
 
     const body = {
       id:  parseInt(this.info[0].id),
-      code: this.data,
-      nombre:  this.info[0].nombre,
-      apellido:  this.info[0].apellido,
-      password: password,
-      email:  this.info[0].email
+      password: password
     }
     this.authService.recuperar( body )
       .subscribe({
@@ -71,15 +66,10 @@ export class RecuperarPasswordComponent implements OnInit {
           })
         },
         error: (message) => {
-          console.log(message);
         }
       });
 
-    if(comparacion === 0 ){
-
-      const body = null;
-
-    }else{
+    if(comparacion != 0 ){
       Swal.fire({
         title: "Error",
         text: "La contraseña ingresada no son iguales",

@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
   permisosMarcados: any[] = [];
 
   constructor(private serviceModule: ModuloService, private service: UsuarioService){}
-  
+
   ngOnInit(): void {
-    
+
   }
 
   async generarSidebar() {
@@ -41,21 +41,21 @@ export class AppComponent implements OnInit {
       this.permisosDisponibles = response.data.rows
       this.serviceModule.setModulo(this.permisosDisponibles);
     });
-    
+
     setTimeout(() => {
       this.verificacion =  this.finishAuthCheck();
     }, 1000);
-    
+
   }
 
   finishAuthCheck = computed<boolean>( () => {
-    
+
       if( this.authService.authStatus() == AuthStatus.checking ){return false; }
       return true;
   });
 
   public authStatusChangeEffect = effect( () => {
-    
+
     switch( this.authService.authStatus() ){
       case AuthStatus.checking:
         return;
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/auth/login');
         return;
     }
-    
+
   } );
 
 }

@@ -27,7 +27,7 @@
                   </div>
                   <mat-form-field class="example-full-width rounded border-black">
                     <mat-label>Codigo Colaborador</mat-label>
-                    <input matInput type="text" placeholder="Codigo" required formControlName="code" class="border-black">
+                    <input matInput type="text" placeholder="Codigo" required formControlName="code" class="border-black"  (input)="onInputChange($event)">
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width rounded border-black">

@@ -31,15 +31,15 @@ export class UsuarioService {
   }
 
   register(data : any): Observable<any> {
-    return this.http.post<UserRegister>(`${this.baseUrl}auth/signup`,data,{ headers: this.headers });
+    return this.http.post<UserRegister>(`${this.baseUrl}auth/ingreso`,data,{ headers: this.headers });
   }
 
   registerAcceso(data : any): Observable<any> {
     return this.http.post<UserRegister>(`${this.baseUrl}user/acceso`,data,{ headers: this.headers });
   }
 
-  deleteAcceso(id : number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}user/acceso?acceso_id=${id}`,{ headers: this.headers });
+  deleteAcceso(user_id: number, modulo_id: number ): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}user/acceso?user_id=${user_id}&modulo_id=${modulo_id}`,{ headers: this.headers });
   }
 
 }

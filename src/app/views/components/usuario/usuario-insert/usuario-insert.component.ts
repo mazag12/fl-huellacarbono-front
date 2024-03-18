@@ -84,7 +84,7 @@ export class UsuarioInsertComponent {
           .subscribe({
             next: (response) => {
               if(existe.length === 0){
-                this.service.deleteAcceso(response.data.id)
+                this.service.deleteAcceso(response.data.id, permiso.id)
                 .subscribe(
                   (error) => {
                     Swal.fire({

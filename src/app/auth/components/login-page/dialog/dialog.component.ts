@@ -18,7 +18,7 @@ export class DialogComponent {
   ) {}
 
   private router = inject( Router );
-  private authService     = inject( AuthService );
+  private authService = inject( AuthService );
 
   botonDeshabilitado: boolean = false;
   tiempoRestante: number = 0;
@@ -32,10 +32,10 @@ export class DialogComponent {
   }
 
   metodo_enviar(): void{
-    console.log(this.verificar)
+
     if(this.codigo === Number(this.verificar)){
 
-      this.router.navigateByUrl('auth/recuperar');
+      this.router.navigateByUrl(`auth/recuperar`);
 
       this.dialogRef.close();
     }else{

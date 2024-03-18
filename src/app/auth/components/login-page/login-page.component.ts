@@ -28,21 +28,18 @@ export class LoginPageComponent {
 
   onSubmit() {
     const {code, password} = this.loginForm.value;
-    //this.router.navigateByUrl('auth/recuperar')
-
     this.authService.login( code, password )
     .subscribe({
       next: () => {
         const currentUser: any = this.authService.currentUser();
-
-        if(currentUser.isValid == false){ 
+        if(currentUser.isValid == false){
           this.authService.updateData(code);
           this.router.navigateByUrl('auth/recuperar');
         }else{
           this.router.navigateByUrl('/dashboard')
         }
-        
-        
+
+
       },
       error: (message) => {
         Swal.fire(
@@ -51,7 +48,7 @@ export class LoginPageComponent {
           'error');
       }
     })
- 
+
   }
 
   async recovery(enterAnimationDuration: string, exitAnimationDuration: string){
@@ -61,12 +58,15 @@ export class LoginPageComponent {
         if (response && response.data) {
           this.authService.updateData(code);
           this.dialog.open(DialogComponent, {
-            data: {code: code, email: response.data.email, nombre: response.data.nombre + response.data.apellido },
+            height: 'auto',
+            width: '500px',
+            data: {id: response.data.id, code: code, email: response.data.email, nombre: response.data.nombre + response.data.apellido },
             autoFocus: true,
             closeOnNavigation: true,
             hasBackdrop: true,
             enterAnimationDuration,
             exitAnimationDuration,
+
           });
         }else{
           Swal.fire(
@@ -91,4 +91,15 @@ export class LoginPageComponent {
     }
 
   }
+
+  onInputChange(event: any) {
+    const input = event.target.value;
+
+    const regex = /^([0-9]{1,6}?)$/;
+
+    if (!regex.test(input)) {
+      event.target.value = input.slice(0, input.length - 1);
+    }
+  }
+
 }
