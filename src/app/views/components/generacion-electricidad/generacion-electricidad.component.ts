@@ -64,59 +64,6 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
 
   this.user = this.authService.currentUser();
 
-    this.service.tipo()
-    .subscribe( tipo =>  {
-      tipo.data.forEach(tipos => {
-        this.tipo.push({id: tipos.id, nombre: tipos.nombre, unidad: tipos.unidad});
-        if(tipos.flag_activo = true){
-          if(tipos.id !== undefined){
-            this.array.push({
-              id: tipos.id,
-              nombre: tipos.nombre,
-              unidad: tipos.unidad,
-              cantidad: 0,
-              a: 0,
-              neto: tipos.valor_neto,
-              c: 0,
-              co2: tipos.co2,
-              e: 0,
-              ch4: tipos.ch4,
-              g: 0,
-              n2o: tipos.n2o,
-              i: 0,
-              j: 0,
-            });
-          }
-        }
-        this.service.reporte('YEAR', '2024')
-        .subscribe( reporte =>  {
-          reporte.data.forEach(reportes => {
-            let encontrado = false;
-            if(reportes.id === tipos.id){
-              for (let i = 0; i < this.array.length; i++) {
-                if (this.array[i].id === tipos.id) {
-                  this.array[i].unidad = reportes.unidad;
-                  this.array[i].cantidad += reportes.cantidad;
-                  this.array[i].a = reportes.factor === 0 ? this.array[i].cantidad : (this.array[i].cantidad * reportes.factor);
-                  this.array[i].neto = reportes.valor_neto;
-                  this.array[i].c = (this.array[i].a *  reportes.valor_neto);
-                  this.array[i].co2 = reportes.co2;
-                  this.array[i].e = (this.array[i].c * reportes.co2)/1000;
-                  this.array[i].ch4 = reportes.ch4;
-                  this.array[i].g = (this.array[i].c * reportes.ch4)/1000;
-                  this.array[i].n2o = reportes.n2o;
-                  this.array[i].i = (this.array[i].c * reportes.n2o)/1000;
-                  this.array[i].j = this.array[i].e + this.array[i].g  * 30 + this.array[i].i * 265;
-                  encontrado = true;
-                  break;
-                }
-              }
-            }
-          });
-        });
-      })
-    });
-
   }
 
   ngAfterViewInit() {
@@ -182,6 +129,60 @@ export class GeneracionElectricidadComponent implements OnInit, AfterViewInit {
   ];
 
   exportToExcel(): void {
+
+    this.service.tipo()
+    .subscribe( tipo =>  {
+      tipo.data.forEach(tipos => {
+        this.tipo.push({id: tipos.id, nombre: tipos.nombre, unidad: tipos.unidad});
+        if(tipos.flag_activo = true){
+          if(tipos.id !== undefined){
+            this.array.push({
+              id: tipos.id,
+              nombre: tipos.nombre,
+              unidad: tipos.unidad,
+              cantidad: 0,
+              a: 0,
+              neto: tipos.valor_neto,
+              c: 0,
+              co2: tipos.co2,
+              e: 0,
+              ch4: tipos.ch4,
+              g: 0,
+              n2o: tipos.n2o,
+              i: 0,
+              j: 0,
+            });
+          }
+        }
+        this.service.reporte('YEAR', '2024')
+        .subscribe( reporte =>  {
+          reporte.data.forEach(reportes => {
+            let encontrado = false;
+            if(reportes.id === tipos.id){
+              for (let i = 0; i < this.array.length; i++) {
+                if (this.array[i].id === tipos.id) {
+                  this.array[i].unidad = reportes.unidad;
+                  this.array[i].cantidad += reportes.cantidad;
+                  this.array[i].a = reportes.factor === 0 ? this.array[i].cantidad : (this.array[i].cantidad * reportes.factor);
+                  this.array[i].neto = reportes.valor_neto;
+                  this.array[i].c = (this.array[i].a *  reportes.valor_neto);
+                  this.array[i].co2 = reportes.co2;
+                  this.array[i].e = (this.array[i].c * reportes.co2)/1000;
+                  this.array[i].ch4 = reportes.ch4;
+                  this.array[i].g = (this.array[i].c * reportes.ch4)/1000;
+                  this.array[i].n2o = reportes.n2o;
+                  this.array[i].i = (this.array[i].c * reportes.n2o)/1000;
+                  this.array[i].j = this.array[i].e + this.array[i].g  * 30 + this.array[i].i * 265;
+                  encontrado = true;
+                  break;
+                }
+              }
+            }
+          });
+        });
+      })
+    });
+
     this.exportExcel( this.array, 'Electricidad' );
   }
 

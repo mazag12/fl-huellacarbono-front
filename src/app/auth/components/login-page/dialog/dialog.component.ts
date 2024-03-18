@@ -19,18 +19,15 @@ export class DialogComponent {
 
   private router = inject( Router );
   private authService = inject( AuthService );
-
   botonDeshabilitado: boolean = false;
   tiempoRestante: number = 0;
   intervalId: any;
   codigo: any;
   verificar: number = 0;
   DesabilitadoInputVerificador: boolean = true;
-
   metodo_salir(): void {
     this.dialogRef.close();
   }
-
   metodo_enviar(): void{
 
     if(this.codigo === Number(this.verificar)){
@@ -57,9 +54,7 @@ export class DialogComponent {
       text: "Se envio a tu correo el codigo",
       icon: "success"
     });
-
    this.codigo = this.generateRandomNumber();
-
    this.authService.sendMail(this.codigo, this.data.email, this.data.nombre)
    .subscribe(response => response);
     this.intervalId = setInterval(() => {
@@ -70,7 +65,6 @@ export class DialogComponent {
       }
     }, 1000);
   }
-
   generateRandomNumber(): number {
     const min = 10000000;
     const max = 99999999;

@@ -42,11 +42,8 @@ export class RecuperarPasswordComponent implements OnInit {
 
   onSubmit() {
     const { password, confirmPassword } = this.loginForm.value;
-
     const comparacion = password.localeCompare(confirmPassword);
-
     this.info[0].id
-
     const body = {
       id:  parseInt(this.info[0].id),
       password: password
@@ -77,6 +74,4 @@ export class RecuperarPasswordComponent implements OnInit {
       });
     }
   }
-
-
 }

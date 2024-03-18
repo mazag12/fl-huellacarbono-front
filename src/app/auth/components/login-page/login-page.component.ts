@@ -14,9 +14,7 @@ import { AuthStatus } from '../../interfaces';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
-
   constructor(public dialog: MatDialog){}
-
   private fb              = inject( FormBuilder );
   private authService     = inject( AuthService );
   private router          = inject( Router );
@@ -46,7 +44,6 @@ export class LoginPageComponent {
           'error');
       }
     })
-
   }
 
   async recovery(enterAnimationDuration: string, exitAnimationDuration: string){
@@ -64,7 +61,6 @@ export class LoginPageComponent {
             hasBackdrop: true,
             enterAnimationDuration,
             exitAnimationDuration,
-
           });
         }else{
           Swal.fire(
@@ -87,17 +83,13 @@ export class LoginPageComponent {
         icon: "warning"
       });
     }
-
   }
 
   onInputChange(event: any) {
     const input = event.target.value;
-
     const regex = /^([0-9]{1,6}?)$/;
-
     if (!regex.test(input)) {
       event.target.value = input.slice(0, input.length - 1);
     }
   }
-
 }
