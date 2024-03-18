@@ -33,7 +33,7 @@ export class AuthService {
     const body = { code, password} ;
     return this.http.post<LoginResponse>(`${ this.baseUrl }auth/signin`, body)
     .pipe(
-      map(token => {
+      map( token => {
         return this.setAuthentication(token.data);
       }),
       catchError( err => throwError( () => err.error.message ))
@@ -60,8 +60,9 @@ export class AuthService {
     if(payload.isValid == false){
       this._authSatatus.set( AuthStatus.checking );
     }else{
-      this._authSatatus.set( AuthStatus.authenticated );
       localStorage.setItem('token', token);
+      this._authSatatus.set( AuthStatus.authenticated );
+      
     }
 
     return true;
