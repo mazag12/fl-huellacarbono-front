@@ -1,15 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { sidebarData } from './sidebar-data';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-body',
+  templateUrl: './body.component.html',
+  styleUrls: ['./body.component.scss']
 })
-export class ListFnaComponent {
-
-  sidebarData = sidebarData;
-
+export class BodyComponent {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 
@@ -22,5 +18,4 @@ export class ListFnaComponent {
     }
     return styleClass;
   }
-
 }

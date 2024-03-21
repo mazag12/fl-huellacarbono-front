@@ -35,24 +35,36 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioRegistroUpdateComponent } from './components/usuario/usuario-registro-update/usuario-registro-update.component';
 import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert.component';
 import { ElectricidadTipoComponent } from './components/generacion-electricidad/electricidad-tipo/electricidad-tipo.component';
+import { AyudaComponent } from './components/ayuda/ayuda.component';
 
 const routes: Routes = [
   {
-    path: 'lista',
+    path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'fuentes-emisiones',
+    component: ListFnaComponent,
+    children:[
+      {path: 'generacion-electricidad',component: ElectricidadIngresarComponent},
+    ]
   },
   {
     path: 'usuario',
     children:[
-      {path: 'lista',component: UsuarioComponent},
+      {path: '',component: UsuarioComponent},
       {path: 'registrar',component: UsuarioInsertComponent},
       {path: 'editar/:id',component: UsuarioRegistroUpdateComponent}
     ]
   },
   {
+    path: 'help',
+    component: AyudaComponent
+  },
+  {
     path: 'electricidad',
     children:[
-      {path: 'lista',component: GeneracionElectricidadComponent},
+      {path: '',component: GeneracionElectricidadComponent},
       {path: 'registrar',component: ElectricidadIngresarComponent},
       {path: 'editar/:id',component: ElectricidadIngresarComponent},
       {path: 'tipo',component: ElectricidadTipoComponent}

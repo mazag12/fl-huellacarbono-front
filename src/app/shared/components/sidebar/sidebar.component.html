@@ -1,0 +1,44 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+  <div class="logo-container">
+    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="toggleCollapse()">
+    <rect width="42" height="42" rx="21" fill="white"/>
+    <path d="M15.3968 16.6047C12.969 16.6047 11 18.5736 11 21.0012C11 23.4288 12.969 25.3951 15.3968 25.3951C17.8246 25.3951 19.791 23.4288 19.791 21.0012C19.791 18.5736 17.8246 16.6047 15.3968 16.6047ZM15.3968 23.442C14.0466 23.442 12.9559 22.3487 12.9559 21.0012C12.9559 19.6537 14.0466 18.5605 15.3968 18.5605C16.7444 18.5605 17.8377 19.6537 17.8377 21.0012C17.8377 22.3487 16.7444 23.442 15.3968 23.442Z" fill="#E73743"/>
+    <path d="M25.9452 15.9442C23.1529 15.9442 20.8877 18.2093 20.8877 21.0013C20.8877 23.7934 23.1529 26.0559 25.9452 26.0559C28.7374 26.0559 31.0001 23.7934 31.0001 21.0013C31.0001 18.2093 28.7374 15.9442 25.9452 15.9442ZM25.9452 24.1001C24.2331 24.1001 22.8436 22.7133 22.8436 21.0013C22.8436 19.2868 24.2331 17.9 25.9452 17.9C27.6572 17.9 29.0468 19.2868 29.0468 21.0013C29.0468 22.7133 27.6572 24.1001 25.9452 24.1001Z" fill="#E73743"/>
+    </svg>
+    <div class="logo-text" @fadeInOut *ngIf="collapsed">{{ user?.nombre }} {{user?.apellido}}</div>
+    <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+        <i class="fal fa-times close-icon"></i>
+    </button>
+  </div>
+  <ul class="sidenav-nav">
+    <ng-container *ngFor="let permiso of permisosDisponibles">
+      <ng-container *ngFor="let acceso of permisosMarcados">
+        <ng-container *ngIf="permiso.id == acceso.modulo_id">
+          <li class="sidenav-nav-item" >
+              <a class="sidenav-nav-link" [routerLink]="[permiso.url]"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}"
+              >
+                  <i class="sidenav-link-icon" [class]="permiso.icono"></i>
+                  <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                      {{permiso.nombre}}
+                  </span>
+              </a>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+      <hr class="border border-white border-3 opacity-75 w-100">
+      <li class="sidenav-nav-item" #tooltip="matTooltip"
+      matTooltip="Cerrar Sesión"
+      matTooltipPosition="above"
+      matTooltipHideDelay="100">
+        <a class="sidenav-nav-link" (click)="onLogout()">
+          <i class="sidenav-link-icon" [class]="'fas fa-sign-out'"></i>
+          <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+              Cerrar Sesión
+          </span>
+        </a>
+      </li>
+  </ul>
+</div>

@@ -6,62 +6,78 @@ import { permisosDisponibles } from './utils/constans';
 import { UsuarioService } from './services/usuario.service';
 import { ModuloService } from './services/modulo.service';
 
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
+}
+
 @Component({
   selector: 'app-views',
   templateUrl: './views.component.html',
   styleUrls: ['./views.component.scss']
 })
-export class ViewsComponent implements OnInit {
-  constructor(private serviceModule: ModuloService, private service: UsuarioService, private breakpointObserver: BreakpointObserver, private cd: ChangeDetectorRef){}
+export class ViewsComponent {
 
-  async ngOnInit() {
-    this.generarSidebar();
+  title = 'sidenav';
+
+  isSideNavCollapsed = false;
+  screenWidth = 0;
+
+  onToggleSideNav(data: SideNavToggle): void {
+    this.screenWidth = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed;
   }
 
+  // constructor(private serviceModule: ModuloService, private service: UsuarioService, private breakpointObserver: BreakpointObserver, private cd: ChangeDetectorRef){}
 
-  private authService = inject ( AuthService );
-  public permisosDisponibles: any
-
-  permisosMarcados: any[] = [];
-  public user = computed( () => this.authService.currentUser() );
-
-  estilos: any = {
-    'width': 'auto'
-  };
-
-  menu: boolean = true;
-
-  onLogout(){
-    this.authService.logout();
-  }
-
-  async generarSidebar() {
-    this.serviceModule.accesos$.subscribe((acceso) => {
-      this.permisosMarcados = acceso;
-    });
-
-    this.serviceModule.modulo$.subscribe((modulo) => {
-      this.permisosDisponibles = modulo;
-    });
-  }
-
-  cambiarEstilo() {
-    this.estilos['width'] = this.menu ?  '58px':'auto';
-    this.menu = this.menu ? false: true ;
-  }
+  // async ngOnInit() {
+  //   this.generarSidebar();
+  // }
 
 
-  ngAfterViewInit(){
-    this.breakpointObserver.observe(['(max-width: 800px)']).subscribe((res: any) => {
-      if(res.matches){
-        this.estilos['width'] = '58px';
-      }else{
-        this.estilos['width'] = 'auto';
-      }
-      this.cd.detectChanges();
-    });
+  // private authService = inject ( AuthService );
+  // public permisosDisponibles: any
 
-  }
+  // permisosMarcados: any[] = [];
+  // public user = computed( () => this.authService.currentUser() );
+
+  // estilos: any = {
+  //   'width': 'auto'
+  // };
+
+  // menu: boolean = true;
+
+  // onLogout(){
+  //   this.authService.logout();
+  // }
+
+  // async generarSidebar() {
+  //   this.serviceModule.accesos$.subscribe((acceso) => {
+  //     this.permisosMarcados = acceso;
+  //   });
+
+  //   this.serviceModule.modulo$.subscribe((modulo) => {
+  //     this.permisosDisponibles = modulo;
+  //   });
+  // }
+
+  // cambiarEstilo() {
+  //   this.estilos['width'] = this.menu ?  '58px':'auto';
+  //   this.menu = this.menu ? false: true ;
+  // }
+
+
+  // ngAfterViewInit(){
+  //   this.breakpointObserver.observe(['(max-width: 800px)']).subscribe((res: any) => {
+  //     if(res.matches){
+  //       this.estilos['width'] = '58px';
+  //     }else{
+  //       this.estilos['width'] = 'auto';
+  //     }
+  //     this.cd.detectChanges();
+  //   });
+
+  // }
 
 
 }

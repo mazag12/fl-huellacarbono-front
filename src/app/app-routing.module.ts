@@ -11,12 +11,12 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule )
   },
   {
-    path:'dashboard',
+    path:'',
     component: ViewsComponent,
     canActivate: [ isAuthenticatedGuard ],
     children:[
       {
-        path:'emisiones',
+        path:'',
         loadChildren: () => import('./views/views.module').then( m => m.ViewsModule )
       }
     ]

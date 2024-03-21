@@ -14,14 +14,25 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import {NgFor} from '@angular/common';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { BodyComponent } from './components/body/body.component';
+
+
 
 @NgModule({
 
   declarations: [
     DialogComponent,
-    TableComponent
+    TableComponent,
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+    BodyComponent
   ],
   imports: [
     CommonModule,
@@ -35,10 +46,15 @@ import {NgFor} from '@angular/common';
     NgFor,
     MatSelectModule,
     MatCardModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTooltipModule
   ],
   exports: [
     DialogComponent,
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+    BodyComponent,
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA,

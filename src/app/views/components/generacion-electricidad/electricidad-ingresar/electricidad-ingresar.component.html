@@ -1,53 +1,55 @@
-<div class="rounded-top p-3 mb-2 bg-secondary bg-gradient text-white text-center">
-  <div *ngIf="editing; else contenidoAlternativo" class="container-fluid" >EDITAR</div>
-  <ng-template #contenidoAlternativo>REGISTRO</ng-template>
+<div class="fs-3 p-3 mb-2 text-black container">
+  <div *ngIf="editing; else contenidoAlternativo" >
+    <i class="fad fa-bolt"></i>
+    <span class="px-3">Consumo de energía eléctrica</span>
+  </div>
+  <ng-template #contenidoAlternativo>
+    <i class="fad fa-bolt"></i>
+    <span class="px-3">Consumo de energía eléctrica</span>
+  </ng-template>
 </div>
 <div class="container mt-3 text-center">
   <div class="row">
     <div class="col-md-4">
-      <button [routerLink]="['/dashboard/emisiones/fna/electricidad']" class="btn btn-primary">Regresar</button>
-    </div>
-  </div>
-  <div class="row p-2  d-flex justify-content-center">
-    <div *ngIf="!editing" class="col-md-4 p-3 border">
-      <h3>GENERACION DE ELECTRICIDAD</h3>
-      <p></p>
-      <div>
-        <h3>Adjunte documento de sustento.</h3>
-        <p>
-          En caso de ser necesario adjunte archivo que sustente la información ingresada.
-          Debe de tener en cuenta que debe ser archivo de extensión Excel y no debe pesar más de 4Mb.
-        </p>
-        <p>
-          <a href="../../../../../assets/document/plantillas/plantilla_electricidad.xlsx">Descargar Plantilla</a>
-        </p>
-          <div class="mb-3">
-            <div class="col p-2">
-              <input class="form-control form-control-sm"
-              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              name="file"
-              type="file"
-              #fileUpload
-              id="formFile"
-              (change)="ImportExcel($event)"
-              >
-            </div>
-            <div class="col p-2">
-              <button type="button" (click)="GuardarExcel()" class="btn btn-primary">GUARDAR</button>
-            </div>
-            <div *ngIf="campoVacioError">
-              <div *ngFor="let mensaje of mensaje_error" class="alert alert-warning" role="alert" >
-                {{ mensaje }}
-              </div>
-            </div>
+      <div class="card action" [routerLink]="['/electricidad']">
+        <div class="card-body fs-5">
+          <i class="fas fa-chart-line"></i>
+          <span class="px-3">Analiza el reporte de datos</span>
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <i class="fas fa-file-upload"></i>
+          <b><span class="px-3 fs-5">¿Deseas adjuntar un archivo?</span></b>
+        </div>
+        <div class="card-body">
+          <p>En caso de ser necesario adjunta un archivo que sustente la información ingresada.
+            Debe de tener en cuenta que el archivo sea PDF y no pese más de 4mb.</p>
+        </div>
+        <div class="card-body fs-5 mx-3 mb-3" style="border-style:dashed;">
+          <input class="form-control form-control-sm"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          name="file"
+          type="file"
+          #fileUpload
+          id="formFile"
+          (change)="ImportExcel($event)"
+          >
+          <button type="button" (click)="GuardarExcel()" class="btn btn-lg bt-footloose rounded-3">Guardar Inforamción</button>
+          <p><a href="../../../../../assets/document/plantillas/plantilla_electricidad.xlsx">Descargar Plantilla</a></p>
+        </div>
+        <div class="card-body" *ngIf="campoVacioError">
+          <div *ngFor="let mensaje of mensaje_error" class="alert alert-warning" role="alert" >
+            {{ mensaje }}
           </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-7 p-3 offset-md-1 text-center border">
-
+    <div class="col-md-8">
       <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
         <fieldset>
-          <legend>Generación electricidad</legend>
+          <legend>Registro Generación de Electricidad</legend>
 
           <input matInput type="text" placeholder="Factura" value="0" formControlName="id" hidden>
 
@@ -110,14 +112,53 @@
             </mat-form-field>
           </div>
 
-          <button type="submit" class="btn btn-primary" *ngIf="editing; else botonalternativo" [disabled]="!Form.valid">Guardar</button>
+          <button type="submit" class="btn btn-primary w-100" *ngIf="editing; else botonalternativo" [disabled]="!Form.valid">Guardar</button>
           <ng-template #botonalternativo>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary w-100">Guardar</button>
           </ng-template>
-
         </fieldset>
       </form>
-
     </div>
   </div>
+  <!-- <div class="row p-2  d-flex justify-content-center">
+    <div *ngIf="!editing" class="col-md-4 p-3 border">
+      <h3>GENERACION DE ELECTRICIDAD</h3>
+      <p></p>
+      <div>
+        <h3>Adjunte documento de sustento.</h3>
+        <p>
+          En caso de ser necesario adjunte archivo que sustente la información ingresada.
+          Debe de tener en cuenta que debe ser archivo de extensión Excel y no debe pesar más de 4Mb.
+        </p>
+        <p>
+
+        </p>
+          <div class="mb-3">
+            <div class="col p-2">
+              <input class="form-control form-control-sm"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              name="file"
+              type="file"
+              #fileUpload
+              id="formFile"
+              (change)="ImportExcel($event)"
+              >
+            </div>
+            <div class="col p-2">
+              <button type="button" (click)="GuardarExcel()" class="btn btn-primary">GUARDAR</button>
+            </div>
+            <div *ngIf="campoVacioError">
+              <div *ngFor="let mensaje of mensaje_error" class="alert alert-warning" role="alert" >
+                {{ mensaje }}
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-7 p-3 offset-md-1 text-center border">
+
+
+
+    </div> -->
+  <!-- </div> -->
 </div>

@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-12 col-lg-12 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
-                <form class="login100-form"
+                <form class="login100-form text-center"
                   autocomplete="on"
                   [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <div class="col-md-12 col-lg-12 d-none d-md-block text-center py-3">
@@ -25,16 +25,17 @@
                   <div class="py-3 text-center">
                     <strong><p class="h3">Huella de Carbono</p></strong>
                   </div>
-                  <mat-form-field class="example-full-width rounded border-black">
-                    <mat-label>Codigo Colaborador</mat-label>
-                    <input matInput type="text" placeholder="Codigo" required formControlName="code" class="border-black"  (input)="onInputChange($event)">
-                  </mat-form-field>
+                  <div class="text-center" style="display: grid;">
+                    <mat-form-field class="example-full-width rounded border-black">
+                      <mat-label>Codigo Colaborador</mat-label>
+                      <input matInput type="text" placeholder="Codigo" required formControlName="code" class="border-black"  (input)="onInputChange($event)">
+                    </mat-form-field>
 
-                  <mat-form-field class="example-full-width rounded border-black">
-                    <mat-label>Contraseña</mat-label>
-                    <input matInput type="password" placeholder="Contraseña" required formControlName="password" class="border-black">
-                  </mat-form-field>
-
+                    <mat-form-field class="example-full-width rounded border-black">
+                      <mat-label>Contraseña</mat-label>
+                      <input matInput type="password" placeholder="Contraseña" required formControlName="password" class="border-black">
+                    </mat-form-field>
+                  </div>
                   <div class="py-3 rounded-pill">
                     <button class="btn rounded-5 w-100 text-light"  type="submit"
                     [disabled]="loginForm.invalid"

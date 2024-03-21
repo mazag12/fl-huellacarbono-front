@@ -1,4 +1,28 @@
-<div class="container mt-5 text-center">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 sidenav" style="overflow-y: auto; max-height: 95vh;">
+      <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of sidebarData" >
+          <a class="sidenav-nav-link" routerLinkActive="active"
+          [routerLink]="[data.routeLink]"
+          [routerLinkActiveOptions]="{exact: true}">
+            <i class="sidenav-link-icon" [class]="data.icon"></i>
+            <span class="sidenav-link-text"> {{data.label}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10" style="overflow-y: auto; max-height: 95vh;">
+      <div class="body" [ngClass]="getBodyClass()">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container-fluid mt-5 text-center">
   <div class="row  align-items-start">
     <div class="col" [routerLink]="['/dashboard/emisiones/electricidad/lista']">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,4 +82,4 @@
 
     <a ><h4>Consumo Agua</h4></a>
   </div>
-</div>
+</div> -->
