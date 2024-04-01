@@ -17,6 +17,7 @@ export class LoginPageComponent {
   private fb              = inject( FormBuilder );
   private authService     = inject( AuthService );
   private router          = inject( Router );
+  hidePassword = true;
 
   public loginForm: FormGroup = this.fb.group({
     code: ['', [Validators.required]],

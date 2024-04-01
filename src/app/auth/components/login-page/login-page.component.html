@@ -8,7 +8,7 @@
               <div class="card-body p-4 p-lg-5 text-black">
                 <form class="login100-form text-center"
                   autocomplete="on"
-                  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  [formGroup]="loginForm">
                   <div class="col-md-12 col-lg-12 d-none d-md-block text-center py-3">
                     <svg width="193" height="24" viewBox="0 0 193 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15.3126 0.572998V5.18758H5.09904V9.79696H14.547V14.4063H5.09904V23.2449H0.104248V0.572998H15.3126Z" fill="#3A2050"/>
@@ -33,12 +33,16 @@
 
                     <mat-form-field class="example-full-width rounded border-black">
                       <mat-label>Contraseña</mat-label>
-                      <input matInput type="password" placeholder="Contraseña" required formControlName="password" class="border-black">
+                      <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Contraseña" required formControlName="password" class="border-black">
+                      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
                     </mat-form-field>
                   </div>
                   <div class="py-3 rounded-pill">
                     <button class="btn rounded-5 w-100 text-light"  type="submit"
                     [disabled]="loginForm.invalid"
+                    (click)="onSubmit()"
                     style="background-color: #3e1151;">Iniciar Sesión
                     </button>
                   </div>

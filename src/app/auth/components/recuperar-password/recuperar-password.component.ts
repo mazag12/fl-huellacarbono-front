@@ -17,6 +17,9 @@ export class RecuperarPasswordComponent implements OnInit {
   private fb          = inject( FormBuilder );
   private authService = inject( AuthService );
   private router      = inject( Router );
+  hidePassword = true;
+  hideConfirmPassword = true;
+  missingCriteria: string[] = [];
 
   data: any;
   info:UserverificatorData[] = [];
@@ -28,6 +31,25 @@ export class RecuperarPasswordComponent implements OnInit {
     confirmPassword: ['', [Validators.required]]
   })
 
+
+
+  getMissingCriteria(password: string): string[] {
+    const missing: string[] = [];
+    if (!/[a-z]/.test(password)) {
+      missing.push('minúscula');
+    }
+    if (!/[A-Z]/.test(password)) {
+      missing.push('mayúscula');
+    }
+    if (!/\d/.test(password)) {
+      missing.push('número');
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      missing.push('carácter especial');
+    }
+    return missing;
+  }
+
   ngOnInit(): void {
     this.subscription = this.authService.currentData.subscribe(data => {
       this.data = data;
@@ -38,11 +60,28 @@ export class RecuperarPasswordComponent implements OnInit {
         }
       });
     });
+    const passwordControl = this.loginForm.get('password');
+    if (!passwordControl) return
+
+    passwordControl.valueChanges.subscribe(value => {
+      this.missingCriteria = this.getMissingCriteria(value);
+    });
+    
   }
 
   onSubmit() {
     const { password, confirmPassword } = this.loginForm.value;
     const comparacion = password.localeCompare(confirmPassword);
+
+    if(comparacion != 0 ){
+      Swal.fire({
+        title: "Error",
+        text: "La contraseña ingresada no son iguales",
+        icon: "error"
+      });
+      return
+    }
+
     this.info[0].id
     const body = {
       id:  parseInt(this.info[0].id),
@@ -63,15 +102,13 @@ export class RecuperarPasswordComponent implements OnInit {
           })
         },
         error: (message) => {
+          Swal.fire(
+            'Error en la solicitud: ',
+            message.error.data[0],
+          );
         }
       });
 
-    if(comparacion != 0 ){
-      Swal.fire({
-        title: "Error",
-        text: "La contraseña ingresada no son iguales",
-        icon: "error"
-      });
-    }
+    
   }
 }
