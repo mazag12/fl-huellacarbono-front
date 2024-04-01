@@ -1,12 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserRegister } from 'src/app/auth/interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UsuarioService } from 'src/app/views/services/usuario.service';
 import Swal from 'sweetalert2';
-import {permisosDisponibles} from '../../../utils/constans';
-
+import { ModuloService } from 'src/app/views/services/modulo.service';
 
 @Component({
   selector: 'app-usuario-insert',
@@ -16,29 +15,31 @@ import {permisosDisponibles} from '../../../utils/constans';
 export class UsuarioInsertComponent {
   constructor(
     private service: UsuarioService ,
-
     private router:Router,
     private user: AuthService,
-    private activatedRoute:ActivatedRoute) {}
-    public permisosDisponibles: any[] = permisosDisponibles;
-    permisosMarcados: any[] = [];
+    private serviceModule: ModuloService) {}
 
-  public Form: any;
-
-  public data:UserRegister[] = [];
-
+  permisosMarcados: any[] = [];
+  permisosDisponibles: any;
+  sinpermisosDisponibles: any;
+  Form: any;
+  data:UserRegister[] = [];
   id: any;
 
   ngOnInit(): void{
-      this.Form = new FormGroup({
-        code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
-        email:                new FormControl<string>('',[Validators.required, Validators.email]),
-        password:             new FormControl<string>('',[Validators.required, Validators.maxLength(20)]),
-        nombre:               new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
-        apellido:             new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
-        role:                 new FormControl<string>('',[Validators.required]),
-        accesos: new FormControl<any[]>([],[Validators.required]),
-      })
+    this.Form = new FormGroup({
+      code:                 new FormControl<string>('0',[Validators.min(1), Validators.pattern('^([0-9]{1,10}(\.[0-9]{1,2})?)$')]),
+      email:                new FormControl<string>('',[Validators.required, Validators.email]),
+      password:             new FormControl<string>('',[Validators.required, Validators.maxLength(20)]),
+      nombre:               new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
+      apellido:             new FormControl<string>('',[Validators.required, Validators.pattern('^([a-zA-Z\s ]{2,250})$'), Validators.min(3), Validators.maxLength(200)]),
+      role:                 new FormControl<string>('',[Validators.required]),
+      accesos: new FormControl<any[]>([],[Validators.required]),
+    });
+
+    this.serviceModule.modulo$.subscribe((modulo) => {
+      this.permisosDisponibles = modulo;
+    });
   }
 
   resetFormState(): void {
@@ -64,7 +65,7 @@ export class UsuarioInsertComponent {
   }
 
   navigateBackToUserList(): void {
-    this.router.navigate(['/dashboard/emisiones/usuario/lista']);
+    this.router.navigate(['/usuario']);
     this.resetFormState();
   }
 

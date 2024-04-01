@@ -1,162 +1,173 @@
-<div class="rounded-top p-3 mb-2 bg-secondary bg-gradient text-white text-center">
-  <div class="row">
-    <div class="col-4 text-start">
-      <button [routerLink]="['/electricidad']" class="btn btn-primary">Regresar</button>
-    </div>
-    <div class="col-4 text-center">
-      FUENTE DE EMISION GENERACION DE ELECTRICIDAD
-    </div>
-    <div class="col-4 text-end">
-
+<div class="container-fluid text-center">
+  <div class="row g-2">
+    <div class="col">
+      <div class="p-3 text-start">
+        <a class="text-black" [routerLink]="['/electricidad']">
+          <i class="fas fa-chevron-left"></i>
+          <span class="px-3 fs-6">FUENTE DE EMISION GENERACION DE ELECTRICIDAD</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
-<div class="container mt-3 text-center">
+<div class="container-fluid mt-3 text-center">
   <div class="row pt-2">
     <div class="col-md-4">
-      <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
-        <fieldset>
-          <legend class="fs-6">Tipo de Combustibles</legend>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">REGISTRAR</h5>
+          <form class="grid" [formGroup]="Form" (ngSubmit)="onSubmit()">
+            <fieldset>
+              <input matInput type="text" placeholder="Factura" value="0" formControlName="id" hidden>
 
-          <input matInput type="text" placeholder="Factura" value="0" formControlName="id" hidden>
+              <mat-form-field class="col-12 sm:col-6">
+                <mat-label class="fs-6">Nombre</mat-label>
+                <input matInput type="text" formControlName="nombre" (input)="onInputlimite($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-12 sm:col-6">
-            <mat-label class="fs-6">Nombre</mat-label>
-            <input matInput type="text" formControlName="nombre" (input)="onInputlimite($event)">
-          </mat-form-field>
+              <mat-form-field class="col-12 sm:col-6">
+                <mat-label>Unidad</mat-label>
+                <input matInput type="text" formControlName="unidad" (input)="onInputlimite($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-12 sm:col-6">
-            <mat-label>Unidad</mat-label>
-            <input matInput type="text" formControlName="unidad" (input)="onInputlimite($event)">
-          </mat-form-field>
+              <mat-form-field class="col-6 sm:col-6">
+                <mat-label>Factor</mat-label>
+                <input matInput type="text" formControlName="factor"
+                type="number" placeholder="00.00" min="01.00"
+                  value="01.00" step="0.01" (input)="onInputChange($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-6 sm:col-6">
-            <mat-label>Factor</mat-label>
-            <input matInput type="text" formControlName="factor"
-            type="number" placeholder="00.00" min="01.00"
-              value="01.00" step="0.01" (input)="onInputChange($event)">
-          </mat-form-field>
+              <mat-form-field class="col-6 sm:col-6">
+                <mat-label>Valor Neto</mat-label>
+                <input matInput type="text" formControlName="valor_neto"
+                type="number" placeholder="00.00" min="01.00"
+                  value="01.00" step="0.01" (input)="onInputChange($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-6 sm:col-6">
-            <mat-label>Valor Neto</mat-label>
-            <input matInput type="text" formControlName="valor_neto"
-            type="number" placeholder="00.00" min="01.00"
-              value="01.00" step="0.01" (input)="onInputChange($event)">
-          </mat-form-field>
+              <mat-form-field class="col-6 sm:col-6">
+                <mat-label>Co2</mat-label>
+                <input matInput type="text" formControlName="co2"
+                type="number" placeholder="00.00" min="01.00"
+                  value="01.00" step="0.01" (input)="onInputChange($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-6 sm:col-6">
-            <mat-label>Co2</mat-label>
-            <input matInput type="text" formControlName="co2"
-            type="number" placeholder="00.00" min="01.00"
-              value="01.00" step="0.01" (input)="onInputChange($event)">
-          </mat-form-field>
+              <mat-form-field class="col-6 sm:col-6">
+                <mat-label>Ch4</mat-label>
+                <input matInput type="text" formControlName="ch4"
+                type="number" placeholder="00.00" min="01.00"
+                  value="01.00" step="0.01" (input)="onInputChange($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-6 sm:col-6">
-            <mat-label>Ch4</mat-label>
-            <input matInput type="text" formControlName="ch4"
-            type="number" placeholder="00.00" min="01.00"
-              value="01.00" step="0.01" (input)="onInputChange($event)">
-          </mat-form-field>
+              <mat-form-field class="col-6 sm:col-6">
+                <mat-label>C2o</mat-label>
+                <input matInput type="text" formControlName="n2o"
+                type="number" placeholder="00.00" min="01.00"
+                  value="01.00" step="0.01" (input)="onInputChange($event)">
+              </mat-form-field>
 
-          <mat-form-field class="col-6 sm:col-6">
-            <mat-label>C2o</mat-label>
-            <input matInput type="text" formControlName="n2o"
-            type="number" placeholder="00.00" min="01.00"
-              value="01.00" step="0.01" (input)="onInputChange($event)">
-          </mat-form-field>
+              <div class="col-12 ">
+                <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
+              </div>
 
-          <div class="col-12 ">
-            <button type="submit" class="btn btn-primary" [disabled]="!Form.valid">Guardar</button>
-          </div>
-
-        </fieldset>
-      </form>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
     <div class="col-md-8">
-      <mat-form-field>
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
-      </mat-form-field>
+      <div class="card">
+        <div class="card-body">
+          <mat-form-field class="w-100">
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
+          </mat-form-field>
 
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header
-            class="text-bg-warning"> No. </th>
-            <td mat-cell *matCellDef="let element" class="text-bg-warning"> {{element.id}} </td>
-          </ng-container>
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Nombre </th>
-            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-          </ng-container>
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="color-footloose"> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="unidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Unidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.unidad}} </td>
-          </ng-container>
+              <ng-container matColumnDef="unidad">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="color-footloose"> Unidad </th>
+                <td mat-cell *matCellDef="let element"> {{element.unidad}} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="factor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Factor </th>
-            <td mat-cell *matCellDef="let element"> {{element.factor | number:'1.2-2' }} </td>
-          </ng-container>
+              <ng-container matColumnDef="factor">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="color-footloose"> Factor </th>
+                <td mat-cell *matCellDef="let element"> {{element.factor | number:'1.2-2' }} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="valor_neto">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Valor Neto </th>
-            <td mat-cell *matCellDef="let element"> {{element.valor_neto | number:'1.2-2' }} </td>
-          </ng-container>
+              <ng-container matColumnDef="valor_neto">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="color-footloose"> Valor Neto </th>
+                <td mat-cell *matCellDef="let element"> {{element.valor_neto | number:'1.2-2' }} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="co2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-bg-primary"> Co2 </th>
-            <td mat-cell *matCellDef="let element"> {{ element.co2 | number:'1.2-2' }} </td>
-          </ng-container>
+              <ng-container matColumnDef="co2">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="color-footloose"> Co2 </th>
+                <td mat-cell *matCellDef="let element"> {{ element.co2 | number:'1.2-2' }} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="ch4">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> CHo </th>
-            <td mat-cell *matCellDef="let element"> {{element.ch4 | number:'1.2-2' }} </td>
-          </ng-container>
+              <ng-container matColumnDef="ch4">
+                <th mat-header-cell *matHeaderCellDef class="color-footloose"> CHo </th>
+                <td mat-cell *matCellDef="let element"> {{element.ch4 | number:'1.2-2' }} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="n2o">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> C2o </th>
-            <td mat-cell *matCellDef="let element"> {{element.n2o | number:'1.2-2' }} </td>
-          </ng-container>
+              <ng-container matColumnDef="n2o">
+                <th mat-header-cell *matHeaderCellDef class="color-footloose"> C2o </th>
+                <td mat-cell *matCellDef="let element"> {{element.n2o | number:'1.2-2' }} </td>
+              </ng-container>
 
-          <ng-container matColumnDef="activo">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Estado </th>
-            <td mat-cell *matCellDef="let element"> {{element.flag_activo}} </td>
-          </ng-container>
+              <ng-container matColumnDef="activo">
+                <th mat-header-cell *matHeaderCellDef class="color-footloose"> Estado </th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.flag_activo;else estado">
+                    Activo
+                  </span>
+                  <ng-template #estado>Inactivo</ng-template>
+                </td>
 
-          <ng-container matColumnDef="accion">
-            <th mat-header-cell *matHeaderCellDef class="text-bg-primary"> Acción </th>
-            <td mat-cell *matCellDef="let element; let i = index">
-              <a color="pointer text-warning" matTooltip="Editar"
-              class="btn btn-outline-warning"
-                (click)="edit(element.id)">
-                <mat-icon>edit</mat-icon>
-              </a>
-              <a color="pointer text-danger " matTooltip="Eliminar"
-              class="btn btn-outline-danger mx-2"
-                (click)="eliminar(element.id)">
-                <mat-icon>delete</mat-icon>
-              </a>
-            </td>
-          </ng-container>
+              </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef class="color-footloose"> Acción </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="text-center">
+                  <a color="pointer text-warning" matTooltip="Editar"
+                  class="btn btn-outline-warning"
+                    (click)="edit(element.id)">
+                    <mat-icon>edit</mat-icon>
+                  </a>
+                  <a color="pointer text-danger " matTooltip="Eliminar"
+                  class="btn btn-outline-danger mx-2"
+                    (click)="eliminar(element.id)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                </td>
+              </ng-container>
 
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4"> No hay información "{{input.value}}"</td>
-          </tr>
-        </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <mat-paginator
-                      [pageSize]="pageSize"
-                      [pageSizeOptions]="[5, 10, 25, 100]"
-                       aria-label="Select page of periodic elements"
-                       >
-        </mat-paginator>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4"> No hay información "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator
+                          [pageSize]="pageSize"
+                          [pageSizeOptions]="[5, 10, 25, 100]"
+                           aria-label="Select page of periodic elements"
+                           >
+            </mat-paginator>
+          </div>
+        </div>
       </div>
     </div>
   </div>

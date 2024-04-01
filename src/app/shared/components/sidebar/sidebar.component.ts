@@ -51,7 +51,7 @@ export class SidebarComponent implements OnInit{
 
   menu: boolean = true;
 
-  constructor(private serviceModule: ModuloService, private service: UsuarioService, private authservice: AuthService){}
+  constructor(private serviceModule: ModuloService, private authservice: AuthService){}
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
@@ -80,7 +80,6 @@ export class SidebarComponent implements OnInit{
     this.serviceModule.accesos$.subscribe((acceso) => {
       this.permisosMarcados = acceso;
     });
-
   }
 
   toggleCollapse(): void {

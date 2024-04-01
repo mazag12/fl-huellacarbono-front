@@ -90,7 +90,7 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
   }
 
   navigateBackToUserList(): void {
-    this.router.navigate(['/dashboard/emisiones/usuario/lista']);
+    this.router.navigate(['/usuario']);
     this.resetFormState();
   }
 
@@ -145,7 +145,7 @@ export class UsuarioRegistroUpdateComponent implements OnInit{
       showConfirmButton: false,
       timer: 3500
     });
-    this.router.navigate(['/dashboard/emisiones/usuario/lista']);
+    this.router.navigate(['/usuario']);
   }
 
   actualizarPermisosMarcados(permisoData: any) {

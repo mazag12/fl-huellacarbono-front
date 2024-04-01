@@ -7,18 +7,18 @@ import { environment } from 'src/environments/environments';
   providedIn: 'root'
 })
 export class ModuloService {
-   
+
    private readonly baseUrl: string = environment.baseURL;
 
    constructor(private http: HttpClient) { }
-   
+
 
   private moduloSubject = new BehaviorSubject<any[]>([]);
   private accesosSubject = new BehaviorSubject<any[]>([]);
-  
+
   public modulo$: Observable<any[]> = this.moduloSubject.asObservable();
   public accesos$: Observable<any[]> = this.accesosSubject.asObservable();
-  
+
   private headers = new HttpHeaders()
    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
@@ -39,6 +39,5 @@ export class ModuloService {
     return this.http.post<any>(`${this.baseUrl}module`,data,{ headers: this.headers });
   }
 
-  
 
 }

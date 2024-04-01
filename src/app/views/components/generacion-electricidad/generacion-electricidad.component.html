@@ -1,27 +1,47 @@
-<div class="container mt-3 text-center">
-  <div class="row p-2 ">
-    <div class="col-md-4 text-start ">
-      <a><mat-icon [routerLink]="['/fuentes-emisiones/generacion-electricidad']" >keyboard_arrow_left</mat-icon></a>
-      FUENTE DE EMISION GENERACION DE ELECTRICIDAD
+<div class="container-fluid text-center">
+  <div class="row g-2">
+    <div class="col-2">
+      <div class="p-3">
+        <a class="text-black" [routerLink]="['/fuentes-emisiones/generacion-electricidad']">
+          <i class="fas fa-chevron-left"></i>
+          <span class="px-3 fs-6">FUENTE DE EMISION GENERACION DE ELECTRICIDAD</span>
+        </a>
+      </div>
     </div>
-    <div class="col-md-8 text-end">
-      <div class="row justify-content-end">
-        <div class="col-3" *ngIf="user.role == 'ADMIN' ">
-          <button [routerLink]="['/electricidad/tipo']" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Tipo de Combustible</button>
+    <div class="col-2">
+      <div class="p-3"></div>
+    </div>
+    <div class="col-2">
+      <div class="p-3">
+        <div class="rounded py-3 bt-footloose" *ngIf="user.role == 'ADMIN' " [routerLink]="['/electricidad/tipo']">
+          Tipo de Combustible
         </div>
-        <div class="col-3">
-          <button (click)="openDialog()" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Filtrar</button>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="p-3">
+        <div class="py-3 rounded bt-footloose" (click)="openDialog()">
+          Filtrar
         </div>
-        <div class="col-3">
-          <button [routerLink]="['/fuentes-emisiones/generacion-electricidad']" class="btn text-white w-100 btn-footloose-100" style="background-color: #3e1151;font-size: small;">Registrar</button>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="p-3">
+        <div class="py-3 rounded bt-footloose" [routerLink]="['/fuentes-emisiones/generacion-electricidad']">
+          Registrar
         </div>
-        <div class="col-3" *ngIf="user.role == 'ADMIN' ">
-          <button (click)="exportToExcel()"  class="btn text-white w-100 btn-footloose-100" style="background-color: #3FAC2D;font-size: small;">Exportar Documento MINAM </button>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="p-3">
+        <div class="py-3 rounded bt-footloose-quinto" *ngIf="user.role == 'ADMIN' " (click)="exportToExcel()">
+          Exportar Documento MINAM
         </div>
       </div>
     </div>
   </div>
-
+</div>
+<div class="container-fluid mt-3 text-center">
   <div class="row pt-2">
 
     <div class="mat-elevation-z8">

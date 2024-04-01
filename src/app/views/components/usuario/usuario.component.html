@@ -4,7 +4,7 @@
 <div class="container-fluid text-center px-5 mb-3">
   <div class="row p-2 ">
     <div class="col text-end">
-      <button [routerLink]="['/dashboard/emisiones/usuario/registrar']" class="btn btn-primary">Registrar</button>
+      <button [routerLink]="['/usuario/registrar']" class="btn btn-primary">Registrar</button>
     </div>
   </div>
 
@@ -51,7 +51,7 @@
         <ng-container matColumnDef="accion">
           <th mat-header-cell *matHeaderCellDef> Acción </th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <a [routerLink]="['/dashboard/emisiones/usuario/editar/'+ element.id]"
+            <a [routerLink]="['/usuario/editar/'+ element.id]"
                 class="btn btn-outline-warning mx-2" color="pointer text-warning"
                 matTooltip="Editar">
               <mat-icon>edit</mat-icon>

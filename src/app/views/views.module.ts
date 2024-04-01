@@ -71,7 +71,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import {LayoutModule} from '@angular/cdk/layout';
 import { SharedModule } from "../shared/shared.module";
-
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -145,6 +145,7 @@ import { SharedModule } from "../shared/shared.module";
         MatListModule,
         MatCardModule,
         SharedModule,
+        DragDropModule,
     ]
 })
 export class ViewsModule { }

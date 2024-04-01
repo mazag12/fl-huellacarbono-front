@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./electricidad-tipo.component.scss']
 })
 export class ElectricidadTipoComponent {
+element: any;
   constructor(
     private service: ElectricidadService) {}
 
@@ -148,11 +149,9 @@ export class ElectricidadTipoComponent {
       confirmButtonText: "Eliminar"
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.service.deletetipo(id).subscribe({complete: ()=>{
-          console.log("completado");
+          this.get();
         }});
-
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
@@ -160,7 +159,7 @@ export class ElectricidadTipoComponent {
         });
       }
     });
-    this.get();
+
   }
 
 }

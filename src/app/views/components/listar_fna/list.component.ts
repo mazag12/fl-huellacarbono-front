@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { sidebarData } from './sidebar-data';
 
 @Component({
@@ -6,7 +6,7 @@ import { sidebarData } from './sidebar-data';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListFnaComponent {
+export class ListFnaComponent{
 
   sidebarData = sidebarData;
 
@@ -22,5 +22,7 @@ export class ListFnaComponent {
     }
     return styleClass;
   }
+
+
 
 }
