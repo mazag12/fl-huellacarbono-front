@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { ElectricidadService } from 'src/app/views/services/electricidad.service';
 import { forkJoin } from 'rxjs';
@@ -148,6 +148,11 @@ export class LineChartComponent implements OnInit {
       }
     })
     this.chart.update();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.onSelectChange();
   }
 
 }
