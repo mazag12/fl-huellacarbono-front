@@ -64,6 +64,8 @@ export const meses: string[] = [
   'Diciembre'
 ];
 
+export const dias: string[] = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
 export const cabecera: string[] = [
   'Alcances',
   'Dioxido de carbono [tCO2]',
