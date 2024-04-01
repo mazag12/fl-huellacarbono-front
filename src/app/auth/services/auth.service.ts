@@ -27,7 +27,7 @@ export class AuthService {
 
   private dataSource = new BehaviorSubject<any>(null);
   currentData = this.dataSource.asObservable();
-  
+
 
   login( code: string, password: string ): Observable<boolean>{
     const body = { code, password} ;
@@ -56,13 +56,13 @@ export class AuthService {
   private setAuthentication(token: string): boolean{
     const payload: Token  = this.getJwtPayload(token);
     this._currentUser.set(payload);
-    
+
     if(payload.isValid == false){
       this._authSatatus.set( AuthStatus.checking );
     }else{
       localStorage.setItem('token', token);
       this._authSatatus.set( AuthStatus.authenticated );
-      
+
     }
 
     return true;
@@ -93,6 +93,11 @@ export class AuthService {
 
     if(token){
       currentUser = this.getJwtPayload(token.toString());
+    }
+
+    if (currentUser.exp < Math.floor(Date.now() / 1000)) {
+      this.logout();
+      return of(false);
     }
 
     this._currentUser.set(currentUser)

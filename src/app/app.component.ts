@@ -60,7 +60,6 @@ export class AppComponent implements OnInit {
       case AuthStatus.checking:
         return;
       case AuthStatus.authenticated:
-        this.router.navigateByUrl('/dashboard');
         this.generarSidebar();
         return;
       case AuthStatus.notAuthenticated:

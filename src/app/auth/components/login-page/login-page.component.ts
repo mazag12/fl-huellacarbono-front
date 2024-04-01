@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth.service';
 import { DialogComponent } from './dialog/dialog.component';
 
 import {MatDialog} from '@angular/material/dialog';
-import { AuthStatus } from '../../interfaces';
 
 @Component({
   templateUrl: './login-page.component.html',

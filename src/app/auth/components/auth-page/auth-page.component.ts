@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
 })
 export class AuthPageComponent {
 
-  public background_img = "src/assets/images/fondo/fondo.base64";
 }

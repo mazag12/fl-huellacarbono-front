@@ -20,6 +20,55 @@ body {
     background: #f4f7fa;
 }
 
+a:link, a:visited, a:active {
+  text-decoration:none;
+}
+
+.color-footloose{
+  color: #3D1452;
+}
+
+.bt-footloose{
+  background: #3D1452;
+  color: white;
+}
+
+.bt-footloose:hover{
+  background: #f7323f;
+  color: white;
+}
+
+.bt-footloose-segundo{
+  background: #f7323f;
+  color: white;
+}
+
+.bt-footloose-segundo:hover{
+  background: #3e1151;
+  color: white;
+}
+
+.bt-footloose-tercero{
+  background: #0071ce;
+  color: white;
+}
+
+.bt-footloose-tercero:hover{
+  background: #ffb547;
+  color: black;
+}
+
+
+.bt-footloose-quinto{
+  background: #3FAC2D;
+  color: white;
+}
+
+.bt-footloose-quinto:hover{
+  background: #f7323f;
+  color: white;
+}
+
 .card {
     display: flex;
     flex-direction: column;
